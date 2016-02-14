@@ -13,19 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <fragment
+
             android:id="@+id/fragment_main_calendric"
             android:name="fragment.Fragment_main_calendric"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></fragment>
+
         <fragment
             android:id="@+id/fragment_main_smart"
             android:name="fragment.Fragment_main_smart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"></fragment>
 
-        </fragment>
 
     </FrameLayout>
 
@@ -38,5 +38,4 @@
         app:headerLayout="@layout/part_main_nav_header"
         app:menu="@menu/menu_main_drawer" />
 
-</android.support.v4.widget.DrawerLayout>
-<!--没有把两个fab的添加在两个界面上共享的原因是因为两个界面上按钮传递的参数不一样且按钮属于fragment之外传递数据不方便-->
+</android.support.v4.widget.DrawerLayout><!--没有把两个fab的添加在两个界面上共享的原因是因为两个界面上按钮传递的参数不一样且按钮属于fragment之外传递数据不方便-->

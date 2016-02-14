@@ -1,17 +1,12 @@
 package bit.eagzzycsl.smartable2;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
+import android.util.Log;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -56,14 +51,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void mySetView() {
-        if(true){
+        if (true) {
             /*默认显示*/
-            getFragmentManager().beginTransaction().hide(fragment_main_calendric).commit();
+            getFragmentManager().beginTransaction().hide(fragment_main_calendric)
+                    .commit();
             drawerLayout.setDrawerListener(toggle_smart);
             toggle_smart.syncState();
             navigationView.getMenu().findItem(R.id.nav_glance_smart).setChecked(true);
-        }else if(true){
-            getFragmentManager().beginTransaction().hide(fragment_main_smart).commit();
+        } else if (true) {
+            getFragmentManager().beginTransaction().hide(fragment_main_smart)
+                    .commit();
             drawerLayout.setDrawerListener(toggle_calendric);
             toggle_calendric.syncState();
             navigationView.getMenu().findItem(R.id.nav_glance_calendric).setChecked(true);
@@ -85,11 +82,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-
+        Log.i("menu", "main_create");
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -115,17 +111,19 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_glance_smart: {
-                getFragmentManager().beginTransaction().
-                        show(fragment_main_smart).hide(fragment_main_calendric).commit();
+                getFragmentManager().beginTransaction().hide(fragment_main_calendric)
+                        .show(fragment_main_smart).commit();
                 drawerLayout.setDrawerListener(toggle_smart);
                 toggle_smart.syncState();
+                invalidateOptionsMenu();
                 break;
             }
             case R.id.nav_glance_calendric: {
-                getFragmentManager().beginTransaction().
-                        show(fragment_main_calendric).hide(fragment_main_smart).commit();
+                getFragmentManager().beginTransaction().hide(fragment_main_smart)
+                        .show(fragment_main_calendric).commit();
                 drawerLayout.setDrawerListener(toggle_calendric);
                 toggle_calendric.syncState();
+                invalidateOptionsMenu();
                 break;
             }
         }

@@ -1,8 +1,5 @@
 package my;
 
-/**
- * Created by EAGzzyCSL on 2016/2/11.
- */
 public class MyMoment {
     private MyDate myDate;
     private MyTime myTime;

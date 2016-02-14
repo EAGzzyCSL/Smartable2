@@ -10,10 +10,34 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="global_setting">设置</string>
     <string name="activity_main_nav_smart">智能浏览</string>
     <string name="activity_main_nav_calendric">按日程</string>
+    <string name="activity_main_nav_done">已完成</string>
+    <string name="activity_main_nav_recycle_bin">回收站</string>
+    <string name="activity_main_nav_version">版本</string>
+    <string name="activity_main_nav_entry">条目</string>
+    <string name="activity_main_nav_history">历史</string>
+    <string name="activity_main_nav_about">关于</string>
+    <string name="activity_main_nav_kind">分类</string>
     <string name="title_activity_guide">GuideActivity</string>
+
     <string name="title_activity_note_book">NoteBookActivity</string>
     <string name="title_activity_edit">EditActivity</string>
+    <string-array name="activity_main_smart_pager_title">
+        <item>速记</item>
+        <item>ddl</item>
+        <item>这两天</item>
+        <item>有朝一日</item>
+    </string-array>
+
+    <string name="entry_note">笔记</string>
+    <string name="entry_deadLine">ddl</string>
+    <string name="entry_trigger">触发</string>
+    <string name="entry_someDay">有朝一日</string>
+    <string name="entry_theseDays">这两天</string>
+    <string name="entry_shortHand">速记</string>
+    <string name="entry_schedule">日程</string>
+
+
 </resources>

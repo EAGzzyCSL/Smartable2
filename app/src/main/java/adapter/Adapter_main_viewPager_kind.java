@@ -1,56 +1,49 @@
 package adapter;
 
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import java.util.ArrayList;
-
-/**
- * Created by EAGzzyCSL on 2016/2/11.
- */
 public class Adapter_main_viewPager_kind extends PagerAdapter {
+    private View[] views;
+    private String[] pageTitle;
+    private int[] titleSort;
+
     @Override
     public int getCount() {
-        return views.size();
+        return views.length;
     }
 
-    private ArrayList<View> views;
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
-        return false;
+        return view == object;
     }
 
-    public Adapter_main_viewPager_kind(ArrayList<View> views) {
+    public Adapter_main_viewPager_kind(View[] views, String[] pageTitle, int titleSort[]) {
         this.views = views;
-        Log.i("hello", "##" + views.size());
+        this.pageTitle = pageTitle;
+
+        this.titleSort = titleSort;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View v = views.get(position);
+        View v = views[position];
         container.addView(v);
         return v;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        View v = views.get(position);
+        View v = views[position];
         container.removeView(v);
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return pageTitle[position];
+
+        return pageTitle[titleSort[position]];
     }
 
-    private static String[] pageTitle = new String[]{
-            "速记",
-            "ddl",
-            "这两天",
-            "有朝一日"
-    };
 }

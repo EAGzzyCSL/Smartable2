@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_glance_smart"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_main_nav_smart"
             android:title="@string/activity_main_nav_smart" />
         <item
             android:id="@+id/nav_glance_calendric"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_main_nav_calendric"
             android:title="@string/activity_main_nav_calendric" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
     </group>
-
-    <item android:title="Communicate">
+    <item android:title="@string/activity_main_nav_kind">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:id="@+id/nav_kind_note"
+                android:icon="@drawable/ic_main_nav_note"
+                android:title="@string/entry_note"></item>
         </menu>
     </item>
+    <item android:title="@string/activity_main_nav_history">
+        <menu>
+            <item
+                android:id="@+id/nav_entry_done"
+                android:icon="@drawable/ic_main_nav_done"
+                android:title="@string/activity_main_nav_done"></item>
+            <item
+                android:id="@+id/nav_entry_recycleBin"
+                android:icon="@drawable/ic_main_nav_recycle_bin"
+                android:title="@string/activity_main_nav_recycle_bin"></item>
 
+        </menu>
+    </item>
+    <item android:title="@string/activity_main_nav_about">
+        <menu>
+            <item
+                android:id="@+id/nav_about_setting"
+                android:icon="@drawable/ic_main_nav_setting"
+                android:title="@string/global_setting" />
+            <item
+                android:id="@+id/nav_about_version"
+                android:icon="@drawable/ic_main_nav_version"
+                android:title="@string/activity_main_nav_version" />
+        </menu>
+    </item>
 </menu>
