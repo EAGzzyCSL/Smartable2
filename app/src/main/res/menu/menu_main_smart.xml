@@ -4,7 +4,7 @@
     <item
         android:id="@+id/action_switch"
         android:orderInCategory="100"
-        android:icon="@drawable/ic_global_tmp1"
+        android:icon="@drawable/ic_main_menu_smart_classify"
         android:title="switch"
         app:showAsAction="always" />
     <item
