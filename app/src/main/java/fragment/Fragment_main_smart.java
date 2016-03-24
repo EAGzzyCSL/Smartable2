@@ -54,7 +54,7 @@ public class Fragment_main_smart extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.i("fab_add", "click");
-                fragment_main_smart_classify.closeDraw();
+                fragment_main_smart_classify.toggleDrawer();
             }
         });
 
