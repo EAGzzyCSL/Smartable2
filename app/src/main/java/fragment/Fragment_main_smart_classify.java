@@ -1,9 +1,7 @@
 package fragment;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -13,7 +11,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ import adapter.Adapter_main_viewPager_kind;
 import bit.eagzzycsl.smartable2.R;
 import entry.Entry;
 import entry.EntryNote;
-import view.EdgeDrawerLayout;
+import layout.EdgeDrawerLayout;
 
 public class Fragment_main_smart_classify extends Fragment {
     private View myView;
@@ -31,6 +31,7 @@ public class Fragment_main_smart_classify extends Fragment {
     private LinearLayout linearLayout_main;
     private EdgeDrawerLayout edgeDrawerLayout;
     private Adapter_main_viewPager_kind adapter_main_viewPager_kind;
+
     public Fragment_main_smart_classify() {
         // Required empty public constructor
 
@@ -53,26 +54,28 @@ public class Fragment_main_smart_classify extends Fragment {
         return myView;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-//        edgeDrawerLayout.closeDrawer();
-    }
-
     private void myFindView() {
         tabLayout_kind = (TabLayout) myView.findViewById(R.id.tabLayout_kind);
         viewPager_kind = (ViewPager) myView.findViewById(R.id.viewPager_kind);
-        linearLayout_main=(LinearLayout)myView.findViewById(R.id.linearLayout_main);
-        edgeDrawerLayout=(EdgeDrawerLayout)myView.findViewById(R.id.edgeDrawerLayout);
-        linearLayout_main.setVisibility(View.INVISIBLE);
+        linearLayout_main = (LinearLayout) myView.findViewById(R.id.linearLayout_main);
+        edgeDrawerLayout = (EdgeDrawerLayout) myView.findViewById(R.id.edgeDrawerLayout);
+        Button button_test = (Button) myView.findViewById(R.id.button_test);
+        button_test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "要是有时间的话，下一步这两件事是可以做的，郭宇可以给抽屉里面写个listview之类的，黄凌云可以改个佩斯换个图标什么，如果需要的话我接下来去看那个滑动删除", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
+
     private void mySetView() {
         viewPager_kind.setAdapter(adapter_main_viewPager_kind);
         tabLayout_kind.setupWithViewPager(viewPager_kind);
         tabLayout_kind.setTabsFromPagerAdapter(adapter_main_viewPager_kind);
 
     }
+
     private void myCreate() {
         final RecyclerView[] pages = new RecyclerView[]{
                 (RecyclerView) View.inflate(getActivity(), R.layout.adapter_main_smart_pager, null),
@@ -103,7 +106,7 @@ public class Fragment_main_smart_classify extends Fragment {
     }
     // TODO: Rename method, update argument and hook method into UI event
 
-    public void closeDraw(){
+    public void toggleDrawer() {
         edgeDrawerLayout.toggleDrawer();
     }
 }

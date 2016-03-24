@@ -1,11 +1,11 @@
-<view.EdgeDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout.EdgeDrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:id="@+id/edgeDrawerLayout"
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:layout_height="match_parent">
+    <!--第一个layout为主view，第二个为抽屉中的，其中主view的rightMargin决定了抽屉露出来多少-->
     <LinearLayout
         android:id="@+id/linearLayout_main"
         android:layout_width="match_parent"
@@ -35,13 +35,14 @@
         android:elevation="20dp">
 
         <Button
+            android:id="@+id/button_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="right" />
+            android:text="点这儿看通知" />
 
     </LinearLayout>
 
 
-</view.EdgeDrawerLayout>
+</layout.EdgeDrawerLayout>
 
 
