@@ -63,7 +63,7 @@ public class Fragment_main_smart extends Fragment {
     private void myCreate() {
     }
 
-    public int  switchView() {
+    public int switchView() {
         /*0表示当前是分类，1表示当前是序列化，用于设置图标*/
         if (fragment_main_smart_serialize.isHidden()) {
 

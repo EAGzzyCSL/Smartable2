@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/view_calendric_day_item_preview_bkg"/>
+        </shape>
+    </item>
+    <item
+        android:bottom="@dimen/view_calendric_day_item_bkg_lineWidth_negative"
+        android:right="@dimen/view_calendric_day_item_bkg_lineWidth_negative"
+        android:top="@dimen/view_calendric_day_item_bkg_lineWidth_negative">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="@dimen/view_calendric_day_item_bkg_lineWidth"
+                android:color="@color/view_calendric_day_item_preview_leftLine"/>
+        </shape>
+    </item>
+</layer-list>
