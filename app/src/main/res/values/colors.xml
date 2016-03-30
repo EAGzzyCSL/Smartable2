@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
+    <!--theme-->
+    <color name="colorPrimary">#4CAF50</color>
+    <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorAccent">#009688</color>
+    <!--theme not in use now-->
+    <color name="primary_light">#C8E6C9</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#727272</color>
+
+
+    <!--view-->
+    <!--CalendricView-->
+    <color name="view_calendric_day_item_preview_leftLine">#dcbc6d</color>
+    <color name="view_calendric_day_item_preview_bkg">#faf1b6</color>
+    <color name="view_calendric_day_item_add_leftLine">#84ac85</color>
+    <color name="view_calendric_day_item_add_bkg">#c7e5c8</color>
+    <!--other-->
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="white">#FFFFFF</color>
+    <color name="add_pos_default">#CBFA96</color>
+    <color name="add_alert_default">#FAF1B6</color>
+
+
 </resources>

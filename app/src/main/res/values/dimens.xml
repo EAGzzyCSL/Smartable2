@@ -6,4 +6,20 @@
     <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!--view-->
+    <!--CalendricView-->
+    <dimen name="view_calendric_day_item_bkg_lineWidth">5dp</dimen>
+    <dimen name="view_calendric_day_item_bkg_lineWidth_negative">-5dp</dimen>
+    <!--other-->
+    <dimen name="singleAdd_bar_height">60dp</dimen>
+    <dimen name="singleAdd_bar_interval">5dp</dimen>
+    <dimen name="singleAdd_bar_height_x2">200dp</dimen>
+    <dimen name="singleAdd_bar_textSize">16sp</dimen>
+    <dimen name="singleAdd_bar_textSize_small">14sp</dimen>
+    <dimen name="singleAdd_bar_innerPaddingVertical">5dp</dimen>
+    <dimen name="singleAdd_bar_innerPaddingHorizontal">10dp</dimen>
+    <dimen name="drawer_width">240dp</dimen>
+
+    <!--font-->
 </resources>

@@ -138,28 +138,6 @@ public class EdgeDrawerLayout extends FrameLayout {
 
     }
 
-
-    @Override
-    public void computeScroll() {
-        if (myViewDragHelper.continueSettling(true)) {
-            ViewCompat.postInvalidateOnAnimation(EdgeDrawerLayout.this);
-            invalidate();
-        }
-    }
-
-    @Override
-    public boolean onInterceptHoverEvent(MotionEvent event) {
-        return myViewDragHelper.shouldInterceptTouchEvent(event);
-
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        myViewDragHelper.processTouchEvent(event);
-        return true;
-    }
-
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         MarginLayoutParams main_lp = (MarginLayoutParams) mainView.getLayoutParams();
@@ -182,6 +160,27 @@ public class EdgeDrawerLayout extends FrameLayout {
         );
 
     }
+
+    @Override
+    public void computeScroll() {
+        if (myViewDragHelper.continueSettling(true)) {
+            ViewCompat.postInvalidateOnAnimation(EdgeDrawerLayout.this);
+            invalidate();
+        }
+    }
+
+    @Override
+    public boolean onInterceptHoverEvent(MotionEvent event) {
+        return myViewDragHelper.shouldInterceptTouchEvent(event);
+
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        myViewDragHelper.processTouchEvent(event);
+        return true;
+    }
+
 
     @Override
     protected void onFinishInflate() {
@@ -225,4 +224,5 @@ public class EdgeDrawerLayout extends FrameLayout {
  * 添加自定义属性以避免在mainView中用marginRight进行调整
  * 左边的drawerLayout导致的问题依然存在，成因大概可以猜测，但目前无法修复
  * 还是必须要设置被覆盖的主view未invisible才能避免它捕捉事件
+ * 在4.4下居然会崩溃。。。
  */
