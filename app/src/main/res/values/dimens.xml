@@ -7,6 +7,9 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="activity_horizontal_padding">8dp</dimen>
+    <dimen name="activity_vertical_padding">8dp</dimen>
+
     <!--view-->
     <!--CalendricView-->
     <dimen name="view_calendric_day_item_bkg_lineWidth">5dp</dimen>
@@ -21,5 +24,10 @@
     <dimen name="singleAdd_bar_innerPaddingHorizontal">10dp</dimen>
     <dimen name="drawer_width">240dp</dimen>
 
-    <!--font-->
+    <dimen name="item_height">50dp</dimen>
+
+    <!-- Default font size -->
+    <dimen name="text_subhead">16sp</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="text_button">14sp</dimen>
 </resources>

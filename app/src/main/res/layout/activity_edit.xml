@@ -1,33 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:gravity="bottom"
     tools:context="bit.eagzzycsl.smartable2.EditActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/edit_barlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="120dp"
+        android:background="@color/colorMyYellow"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
+        <android.support.v7.widget.AppCompatEditText
+
+            android:id="@+id/edit_activity_title"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:textColor="@color/colorMyWhite"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:hint="Add an event..."
+            android:singleLine="true" />
     </android.support.design.widget.AppBarLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:paddingBottom="40dp"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/activity_horizontal_margin"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:divider="@drawable/shape_divider"
+                    android:showDividers="end">
+                    <RadioGroup
+                        android:id="@+id/edit_radioGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_height"
+                        android:orientation="horizontal">
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/edit_rbtn1"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:text="@string/entry_shortHand"
+                            android:checked="true"
+                            style="@style/RadioButtonStyles_ora"
+                            />
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/edit_rbtn2"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:text="@string/entry_schedule"
+                            style="@style/RadioButtonStyles_yellow"
+                            />
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/edit_rbtn3"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:text="@string/entry_theseDays"
+                            style="@style/RadioButtonStyles_purple"
+                            />
+                        <android.support.v7.widget.AppCompatRadioButton
+                            android:id="@+id/edit_rbtn4"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:text="@string/entry_deadLine"
+                            style="@style/RadioButtonStyles_blue"
+                            />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <!--设置时间-->
+                <LinearLayout
+                    android:id="@+id/linearlayout_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:divider="@drawable/shape_divider"
+                    android:showDividers="end">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal"
+                        android:divider="@drawable/shape_divider">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:background="@drawable/ic_schedule_black_36dp"
+                            />
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <!--设置时间的上半部分-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:background="@drawable/angle_brackets_up"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="10dp">
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/textView_startDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:textSize="16sp" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/textView_endDate"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="fill_horizontal"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:textSize="@dimen/text_subhead" />
+
+
+                            </LinearLayout>
+                            <!--设置时间的下半部分-->
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:background="@drawable/angle_brackets_under"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp">
+
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/textView_startTime"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:textSize="@dimen/text_subhead" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/textView_endTime"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:textSize="@dimen/text_subhead" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearlayout_deadling"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:divider="@drawable/shape_divider"
+                    android:showDividers="end">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/edit_ddl_datetime_picker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/item_height"
+                            android:drawableStart="@drawable/ic_schedule_black_36dp"
+                            android:drawablePadding="@dimen/activity_horizontal_padding"
+                            android:gravity="start|center_vertical"
+                            android:text="4月1日"
+                            android:background="@null"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/edit_ddl_datetime_picker2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/item_height"
+                            android:gravity="center_vertical"
+                            android:text="14:00"
+                            android:background="@null"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:text="截止"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:divider="@drawable/shape_divider"
+                    android:showDividers="end"
+                    android:id="@+id/linearlayout_remind">
+                    <Button
+                        android:id="@+id/edit_remind_picker"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_height"
+                        android:drawableStart="@drawable/ic_notifications_none_black_36dp"
+                        android:drawablePadding="@dimen/activity_horizontal_padding"
+                        android:gravity="left|center_vertical"
+                        android:text="不提醒"
+                        android:background="@null"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:divider="@drawable/shape_divider"
+                    android:showDividers="end"
+                    android:id="@+id/linearlayout_location">
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/edit_location_et"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/item_height"
+                        android:background="@null"
+                        android:drawableStart="@drawable/ic_place_36dp"
+                        android:drawablePadding="@dimen/activity_horizontal_padding"
+                        android:textSize="14sp"
+                        android:hint="地点" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:divider="@drawable/shape_divider"
+                    android:showDividers="end"
+                    android:id="@+id/linearlayout_ddl_expand">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/item_height"
+                            android:drawableLeft="@drawable/ic_label_outline_black_36dp"
+                            android:drawablePadding="@dimen/activity_horizontal_padding"
+                            android:gravity="center_vertical"
+                            android:text="分"/>
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/edit_ddl_expand_et"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/item_height"
+                            android:paddingStart="@dimen/activity_horizontal_padding"
+                            android:paddingEnd="@dimen/activity_horizontal_padding"
+                            android:background="@null"
+                            android:text="3"/>
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/item_height"
+                            android:gravity="center_vertical"
+                            android:text="次  每次"/>
+                        <android.support.v7.widget.AppCompatEditText
+                            android:id="@+id/edit_ddl_expand_et2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/item_height"
+                            android:paddingStart="@dimen/activity_horizontal_padding"
+                            android:paddingEnd="@dimen/activity_horizontal_padding"
+                            android:background="@null"
+                            android:text="20" />
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/item_height"
+                            android:gravity="center_vertical"
+                            android:text="min"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:orientation="horizontal"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
 
-</android.support.design.widget.CoordinatorLayout>
+        <Button android:id="@+id/edit_to_schedule_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorMyTransparent"
+            android:drawableLeft="@drawable/ic_schedule_black_48dp"
+            android:text="日程"/>
+
+        <Button android:id="@+id/edit_note_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorMyTransparent"
+            android:drawableLeft="@drawable/ic_schedule_black_48dp"
+            android:text="笔记"/>
+
+        <Button android:id="@+id/edit_someday_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorMyTransparent"
+            android:drawableLeft="@drawable/ic_someday_black_48dp"
+            android:text="有朝一日"/>"
+
+        <Button android:id="@+id/edit_done_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorMyTransparent"
+            android:drawableEnd="@drawable/ic_done_black_48dp"/>"
+    </LinearLayout>
+
+
+</LinearLayout>

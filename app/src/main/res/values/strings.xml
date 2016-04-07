@@ -46,4 +46,13 @@
         <item>周</item>
     </string-array>
 
+    <string name="title_remind_time">提醒时间</string>
+    <string name="btn_time_30min">30 min</string>
+    <string name="btn_time_1h">1 hour</string>
+    <string name="btn_time_3h">3 hours</string>
+    <string name="btn_time_5min">5 minutes</string>
+    <string name="btn_time_9am">9:00 am</string>
+    <string name="btn_time_10pm">10:00 pm\n last day</string>
+    <string name="btn_time_other">Exact</string>
+
 </resources>

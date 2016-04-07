@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogYellowTheme</item>
+        <item name="android:timePickerDialogTheme">@style/MyTimePickerDialogYellowTheme</item>
+
+        <!--<item name="android:datePickerDialogTheme">@style/MyDatePickerDialogBlueTheme</item>-->
+        <!--<item name="android:timePickerDialogTheme">@style/MyTimePickerDialogBlueTheme</item>-->
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -21,5 +26,50 @@
         <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <!--yellow date/time picker dialog-->
+    <style name="MyDatePickerDialogYellowTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:datePickerStyle">@style/MyDatePickerYellowStyle</item>
+    </style>
+    <style name="MyDatePickerYellowStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/colorMyYellow</item>
+    </style>
+
+    <style name="MyTimePickerDialogYellowTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:timePickerStyle">@style/MyTimePickerYellowStyle</item>
+    </style>
+    <style name="MyTimePickerYellowStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+        <item name="android:headerBackground">@color/colorMyYellow</item>
+    </style>
+
+    <!--blue date/time picker dialog-->
+    <style name="MyDatePickerDialogBlueTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:datePickerStyle">@style/MyDatePickerBlueStyle</item>
+    </style>
+    <style name="MyDatePickerBlueStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/colorMyBlue</item>
+    </style>
+
+    <style name="MyTimePickerDialogBlueTheme" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:timePickerStyle">@style/MyTimePickerBlueStyle</item>
+    </style>
+    <style name="MyTimePickerBlueStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+        <item name="android:headerBackground">@color/colorMyBlue</item>
+    </style>
+
+    <!--添加页面radiobutton的样式-->
+    <style name="RadioButtonStyles_ora">
+        <item name="android:button">@drawable/ic_radiobtn_ora_selector</item>
+    </style>
+    <style name="RadioButtonStyles_purple">
+        <item name="android:button">@drawable/ic_radiobtn_purple_selector</item>
+    </style>
+    <style name="RadioButtonStyles_blue">
+        <item name="android:button">@drawable/ic_radiobtn_blue_selector</item>
+    </style>
+    <style name="RadioButtonStyles_yellow">
+        <item name="android:button">@drawable/ic_radiobtn_yellow_selector</item>
     </style>
 </resources>
