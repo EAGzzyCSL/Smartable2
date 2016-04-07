@@ -1,5 +1,6 @@
 package bit.eagzzycsl.smartable2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.NavigationView;
@@ -127,6 +128,10 @@ public class MainActivity extends AppCompatActivity
                 getFragmentManager().beginTransaction().hide(fragment_main_smart)
                         .show(fragment_main_calendric).commit();
                 invalidateOptionsMenu();
+                break;
+            }
+            case R.id.nav_kind_note:{
+                startActivity(new Intent(this,NoteBookActivity.class));
                 break;
             }
         }

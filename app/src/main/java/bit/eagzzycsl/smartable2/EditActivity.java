@@ -3,6 +3,7 @@ package bit.eagzzycsl.smartable2;
 import android.content.Intent;
 import android.graphics.Color;
 import android.opengl.Visibility;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -68,6 +69,10 @@ public class EditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+        if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyRed));
+        }
 
         myFindView();
         myInit();
@@ -76,7 +81,7 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
-    private void myFindView(){
+    private void myFindView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         edit_activity_title = (android.support.v7.widget.AppCompatEditText) findViewById(R.id.edit_activity_title);
         edit_radioGroup = (RadioGroup) findViewById(R.id.edit_radioGroup);
@@ -96,7 +101,7 @@ public class EditActivity extends AppCompatActivity {
         linearlayout_location = (LinearLayout) findViewById(R.id.linearlayout_location);
         linearlayout_ddl_expand = (LinearLayout) findViewById(R.id.linearlayout_ddl_expand);
 
-        edit_barlayout =(android.support.design.widget.AppBarLayout) findViewById(R.id.edit_barlayout);
+        edit_barlayout = (android.support.design.widget.AppBarLayout) findViewById(R.id.edit_barlayout);
         textView_startDate = (android.support.v7.widget.AppCompatTextView) findViewById(R.id.textView_startDate);
         textView_endDate = (android.support.v7.widget.AppCompatTextView) findViewById(R.id.textView_endDate);
         textView_startTime = (android.support.v7.widget.AppCompatTextView) findViewById(R.id.textView_startTime);
@@ -104,15 +109,15 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
-    private void myInit(){
+    private void myInit() {
         edit_rbtn1.setSelected(true);
         set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
         edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyOrange));
 
         Calendar c = Calendar.getInstance();
-        timeStart = new MyTime(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.HOUR_OF_DAY),0);
-        timeEnd = new MyTime(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.HOUR_OF_DAY),0);
-        timeDDL =new MyTime(c.get(Calendar.YEAR),c.get(Calendar.MONTH)+1,c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.HOUR_OF_DAY),0);
+        timeStart = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
+        timeEnd = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
+        timeDDL = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
 
 
         textView_startDate.setText(MyPickerDialog.getShortDate(timeStart.getYear(),
@@ -126,7 +131,8 @@ public class EditActivity extends AppCompatActivity {
         edit_ddl_datetime_picker2.setText(MyPickerDialog.getMoment(timeDDL.getHour(), timeDDL.getMinute()));
 
     }
-    private void mySetView(){
+
+    private void mySetView() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//顶部返回按钮
 
@@ -183,7 +189,7 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        edit_ddl_datetime_picker.setOnClickListener(new View.OnClickListener(){
+        edit_ddl_datetime_picker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new MyDatePickerDialog(EditActivity.this, edit_ddl_datetime_picker, timeDDL)
@@ -191,7 +197,7 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
-        edit_ddl_datetime_picker2.setOnClickListener(new View.OnClickListener(){
+        edit_ddl_datetime_picker2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new MyTimePickerDialog(EditActivity.this, edit_ddl_datetime_picker2, timeDDL)
@@ -209,7 +215,7 @@ public class EditActivity extends AppCompatActivity {
 
     }
 
-    private void set_layout_visible(int visible1,int visible2,int visible3,int visible4,int visible5){
+    private void set_layout_visible(int visible1, int visible2, int visible3, int visible4, int visible5) {
         linearlayout_schedule.setVisibility(visible1);
         linearlayout_deadling.setVisibility(visible2);
         linearlayout_remind.setVisibility(visible3);
@@ -228,7 +234,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     //选择提醒时间dialog
-    private void myDialog(){
+    private void myDialog() {
 //        alertDialog = new AlertDialog.Builder(EditActivity.this).create();
 //        alertDialog.setTitle("lily");
 //        alertDialog.show();
