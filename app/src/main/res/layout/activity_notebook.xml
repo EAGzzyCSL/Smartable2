@@ -6,29 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="bit.eagzzycsl.smartable2.NoteBookActivity">
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        app:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="200dp"
+            android:fitsSystemWindows="true"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <TextView
-            android:id="@+id/notebook_activity_title_id"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:textColor="#FFF"
-            android:textSize="20dp"
-            android:gravity="center_vertical"
-            android:text="这是一个笔记本名"/>
+
+            app:popupTheme="@style/AppTheme.PopupOverlay" >
+            <TextView
+                android:id="@+id/notebook_activity_title_id"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:textColor="#FFF"
+                android:textSize="20dp"
+                android:gravity="center_vertical"
+                android:text="这是一个笔记本名"/>
+
+        </android.support.v7.widget.Toolbar>
+
+
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout

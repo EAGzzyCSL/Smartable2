@@ -2,7 +2,9 @@ package fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import adapter.Adapter_view_calendric;
+import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.R;
 import view.CalendricView;
 
@@ -19,6 +22,7 @@ public class Fragment_main_calendric extends Fragment {
     private View myView;
     private CalendricView calendricView_day;
     private Adapter_view_calendric adapter_view_calendric;
+    private FloatingActionButton fab_add;
 
     public Fragment_main_calendric() {
         // Required empty public constructor
@@ -48,14 +52,21 @@ public class Fragment_main_calendric extends Fragment {
 
     public void myFindView() {
         calendricView_day = (CalendricView) myView.findViewById(R.id.calendricView_day);
+        fab_add = (FloatingActionButton) myView.findViewById(R.id.fab_add);
     }
 
     private void myCreate() {
-        adapter_view_calendric = new Adapter_view_calendric(this.getActivity(),null);
+        adapter_view_calendric = new Adapter_view_calendric(this.getActivity(), null);
     }
 
     private void mySetView() {
         calendricView_day.setAdapter(adapter_view_calendric);
+        fab_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), EditActivity.class));
+            }
+        });
     }
 
 
