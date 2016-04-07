@@ -25,4 +25,15 @@
     <color name="add_alert_default">#FAF1B6</color>
 
 
+    <!--lily Color-->
+    <color name="colorMyWhite">#ffffff</color>
+    <color name="colorMyRed">#F4511E</color>
+    <color name="colorMyYellow">#FFC107</color>
+    <color name="colorMyOrange">#FF9800</color>
+    <color name="colorMyBlue">#0056FF</color>
+    <color name="colorMyPurple">#8000FF</color>
+    <color name="colorMyLine">#dadada</color>
+    <color name="colorMyActivityBg">#eeeeee</color>
+    <color name="colorMyTransparent">#00000000</color>
+
 </resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/notebook_item_color"
+        android:layout_width="5dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="12dp"
+        android:background="@color/colorMyOrange"/>
+
+    <TextView
+        android:id="@+id/note_item_tv_id"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:textSize="28px"
+        />
+</LinearLayout>
