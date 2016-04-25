@@ -8,7 +8,6 @@ public class EntrySchedule extends Entry {
         super(name);
     }
 
-    private Integer _id = null;
     private String title = null;
     private String annotation = null;
     private String date_create = null;
@@ -20,13 +19,6 @@ public class EntrySchedule extends Entry {
     private String date_alert = null;
     private String location = null;
 
-    public Integer get_id() {
-        return _id;
-    }
-
-    public void set_id(Integer _id) {
-        this._id = _id;
-    }
 
     public String getTitle() {
         return title;
@@ -106,14 +98,11 @@ public class EntrySchedule extends Entry {
     private MyTime end;
 
     public EntrySchedule(int _id, String name, MyTime start, MyTime end) {
-        this._id=_id;
+        this.id=_id;
         this.name=name;
         this.start=start;
         this.end=end;
 
-    }
-    public int getId(){
-        return _id;
     }
     public MyTime getStart(){
         return this.start;

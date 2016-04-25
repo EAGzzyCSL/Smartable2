@@ -32,7 +32,7 @@
     <color name="colorMyOrange">#FF9800</color>
     <color name="colorMyBlue">#0056FF</color>
     <color name="colorMyPurple">#8000FF</color>
-    <color name="colorMyLine">#dadada</color>
+    <color name="colorMyLine">@color/colorMyActivityBg</color>
     <color name="colorMyActivityBg">#eeeeee</color>
     <color name="colorMyTransparent">#00000000</color>
 
