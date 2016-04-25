@@ -9,6 +9,12 @@ public class Adapter_main_viewPager_kind extends PagerAdapter {
     private String[] pageTitle;
     private int[] titleSort;
 
+    //yu---
+    private OnItemClickListener mListener;//yu---
+    public void setOnItemClickListener(OnItemClickListener mListener) {
+        this.mListener = mListener;
+    }
+
     @Override
     public int getCount() {
         return views.length;
@@ -44,6 +50,12 @@ public class Adapter_main_viewPager_kind extends PagerAdapter {
     public CharSequence getPageTitle(int position) {
 
         return pageTitle[titleSort[position]];
+    }
+
+
+
+    public interface OnItemClickListener<String>{//yu---
+        void onItemClick(int position, String data);
     }
 
 }

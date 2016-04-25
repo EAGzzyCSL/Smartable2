@@ -1,30 +1,33 @@
 package bit.eagzzycsl.smartable2;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.opengl.Visibility;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
+import database.DatabaseManager;
+import entry.EntryDeadLine;
+import entry.EntrySchedule;
+import entry.EntryShortHand;
+import entry.EntryTheseDays;
 import my.MyTime;
+import my.MyUtil;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -46,6 +49,8 @@ public class EditActivity extends AppCompatActivity {
     private LinearLayout linearlayout_remind;
     private LinearLayout linearlayout_location;
     private LinearLayout linearlayout_ddl_expand;
+    private Button edit_done_btn;//yu---
+    private Integer flag_nowWhatPage = 0;//yu---
 
     private android.support.design.widget.AppBarLayout edit_barlayout;
     private android.support.v7.widget.AppCompatTextView textView_startDate;
@@ -73,12 +78,9 @@ public class EditActivity extends AppCompatActivity {
 
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyRed));
         }
-
         myFindView();
         myInit();
         mySetView();
-
-
     }
 
     private void myFindView() {
@@ -100,6 +102,7 @@ public class EditActivity extends AppCompatActivity {
         linearlayout_remind = (LinearLayout) findViewById(R.id.linearlayout_remind);
         linearlayout_location = (LinearLayout) findViewById(R.id.linearlayout_location);
         linearlayout_ddl_expand = (LinearLayout) findViewById(R.id.linearlayout_ddl_expand);
+        edit_done_btn = (Button) findViewById(R.id.edit_done_btn);//yu---
 
         edit_barlayout = (android.support.design.widget.AppBarLayout) findViewById(R.id.edit_barlayout);
         textView_startDate = (android.support.v7.widget.AppCompatTextView) findViewById(R.id.textView_startDate);
@@ -110,11 +113,25 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void myInit() {
+        //yu---预置数据
+//        DatabaseManager.getInstance(EditActivity.this).insertDDL(presetData.testDDL1());
+//        Toast.makeText(EditActivity.this, "成功ye", Toast.LENGTH_SHORT).show();
+
         edit_rbtn1.setSelected(true);
         set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
         edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyOrange));
 
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date_ddl = new Date(timeDDL.getYear() - 1900, timeDDL.getMonth() - 1, timeDDL.getDay(), timeDDL.getHour(), timeDDL.getMinute());//年份要减去1900；月份要注意转换， 1月是0
+
+
         Calendar c = Calendar.getInstance();
+//        Date date2 = c.getTime();
+//        String date2_2 = simpleDateFormat.format(date2);
+//        Log.i("TAG_date2", date2.toString());
+//        Log.i("TAG_date2_2", date2_2);
+
         timeStart = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
         timeEnd = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
         timeDDL = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
@@ -136,7 +153,6 @@ public class EditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//顶部返回按钮
 
-
         edit_radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
@@ -145,17 +161,21 @@ public class EditActivity extends AppCompatActivity {
                 if (checkedId == edit_rbtn1.getId()) {  //速记
                     set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
                     edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyOrange));
+                    flag_nowWhatPage = 0;
                 } else if (checkedId == edit_rbtn2.getId()) { //日程
                     set_layout_visible(View.VISIBLE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE);
                     edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyYellow));
+                    flag_nowWhatPage = 1;
                 } else if (checkedId == edit_rbtn3.getId()) { //这两天
                     set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
                     edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyPurple));
+                    flag_nowWhatPage = 2;
                 } else if (checkedId == edit_rbtn4.getId()) { //DDL
                     set_layout_visible(View.GONE, View.VISIBLE, View.VISIBLE, View.VISIBLE, View.VISIBLE);
                     edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyBlue));
-
+                    flag_nowWhatPage = 3;
                 }
+                Log.i("TAG", flag_nowWhatPage.toString());
             }
         });
 
@@ -167,6 +187,7 @@ public class EditActivity extends AppCompatActivity {
                         .show();
             }
         });
+
         textView_endDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,6 +233,102 @@ public class EditActivity extends AppCompatActivity {
             }
         });
 
+        //yu---
+        //点击确定按钮，绑定事件  edit_done_btn
+        edit_done_btn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Calendar now = Calendar.getInstance();
+
+                Log.i("TAG666", flag_nowWhatPage.toString());
+                switch (flag_nowWhatPage) {
+                    case 0: {//速记
+                        EntryShortHand shortHand = new EntryShortHand(edit_activity_title.getText().toString());
+                            shortHand.setTitle(edit_activity_title.getText().toString());
+                            shortHand.setAnnotation("");
+                            shortHand.setDate_create(simpleDateFormat.format(now.getTime()));
+                            shortHand.setStatus("1");
+                        DatabaseManager.getInstance(EditActivity.this).insertShortHand(shortHand);
+
+                        //跳转到显示界面
+                        //Intent intent = new Intent(EditActivity.this, Fragment_main_smart_classify.class);
+                        //startActivity(intent);
+                        break;
+                    }
+                    case 1: {    //日程
+                        EntrySchedule entrySchedule = new EntrySchedule(edit_activity_title.getText().toString());
+                        entrySchedule.setTitle(edit_activity_title.getText().toString());
+                        entrySchedule.setAnnotation("");//todo 暂时没有数据
+                        entrySchedule.setDate_create(simpleDateFormat.format(now.getTime()));//创建时间
+                        entrySchedule.setStatus("1");//未完成标记
+
+                        String date_begin = simpleDateFormat.format(new Date(timeStart.getYear() - 1900, timeStart.getMonth() - 1, timeStart.getDay(), timeStart.getHour(), timeStart.getMinute()));//年份要减去1900；月份要注意转换， 1月是0
+                        String date_end = simpleDateFormat.format(new Date(timeStart.getYear() - 1900, timeStart.getMonth() - 1, timeStart.getDay(), timeStart.getHour(), timeStart.getMinute()));//年份要减去1900；月份要注意转换， 1月是0
+
+                        entrySchedule.setDate_begin(date_begin);
+                        entrySchedule.setDate_end(date_end);
+                        if (edit_remind_picker.getText().toString().equals("不提醒")) { //判断是否有提醒时间
+                            entrySchedule.setAlert("0");
+                        } else {
+                            entrySchedule.setAlert("1");//提醒标记
+                            try {
+                                entrySchedule.setDate_alert(MyUtil.getAlertTime(date_begin, edit_remind_picker.getText().toString()));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        entrySchedule.setLocation(edit_location_et.getText().toString());
+
+                        DatabaseManager.getInstance(EditActivity.this).insertSchedule(entrySchedule);
+                        Toast.makeText(EditActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case 2: {    //这两天
+                        EntryTheseDays theseDays = new EntryTheseDays(edit_activity_title.getText().toString());
+                            theseDays.setTitle(edit_activity_title.getText().toString());
+                            theseDays.setAnnotation("");
+                            theseDays.setDate_create(simpleDateFormat.format(now.getTime()));
+                            theseDays.setStatus("1");
+                        DatabaseManager.getInstance(EditActivity.this).insertTheseDays(theseDays);
+                        Toast.makeText(EditActivity.this, "成功", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                    case 3: {    // DDL
+
+                        EntryDeadLine ddl = new EntryDeadLine(edit_activity_title.getText().toString());
+                            ddl.setTitle(edit_activity_title.getText().toString());
+                            ddl.setAnnotation("");//todo 暂时没有数据
+                            ddl.setDate_create(simpleDateFormat.format(now.getTime()));//创建时间
+                            ddl.setStatus("1");//未完成标记
+
+                        String date_ddl = simpleDateFormat.format(new Date(timeDDL.getYear() - 1900, timeDDL.getMonth() - 1, timeDDL.getDay(), timeDDL.getHour(), timeDDL.getMinute()));//年份要减去1900；月份要注意转换， 1月是0
+                        if (edit_remind_picker.getText().toString().equals("不提醒")) { //判断是否有提醒时间
+                            ddl.setAlert("0");
+                        } else {
+                            ddl.setAlert("1");//提醒标记
+                            try {
+                               ddl.setDate_alert(MyUtil.getAlertTime(date_ddl, edit_remind_picker.getText().toString()));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                            ddl.setLocation(edit_location_et.getText().toString());
+
+                            ddl.setDate_ddl(date_ddl);//截止时间
+                            ddl.setTodo_numbers(Integer.valueOf(edit_ddl_expand_et.getText().toString()));//准备做几次
+                            ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
+
+                        DatabaseManager.getInstance(EditActivity.this).insertDDL(ddl);
+                        Toast.makeText(EditActivity.this, "成功", Toast.LENGTH_SHORT).show();
+
+                        //todo 判断是否有分几次，每次多长时间
+                        break;
+                    }
+                    default:
+                        Log.i("TAG666", flag_nowWhatPage.toString());
+                }
+            }
+        });
 
     }
 
@@ -308,4 +425,6 @@ public class EditActivity extends AppCompatActivity {
         remindDialog.show();
 
     }
+
+
 }
