@@ -5,13 +5,22 @@ package entry;
  */
 public abstract class Entry {
     protected String name;
-    private int id;
+    protected int id;
 
     public Entry(String name) {
         this.name = name;
     }
-    public Entry(){
 
+    public Entry() {
+
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
