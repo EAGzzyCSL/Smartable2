@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -24,10 +25,12 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
 
     //yu---
     private OnItemClickListener mListener;
+
     public void setOnItemClickListener(OnItemClickListener mListener) {
         this.mListener = mListener;
     }
-    public interface OnItemClickListener<String>{
+
+    public interface OnItemClickListener<String> {
         void onItemClick(int position);
     }
 
@@ -47,7 +50,7 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
         holder.setContent(entries.get(position));
 
         final int pos = holder.getLayoutPosition();//待删除
-        if(mListener == null) return;
+        if (mListener == null) return;
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,39 +66,38 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView_name;
-        private TextView colorMyOrange;//速记
-        private TextView colorMyYellow;//日程
-        private TextView colorMyRed;//有朝一日
-        private TextView colorMyPurple;//这两天
-        private TextView colorMyBlue;//DDL
+        private View view_color_indicator;
 
         public ViewHolder(View itemView) {
             super(itemView);
             textView_name = (TextView) itemView.findViewById(R.id.id_num_smart_serialize);
+            view_color_indicator = itemView.findViewById(R.id.view_color_indicator);
 
-            colorMyOrange = (TextView) itemView.findViewById(R.id.colorMyOrange);
-            colorMyYellow = (TextView) itemView.findViewById(R.id.colorMyYellow);
-            colorMyRed = (TextView) itemView.findViewById(R.id.colorMyRed);
-            colorMyPurple = (TextView) itemView.findViewById(R.id.colorMyPurple);
-            colorMyBlue = (TextView) itemView.findViewById(R.id.colorMyBlue);
         }
 
         public void setContent(final Entry entry) {
             textView_name.setText(entry.getName());
-            if(entry instanceof EntryShortHand){
-                colorMyOrange.setVisibility(View.VISIBLE);
-            }
-            else if(entry instanceof EntrySchedule){
-                colorMyYellow.setVisibility(View.VISIBLE);
-            }
-            else if(entry instanceof EntrySomeDay){
-                colorMyRed.setVisibility(View.VISIBLE);
-            }
-            else if(entry instanceof EntryTheseDays){
-                colorMyPurple.setVisibility(View.VISIBLE);
-            }
-            else if(entry instanceof EntryDeadLine){
-                colorMyBlue.setVisibility(View.VISIBLE);
+            textView_name.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, entry.getName()+"/"+entry.getId(), Toast.LENGTH_SHORT).show();
+                }
+            });
+            if (entry instanceof EntryShortHand) {
+                view_color_indicator.setBackgroundColor(
+                        context.getResources().getColor(R.color.colorMyOrange));
+            } else if (entry instanceof EntrySchedule) {
+                view_color_indicator.setBackgroundColor(
+                        context.getResources().getColor(R.color.colorMyYellow));
+            } else if (entry instanceof EntrySomeDay) {
+                view_color_indicator.setBackgroundColor(
+                        context.getResources().getColor(R.color.colorMyRed));
+            } else if (entry instanceof EntryTheseDays) {
+                view_color_indicator.setBackgroundColor(
+                        context.getResources().getColor(R.color.colorMyPurple));
+            } else if (entry instanceof EntryDeadLine) {
+                view_color_indicator.setBackgroundColor(
+                        context.getResources().getColor(R.color.colorMyBlue));
             }
         }
     }

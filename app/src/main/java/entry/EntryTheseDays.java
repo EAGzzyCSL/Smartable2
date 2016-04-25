@@ -8,19 +8,11 @@ public class EntryTheseDays extends Entry {
         super(name);
     }
 
-    private Integer _id = null;
     private String title = null;
     private String annotation = null;
     private String date_create = null;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）
 
-    public Integer get_id() {
-        return _id;
-    }
-
-    public void set_id(Integer _id) {
-        this._id = _id;
-    }
 
     public String getTitle() {
         return title;

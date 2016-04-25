@@ -8,7 +8,6 @@ public class EntryDeadLine extends Entry {
         super(name);
     }
 
-    private Integer _id = null;
     private String title = null;
     private String annotation = null;
     private String date_create = null;
@@ -22,13 +21,6 @@ public class EntryDeadLine extends Entry {
     private Integer todo_numbers;//想用几次完成（注意加s）
     private String date_ddl = null;
 
-    public Integer get_id() {
-        return _id;
-    }
-
-    public void set_id(Integer _id) {
-        this._id = _id;
-    }
 
     public String getLocation() {
         return location;
