@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal"
+        >
+
+        <!--左边白框-->
+        <LinearLayout
+            android:layout_weight="10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                />
+        </LinearLayout>
+
+
+        <!--中间部分，vertical-->
+        <LinearLayout
+            android:layout_weight="350"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!--上边白边-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#ffffff"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                >
+                <!--紧接着左部有颜色的竖线,连着几个不同颜色的，最终只能显示一个-->
+                <!--速记-->
+                <TextView
+                    android:id="@+id/colorMyOrange"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:background="@color/colorMyOrange"
+                    android:visibility="gone"
+                    />
+
+                <!--日程-->
+                <TextView
+                    android:id="@+id/colorMyYellow"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:background="@color/colorMyYellow"
+                    android:visibility="gone"
+                    />
+
+                <!--有朝一日-->
+                <TextView
+                    android:id="@+id/colorMyRed"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:background="@color/colorMyRed"
+                    android:visibility="gone"
+                    />
+
+                <!--这两天-->
+                <TextView
+                    android:id="@+id/colorMyPurple"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:background="@color/colorMyPurple"
+                    android:visibility="gone"
+                    />
+
+                <!--DDL-->
+                <TextView
+                    android:id="@+id/colorMyBlue"
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left"
+                    android:background="@color/colorMyBlue"
+                    android:visibility="gone"
+                    />
+                <!--中间内容-->
+                <TextView
+                    android:id="@+id/id_num_smart_serialize"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="1"
+                    />
+            </LinearLayout>
+
+
+            <!--下边白边-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#ffffff"/>
+
+            <!--边框线-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#eeeeee"
+                />
+
+
+        </LinearLayout>
+        
+
+
+        <!--右边的白边-->
+        <LinearLayout
+            android:layout_weight="10"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>

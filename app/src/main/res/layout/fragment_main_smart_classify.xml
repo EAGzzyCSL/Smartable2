@@ -25,20 +25,29 @@
             android:id="@+id/viewPager_kind"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#1e90ff" />
+            android:background="#ffffff" />
     </LinearLayout>
 
+    <!--主页背景色-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00ff00"
-        android:elevation="20dp">
+        android:background="#ffffff"
+        android:elevation="40dp">
 
-        <Button
+        <!--<Button
             android:id="@+id/button_test"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="点这儿看通知" />
+            android:text="点这儿看通知" />-->
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/id_smart_latest"
+            android:divider="#ffff0000"
+            android:dividerHeight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
     </LinearLayout>
 

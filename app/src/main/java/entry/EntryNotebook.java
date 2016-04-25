@@ -1,13 +1,12 @@
 package entry;
 
 /**
- * Created by EAGzzyCSL on 2016/2/11.
+ * Created by 宇 on 2016/3/12.
  */
-public class EntrySomeDay extends Entry {
-    public EntrySomeDay(String name) {
+public class EntryNotebook extends Entry{
+    public EntryNotebook(String name) {
         super(name);
     }
-
     private Integer _id;
     private String title;
     private String annotation;
@@ -18,52 +17,6 @@ public class EntrySomeDay extends Entry {
     private Integer create_day;
     private Integer create_hour;
     private Integer create_minute;
-
-    private Integer alert_year;
-    private Integer alert_month;
-    private Integer alert_day;
-    private Integer alert_hour;
-    private Integer alert_minute;
-
-    public Integer getAlert_year() {
-        return alert_year;
-    }
-
-    public void setAlert_year(Integer alert_year) {
-        this.alert_year = alert_year;
-    }
-
-    public Integer getAlert_month() {
-        return alert_month;
-    }
-
-    public void setAlert_month(Integer alert_month) {
-        this.alert_month = alert_month;
-    }
-
-    public Integer getAlert_day() {
-        return alert_day;
-    }
-
-    public void setAlert_day(Integer alert_day) {
-        this.alert_day = alert_day;
-    }
-
-    public Integer getAlert_hour() {
-        return alert_hour;
-    }
-
-    public void setAlert_hour(Integer alert_hour) {
-        this.alert_hour = alert_hour;
-    }
-
-    public Integer getAlert_minute() {
-        return alert_minute;
-    }
-
-    public void setAlert_minute(Integer alert_minute) {
-        this.alert_minute = alert_minute;
-    }
 
     public Integer get_id() {
         return _id;
