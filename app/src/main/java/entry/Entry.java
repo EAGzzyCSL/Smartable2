@@ -1,9 +1,13 @@
 package entry;
 
+import java.io.Serializable;
+
 /**
  * Created by EAGzzyCSL on 2016/2/11.
+ *
  */
-public abstract class Entry {
+//lily,略作修改:implements Serializable,为了能在页面间传递entry
+public abstract class Entry implements Serializable {
     protected String name;
     protected int id;
 

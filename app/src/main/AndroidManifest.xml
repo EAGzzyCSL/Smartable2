@@ -35,6 +35,8 @@
             android:name=".NoteBookDetailActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
+        <activity android:name=".ModifyDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
