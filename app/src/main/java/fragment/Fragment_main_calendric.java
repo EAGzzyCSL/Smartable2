@@ -11,10 +11,18 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import adapter.Adapter_view_calendric;
 import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.R;
+import entry.Entry;
+import entry.EntrySchedule;
+import my.MyDate;
+import my.MyTime;
 import view.CalendricView;
+import view.CalendricViewItemProvider;
+import view.EnumCalendricViewType;
 
 
 public class Fragment_main_calendric extends Fragment {
@@ -56,11 +64,25 @@ public class Fragment_main_calendric extends Fragment {
     }
 
     private void myCreate() {
-        adapter_view_calendric = new Adapter_view_calendric(this.getActivity(), null);
+        adapter_view_calendric = new Adapter_view_calendric(this.getActivity(),
+                EnumCalendricViewType.Day,
+                new CalendricViewItemProvider() {
+                    @Override
+                    public ArrayList<EntrySchedule> readFromDatabase(int i) {
+                        return new ArrayList<EntrySchedule>() {
+                            {
+                                this.add(new EntrySchedule(1, "3:00-8:00", new MyTime(3, 0), new MyTime(8, 0)));
+
+                            }
+                        };
+                    }
+                }
+        );
     }
 
     private void mySetView() {
         calendricView_day.setAdapter(adapter_view_calendric);
+        calendricView_day.setFirstDay(new MyDate(2016,4,29));
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
