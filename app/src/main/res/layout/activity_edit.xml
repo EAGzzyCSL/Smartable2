@@ -62,7 +62,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="fill_parent"
-                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:paddingStart="@dimen/activity_horizontal_margin"
+                    android:paddingEnd="@dimen/activity_horizontal_margin"
                     android:orientation="vertical"
                     android:paddingBottom="40dp"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -72,7 +73,8 @@
                         android:layout_height="wrap_content"
                         android:divider="@drawable/shape_divider"
                         android:orientation="vertical"
-                        android:showDividers="end">
+                        android:showDividers="end"
+                        android:id="@+id/linearlaayout_rbtngroup">
 
                         <RadioGroup
                             android:id="@+id/edit_radioGroup"
@@ -336,6 +338,12 @@
                                 android:text="min" />
                         </LinearLayout>
                     </LinearLayout>
+                    <Button
+                        android:id="@+id/btn_modify_delete"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="删除"/>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
@@ -346,7 +354,8 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp">
+            android:paddingRight="20dp"
+            android:id="@+id/linearlayout_aboveKey">
 
             <Button
                 android:id="@+id/edit_to_schedule_btn"

@@ -1,6 +1,9 @@
 package entry;
 
+import android.content.ContentValues;
+
 import my.MyTime;
+import my.TableFiled;
 
 public class EntrySchedule extends Entry {
 
@@ -90,6 +93,21 @@ public class EntrySchedule extends Entry {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public ContentValues toContentValues(EntrySchedule entrySchedule){
+        ContentValues cv = new ContentValues();
+        cv.put(TableFiled.TITLE, entrySchedule.getTitle());
+        cv.put(TableFiled.ANNOTATION, entrySchedule.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, entrySchedule.getDate_create());
+        cv.put(TableFiled.STATUS, entrySchedule.getStatus());
+
+        cv.put(TableFiled.DATE_begin, entrySchedule.getDate_begin());
+        cv.put(TableFiled.DATE_end, entrySchedule.getDate_end());
+        cv.put(TableFiled.ALERT, entrySchedule.getAlert());
+        cv.put(TableFiled.DATE_alert, entrySchedule.getDate_alert());
+        cv.put(TableFiled.LOCATION, entrySchedule.getLocation());
+        return cv;
     }
 
     //以下是赵仲印写的-为了测试
