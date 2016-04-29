@@ -1,5 +1,9 @@
 package entry;
 
+import android.content.ContentValues;
+
+import my.TableFiled;
+
 /**
  * Created by EAGzzyCSL on 2016/2/11.
  */
@@ -63,5 +67,17 @@ public class EntryShortHand extends Entry {
 
     public void setDate_upper(String date_upper) {
         this.date_upper = date_upper;
+    }
+
+    public ContentValues toContentValues(EntryShortHand shortHand){
+        ContentValues cv = new ContentValues();
+        cv.put(TableFiled.TITLE, shortHand.getTitle());
+        cv.put(TableFiled.ANNOTATION, shortHand.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, shortHand.getDate_create());
+        cv.put(TableFiled.STATUS, shortHand.getStatus());
+
+        cv.put(TableFiled.IS_UPPER, shortHand.getIsUpper());
+        cv.put(TableFiled.DATE_upper, shortHand.getDate_upper());
+        return cv;
     }
 }
