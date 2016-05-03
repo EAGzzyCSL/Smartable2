@@ -280,7 +280,6 @@ public class EditActivity extends AppCompatActivity {
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
                         DatabaseManager.getInstance(EditActivity.this).insertSchedule(entrySchedule);
-                        Toast.makeText(EditActivity.this, "成功", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 2: {    //这两天
@@ -290,7 +289,6 @@ public class EditActivity extends AppCompatActivity {
                             theseDays.setDate_create(simpleDateFormat.format(now.getTime()));
                             theseDays.setStatus("1");
                         DatabaseManager.getInstance(EditActivity.this).insertTheseDays(theseDays);
-                        Toast.makeText(EditActivity.this, "成功", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case 3: {    // DDL
@@ -319,13 +317,12 @@ public class EditActivity extends AppCompatActivity {
                             ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
 
                         DatabaseManager.getInstance(EditActivity.this).insertDDL(ddl);
-                        Toast.makeText(EditActivity.this, "成功", Toast.LENGTH_SHORT).show();
 
                         //todo 判断是否有分几次，每次多长时间
                         break;
                     }
                     default:
-                        Log.i("TAG666", flag_nowWhatPage.toString());
+                        Toast.makeText(EditActivity.this, "成功", Toast.LENGTH_SHORT).show();
                 }
             }
         });
