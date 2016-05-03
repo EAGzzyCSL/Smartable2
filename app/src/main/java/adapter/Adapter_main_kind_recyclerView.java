@@ -1,15 +1,20 @@
 package adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import bit.eagzzycsl.smartable2.ModifyDetailActivity;
 import bit.eagzzycsl.smartable2.R;
 import entry.Entry;
 import entry.EntryDeadLine;
@@ -67,12 +72,12 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView_name;
         private View view_color_indicator;
-
+        private LinearLayout ll_item_smart_serialize;//lily
         public ViewHolder(View itemView) {
             super(itemView);
             textView_name = (TextView) itemView.findViewById(R.id.id_num_smart_serialize);
             view_color_indicator = itemView.findViewById(R.id.view_color_indicator);
-
+            ll_item_smart_serialize = (LinearLayout)itemView.findViewById(R.id.ll_item_smart_serialize);
         }
 
         public void setContent(final Entry entry) {
@@ -80,7 +85,14 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
             textView_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, entry.getName()+"/"+entry.getId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, entry.getName() +"/"+ entry.getId(), Toast.LENGTH_SHORT).show();
+                    to_ModifyDetail_click(ll_item_smart_serialize,entry);
+                }
+            });
+            ll_item_smart_serialize.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    to_ModifyDetail_click(ll_item_smart_serialize,entry);
                 }
             });
             if (entry instanceof EntryShortHand) {
@@ -99,6 +111,21 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
                 view_color_indicator.setBackgroundColor(
                         context.getResources().getColor(R.color.colorMyBlue));
             }
+
+
         }
+    }
+
+    /**
+     * 跳转到编辑页面lily
+     * ps:两个地方用到这个函数是因为textView_name的点击事件会把ll_item_smart_serialize的点击事件吞掉
+     */
+    public void to_ModifyDetail_click(View view, Entry entry){
+        Activity currentActivity = (Activity) view.getContext();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("entry", entry);
+        Intent intent = new Intent(currentActivity, ModifyDetailActivity.class);
+        intent.putExtras(bundle);
+        currentActivity.startActivity(intent);
     }
 }

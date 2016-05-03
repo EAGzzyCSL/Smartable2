@@ -12,9 +12,10 @@ import java.util.ArrayList;
 
 import bit.eagzzycsl.smartable2.R;
 import entry.EntrySchedule;
+import my.MyDate;
 
 
-public class CalendricCombineDayView extends FrameLayout {
+public class CalendricCombineDayView extends FrameLayout implements CalendricPagerView {
     private TextView textView_showDay;
     private CalendricSimpleDayView calendricSimpleDayView;
     private ScrollView scrollView;
@@ -28,21 +29,15 @@ public class CalendricCombineDayView extends FrameLayout {
     }
 
 
-    public ArrayList<EntrySchedule> schedules;
+    private ArrayList<EntrySchedule> schedules;
 
-    public void setEntrySchedule(ArrayList<EntrySchedule> schedules) {
+    public void setEntrySchedule(MyDate date, ArrayList<EntrySchedule> schedules) {
         this.schedules = schedules;
         calendricSimpleDayView.setBussiness(schedules);
+        textView_showDay.setText(date.getDay() + "");
 
     }
 
-    public ArrayList<EntrySchedule> getEnetrySchedule() {
-        return this.schedules;
-    }
-
-    public void setTextView_showDay(String text) {
-        textView_showDay.setText(text);
-    }
 
     public int myGetScroll() {
         return scrollView.getScrollY();
