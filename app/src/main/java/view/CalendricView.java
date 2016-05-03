@@ -6,17 +6,24 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
 import java.util.Calendar;
-import java.util.LinkedList;
 
 import adapter.Adapter_view_calendric;
-import test.ScheduleCaseProvider;
+import my.MyDate;
 
 
 public class CalendricView extends ViewPager {
-    private Calendar viewCalendar;//不管按月看按日看都使用同一个calendar
-
+    private Calendar viewCalendar;//一个日历，用来表计三张视图中第一张的起始日期
+    /*adapter负责提供数据，日供日历的加减，adapter的数据从item提供器获取，pager提供根据指定日期更新内容的方法*/
+    private Adapter_view_calendric myAdapter;
     private Context context;
-    private LinkedList<CalendricCombineDayView> pagers;
+
+    public void setFirstDay(MyDate date) {
+        viewCalendar.set(Calendar.YEAR, date.getYear());
+        viewCalendar.set(Calendar.MONTH, date.getMonth());
+        viewCalendar.set(Calendar.DAY_OF_MONTH, date.getDay());
+        pagerUpdate();
+    }
+
     private OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
         private boolean haveScrolled = false;//是否已经滚动
         private int scrolledIndex;
@@ -24,9 +31,10 @@ public class CalendricView extends ViewPager {
         @Override
         public void onPageScrolled(int i, float v, int i1) {
             /*同步滚动*/
-            int scrollY = pagers.get(1).myGetScroll();
-            pagers.get(2).mySetScroll(scrollY);
-            pagers.get(0).mySetScroll(scrollY);
+            int scrollY = myAdapter.getPage_b().myGetScroll();
+            myAdapter.getPage_a().mySetScroll(scrollY);
+            myAdapter.getPage_c().mySetScroll(scrollY);
+
         }
 
         @Override
@@ -38,13 +46,13 @@ public class CalendricView extends ViewPager {
             if (position == 0) {
                 haveScrolled = true;
                 scrolledIndex = 0;
-                viewCalendar.add(Calendar.DAY_OF_MONTH, -1);
+                viewCalendar.add(Calendar.DAY_OF_MONTH, -1 * myAdapter.getEnumViewType().getDiv());
                 /*calendar还有一个roll方法也可以增加日期，但是roll的年月日不会同步，即31号加到1号时月不会加1*/
             }
             if (position == 2) {
                 scrolledIndex = 2;
                 haveScrolled = true;
-                viewCalendar.add(Calendar.DAY_OF_MONTH, 1);
+                viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
             }
         }
 
@@ -54,8 +62,7 @@ public class CalendricView extends ViewPager {
              * 1：Indicates that the pager is currently being dragged by the user.
              * 2：Indicates that the pager is in the process of settling to a final position.
              * 0：Indicates that the pager is in an idle, settled state. The current page is fully in view and no animation is in progress.
-             */
-            /**
+             *
              * （翻译自我，仅供参考）
              * 页面在滑动的时候正状态的变化的值（i）依次为：1，2，0
              * 1表示正在滑动，2表示将要选定一个位置，应该是发生在当滑动页面使下一个view足够的部分进入屏幕时pager就会把这个页面设为将要进入的页面
@@ -74,26 +81,34 @@ public class CalendricView extends ViewPager {
 
         private void updatePage() {
             /*原来采用重新加载view的做法，现在采用将view中的内容替换的方法*/
-            switch (scrolledIndex) {
-                case 2:
-                    pagers.get(0).setEntrySchedule(pagers.get(1).schedules);
-                    pagers.get(1).setEntrySchedule(pagers.get(2).schedules);
-                    pagers.get(2).setEntrySchedule(ScheduleCaseProvider.getSchedule(viewCalendar.get(Calendar.DAY_OF_MONTH) + 1));
-                    break;
-                case 0:
-                    pagers.get(2).setEntrySchedule(pagers.get(1).schedules);
-                    pagers.get(1).setEntrySchedule(pagers.get(0).schedules);
-                    pagers.get(2).setEntrySchedule(ScheduleCaseProvider.getSchedule(viewCalendar.get(Calendar.DAY_OF_MONTH) - 1));
-                    break;
+            if (scrolledIndex == 2 || scrolledIndex == 0) {
+                pagerUpdate();
             }
-            pagers.get(0).setTextView_showDay(viewCalendar.get(Calendar.DAY_OF_MONTH) - 1 + "");
-            pagers.get(1).setTextView_showDay(viewCalendar.get(Calendar.DAY_OF_MONTH) + "");
-            pagers.get(2).setTextView_showDay(viewCalendar.get(Calendar.DAY_OF_MONTH) + 1 + "");
-            getAdapter().notifyDataSetChanged();
             CalendricView.this.setCurrentItem(1, false);
 
         }
     };
+
+    private void pagerUpdate() {
+        //日历的加减早在pager滚动的时候就完成了，这里只需要负责日历增加产生新的时间传一下再把日历reset了就好
+
+        /*page_a*/
+        myAdapter.getPage_a().setEntrySchedule(MyDate.fromCalendar(viewCalendar),
+                myAdapter.getScheduleFromItemProvider());
+        viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
+        /*page_b*/
+        myAdapter.getPage_b().setEntrySchedule(MyDate.fromCalendar(
+                viewCalendar
+        ), myAdapter.getScheduleFromItemProvider());
+        viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
+        /*page_c*/
+        myAdapter.getPage_c().setEntrySchedule(MyDate.fromCalendar(
+                viewCalendar
+        ), myAdapter.getScheduleFromItemProvider());
+        /*reset calendar and notify data change*/
+        viewCalendar.add(Calendar.DAY_OF_MONTH, -2 * myAdapter.getEnumViewType().getDiv());
+        myAdapter.notifyDataSetChanged();
+    }
 
     public CalendricView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -114,7 +129,7 @@ public class CalendricView extends ViewPager {
     @Override
     public void setAdapter(PagerAdapter adapter) {
         super.setAdapter(adapter);
+        this.myAdapter = (Adapter_view_calendric) adapter;
         setCurrentItem(1, false);
-        this.pagers = ((Adapter_view_calendric) adapter).getMySimpleByDayViews();
     }
 }

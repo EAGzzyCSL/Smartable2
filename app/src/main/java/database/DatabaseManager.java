@@ -1,6 +1,5 @@
 package database;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -42,19 +41,7 @@ public class DatabaseManager extends Entry implements TableFiled {
 
     //1.1 日程-增 4.19
     public void insertSchedule(EntrySchedule entrySchedule) {
-        ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, entrySchedule.getTitle());
-        cv.put(TableFiled.ANNOTATION, entrySchedule.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, entrySchedule.getDate_create());
-        cv.put(TableFiled.STATUS, entrySchedule.getStatus());
-
-        cv.put(TableFiled.DATE_begin, entrySchedule.getDate_begin());
-        cv.put(TableFiled.DATE_end, entrySchedule.getDate_end());
-        cv.put(TableFiled.ALERT, entrySchedule.getAlert());
-        cv.put(TableFiled.DATE_alert, entrySchedule.getDate_alert());
-        cv.put(TableFiled.LOCATION, entrySchedule.getLocation());
-
-        sqLiteDatabase.insert("Schedule", null, cv);
+        sqLiteDatabase.insert("Schedule", null, entrySchedule.toContentValues(entrySchedule));
     }
 
     //1.2 日程-查
@@ -63,10 +50,19 @@ public class DatabaseManager extends Entry implements TableFiled {
 
         Cursor c = sqLiteDatabase.rawQuery("select * from Schedule order by date_create desc", null);
         if (c.moveToFirst()) {
-            do {
+            do{
                 EntrySchedule entrySchedule = new EntrySchedule(c.getString(c.getColumnIndex(TableFiled.TITLE)));
                 entrySchedule.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
+                entrySchedule.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
+                entrySchedule.setAnnotation(c.getString(c.getColumnIndex(TableFiled.ANNOTATION)));
                 entrySchedule.setDate_create(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE)));
+                entrySchedule.setStatus(c.getString(c.getColumnIndex(TableFiled.STATUS)));
+
+                entrySchedule.setDate_begin(c.getString(c.getColumnIndex(TableFiled.DATE_begin)));
+                entrySchedule.setDate_end(c.getString(c.getColumnIndex(TableFiled.DATE_end)));
+                entrySchedule.setAlert(c.getString(c.getColumnIndex(TableFiled.DATE_alert)));
+                entrySchedule.setDate_alert(c.getString(c.getColumnIndex(TableFiled.DATE_alert)));
+                entrySchedule.setLocation(c.getString(c.getColumnIndex(TableFiled.LOCATION)));
                 ScheduleList.add(entrySchedule);
             } while (c.moveToNext());
         }
@@ -77,12 +73,7 @@ public class DatabaseManager extends Entry implements TableFiled {
 
     //2.1 这两天-增 4.19
     public void insertTheseDays(EntryTheseDays entryTheseDays) {
-        ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, entryTheseDays.getTitle());
-        cv.put(TableFiled.ANNOTATION, entryTheseDays.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, entryTheseDays.getDate_create());
-        cv.put(TableFiled.STATUS, entryTheseDays.getStatus());
-        sqLiteDatabase.insert("TheseDays", null, cv);
+        sqLiteDatabase.insert("TheseDays", null, entryTheseDays.toContentValues(entryTheseDays));
     }
 
     //2.2 这两天-查
@@ -91,11 +82,12 @@ public class DatabaseManager extends Entry implements TableFiled {
 
         Cursor c = sqLiteDatabase.rawQuery("select * from TheseDays order by date_create desc", null);
         if (c.moveToFirst()) {
-            do {
+            do{
                 EntryTheseDays entryTheseDays = new EntryTheseDays(c.getString(c.getColumnIndex(TITLE)));
                 entryTheseDays.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
+                entryTheseDays.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
                 entryTheseDays.setDate_create(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE)));
-//                entryTheseDays.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
+                entryTheseDays.setStatus(c.getString(c.getColumnIndex(TableFiled.STATUS)));
                 TheseDaysList.add(entryTheseDays);
             } while (c.moveToNext());
         }
@@ -106,21 +98,7 @@ public class DatabaseManager extends Entry implements TableFiled {
 
     //3.1 DDL-增 4.19
     public void insertDDL(EntryDeadLine entryDeadLine) {
-        ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, entryDeadLine.getTitle());
-        cv.put(TableFiled.ANNOTATION, entryDeadLine.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, entryDeadLine.getDate_create());
-        cv.put(TableFiled.STATUS, entryDeadLine.getStatus());
-
-        cv.put(TableFiled.ALERT, entryDeadLine.getAlert());
-        cv.put(TableFiled.DATE_alert, entryDeadLine.getDate_alert());
-        cv.put(TableFiled.LOCATION, entryDeadLine.getLocation());
-
-        cv.put(TableFiled.TODO_DURATION, entryDeadLine.getTodo_duration());
-        cv.put(TableFiled.TODO_NUMBERS, entryDeadLine.getTodo_numbers());
-        cv.put(TableFiled.DATE_ddl, entryDeadLine.getDate_ddl());
-
-        sqLiteDatabase.insert("DDL", null, cv);
+        sqLiteDatabase.insert("DDL", null, entryDeadLine.toContentValues(entryDeadLine));
     }
 
     //3.2 DDL-查
@@ -129,11 +107,22 @@ public class DatabaseManager extends Entry implements TableFiled {
 
         Cursor c = sqLiteDatabase.rawQuery("select * from DDL order by date_create desc", null);
         if (c.moveToFirst()) {
-            do {
+            do{
                 EntryDeadLine entryDeadLine = new EntryDeadLine(c.getString(c.getColumnIndex(TableFiled.TITLE)));
                 entryDeadLine.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
+                entryDeadLine.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
+                entryDeadLine.setAnnotation(c.getString(c.getColumnIndex(TableFiled.ANNOTATION)));
                 entryDeadLine.setDate_create(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE)));
-//                entryDeadLine.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
+                entryDeadLine.setStatus(c.getString(c.getColumnIndex(TableFiled.STATUS)));
+
+                entryDeadLine.setAlert(c.getString(c.getColumnIndex(TableFiled.DATE_alert)));
+                entryDeadLine.setDate_alert(c.getString(c.getColumnIndex(TableFiled.DATE_alert)));
+                entryDeadLine.setLocation(c.getString(c.getColumnIndex(TableFiled.LOCATION)));
+
+                entryDeadLine.setTodo_duration(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.TODO_DURATION))));
+                entryDeadLine.setTodo_numbers(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.TODO_NUMBERS))));
+                entryDeadLine.setDate_ddl(c.getString(c.getColumnIndex(TableFiled.DATE_ddl)));
+
                 DDLList.add(entryDeadLine);
             } while (c.moveToNext());
         }
@@ -168,15 +157,7 @@ public class DatabaseManager extends Entry implements TableFiled {
 
     //5.1 速记-增  4.19
     public void insertShortHand(EntryShortHand shortHand) {
-        ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, shortHand.getTitle());
-        cv.put(TableFiled.ANNOTATION, shortHand.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, shortHand.getDate_create());
-        cv.put(TableFiled.STATUS, shortHand.getStatus());
-
-        cv.put(TableFiled.IS_UPPER, shortHand.getIsUpper());
-        cv.put(TableFiled.DATE_upper, shortHand.getDate_upper());
-        sqLiteDatabase.insert("ShortHand", null, cv);
+        sqLiteDatabase.insert("ShortHand", null, shortHand.toContentValues(shortHand));
     }
 
     //5.2 速记-查询
@@ -184,14 +165,17 @@ public class DatabaseManager extends Entry implements TableFiled {
         ArrayList<Entry> shortHandList = new ArrayList<>();
 
         Cursor c = sqLiteDatabase.rawQuery("select * from ShortHand order by date_create desc", null);
-        int i = 0;
         if (c.moveToFirst()) {
             do {
                 EntryShortHand entryShortHand = new EntryShortHand(c.getString(c.getColumnIndex(TableFiled.TITLE)));
                 entryShortHand.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
+                entryShortHand.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
+                entryShortHand.setAnnotation(c.getString(c.getColumnIndex(TableFiled.ANNOTATION)));
                 entryShortHand.setDate_create(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE)));
+                entryShortHand.setStatus(c.getString(c.getColumnIndex(TableFiled.STATUS)));
+
+                entryShortHand.setIsUpper(c.getString(c.getColumnIndex(TableFiled.DATE_upper)));
                 shortHandList.add(entryShortHand);
-                //shortHandList.add(c.getString(c.getColumnIndex(TableFiled.TITLE))); //返回String时，用这个
             } while (c.moveToNext());
         }
         c.close();

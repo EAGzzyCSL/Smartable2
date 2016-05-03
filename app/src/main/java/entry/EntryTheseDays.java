@@ -1,5 +1,9 @@
 package entry;
 
+import android.content.ContentValues;
+
+import my.TableFiled;
+
 /**
  * Created by EAGzzyCSL on 2016/2/11.
  */
@@ -44,5 +48,14 @@ public class EntryTheseDays extends Entry {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public ContentValues toContentValues(EntryTheseDays entryTheseDays){
+        ContentValues cv = new ContentValues();
+        cv.put(TableFiled.TITLE, entryTheseDays.getTitle());
+        cv.put(TableFiled.ANNOTATION, entryTheseDays.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, entryTheseDays.getDate_create());
+        cv.put(TableFiled.STATUS, entryTheseDays.getStatus());
+        return cv;
     }
 }

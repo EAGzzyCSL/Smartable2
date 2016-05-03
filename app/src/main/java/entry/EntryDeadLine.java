@@ -1,5 +1,9 @@
 package entry;
 
+import android.content.ContentValues;
+
+import my.TableFiled;
+
 /**
  * Created by EAGzzyCSL on 2016/2/11.
  */
@@ -100,5 +104,22 @@ public class EntryDeadLine extends Entry {
 
     public void setDate_ddl(String date_ddl) {
         this.date_ddl = date_ddl;
+    }
+
+    public ContentValues toContentValues(EntryDeadLine entryDeadLine){
+        ContentValues cv = new ContentValues();
+        cv.put(TableFiled.TITLE, entryDeadLine.getTitle());
+        cv.put(TableFiled.ANNOTATION, entryDeadLine.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, entryDeadLine.getDate_create());
+        cv.put(TableFiled.STATUS, entryDeadLine.getStatus());
+
+        cv.put(TableFiled.ALERT, entryDeadLine.getAlert());
+        cv.put(TableFiled.DATE_alert, entryDeadLine.getDate_alert());
+        cv.put(TableFiled.LOCATION, entryDeadLine.getLocation());
+
+        cv.put(TableFiled.TODO_DURATION, entryDeadLine.getTodo_duration());
+        cv.put(TableFiled.TODO_NUMBERS, entryDeadLine.getTodo_numbers());
+        cv.put(TableFiled.DATE_ddl, entryDeadLine.getDate_ddl());
+        return cv;
     }
 }
