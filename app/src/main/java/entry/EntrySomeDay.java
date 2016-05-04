@@ -1,11 +1,18 @@
 package entry;
 
+import android.content.ContentValues;
+
 /**
  * Created by EAGzzyCSL on 2016/2/11.
  */
 public class EntrySomeDay extends Entry {
     public EntrySomeDay(String name) {
         super(name);
+    }
+
+    @Override
+    public ContentValues toContentValues() {
+        return null;
     }
 
     private String title;

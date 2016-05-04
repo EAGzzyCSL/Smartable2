@@ -50,12 +50,12 @@ public class EntryTheseDays extends Entry {
         this.status = status;
     }
 
-    public ContentValues toContentValues(EntryTheseDays entryTheseDays){
+    public ContentValues toContentValues(){
         ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, entryTheseDays.getTitle());
-        cv.put(TableFiled.ANNOTATION, entryTheseDays.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, entryTheseDays.getDate_create());
-        cv.put(TableFiled.STATUS, entryTheseDays.getStatus());
+        cv.put(TableFiled.TITLE, this.getTitle());
+        cv.put(TableFiled.ANNOTATION, this.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, this.getDate_create());
+        cv.put(TableFiled.STATUS, this.getStatus());
         return cv;
     }
 }

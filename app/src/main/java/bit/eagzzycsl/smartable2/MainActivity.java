@@ -52,9 +52,10 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void mySetView() {
-        drawerLayout.setDrawerListener(toggle);
+
+        drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        if (false) {
+        if (true) {
             /*默认显示*/
             getFragmentManager().beginTransaction().hide(fragment_main_calendric)
                     .commit();
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer != null && drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -130,8 +131,8 @@ public class MainActivity extends AppCompatActivity
                 invalidateOptionsMenu();
                 break;
             }
-            case R.id.nav_kind_note:{
-                startActivity(new Intent(this,NoteBookActivity.class));
+            case R.id.nav_kind_note: {
+                startActivity(new Intent(this, NoteBookActivity.class));
                 break;
             }
         }
