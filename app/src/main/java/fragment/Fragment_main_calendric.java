@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import adapter.Adapter_view_calendric;
 import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.R;
-import entry.Entry;
 import entry.EntrySchedule;
 import my.MyDate;
 import my.MyTime;

@@ -77,7 +77,7 @@ public class Fragment_main_smart_classify extends Fragment {
         viewPager_kind.setAdapter(adapter_main_viewPager_kind);
         tabLayout_kind.setupWithViewPager(viewPager_kind);
         tabLayout_kind.setTabsFromPagerAdapter(adapter_main_viewPager_kind);
-        //yu-------
+//        yu-------
         smart_serilizeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         smart_serilizeRecyclerView.setAdapter(adapter_smart_serialize);
         smart_serilizeRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
@@ -105,9 +105,6 @@ public class Fragment_main_smart_classify extends Fragment {
                 getActivity(),
                 getActivity().getResources().getStringArray(R.array.activity_main_smart_pager_title),
                 sort);
-        smart_serilizeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        smart_serilizeRecyclerView.setAdapter(adapter_smart_serialize);
-        smart_serilizeRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         //数据初始化
         mDatas_smart_serilize = new ArrayList<Entry>() {
             {

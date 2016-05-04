@@ -1,23 +1,31 @@
 package layout;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.support.v4.view.ViewCompat;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
+
+import bit.eagzzycsl.smartable2.R;
 
 
-public class EdgeDrawerLayout extends FrameLayout {
-    /*继承自FrameLayout或者LinearLayout均可*/
+public class EdgeDrawerLayout extends ViewGroup {
     private boolean drawerOpen = false;
     private View drawerView;
     private View mainView;
     private ViewDragHelper myViewDragHelper;
+    private int edgeSize = 20;//所露边边的默认值
 
     public EdgeDrawerLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        if (attrs != null) {
+            TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.edge);
+            edgeSize = ta.getDimensionPixelSize(R.styleable.edge_edgeSize, edgeSize);
+            ta.recycle();
+        }
         myViewDragHelper = ViewDragHelper.create(this, 1.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
@@ -31,11 +39,17 @@ public class EdgeDrawerLayout extends FrameLayout {
                     return false;
                 }
             }
+            /*边界检测，提高灵敏度，不知会不会有用*/
+            @Override
+            public void onEdgeDragStarted(int edgeFlags, int pointerId) {
+                super.onEdgeDragStarted(edgeFlags, pointerId);
+                myViewDragHelper.captureChildView(drawerView, pointerId);
+            }
 
             /*left and top，可以用来限制边界*/
             @Override
             public int clampViewPositionHorizontal(View child, int left, int dx) {
-                return Math.min(Math.max(0, left), mainView.getRight());
+                return Math.min(Math.max(0, left), mainView.getRight() - edgeSize);
             }
 
             @Override
@@ -74,15 +88,15 @@ public class EdgeDrawerLayout extends FrameLayout {
             }
 
 
-            /*目前似乎可有可无*/
+            /*还是不知道该怎么设置，不过可以凑活用*/
             @Override
             public int getViewHorizontalDragRange(View child) {
-                return getMeasuredWidth() - child.getMeasuredWidth();
+                return getMeasuredWidth();
             }
 
             @Override
             public int getViewVerticalDragRange(View child) {
-                return getMeasuredHeight() - child.getMeasuredHeight();
+                return getMeasuredHeight();
             }
 
             /*当位置改变时因着抽屉是开还是关来决定要不要显示mainView*/
@@ -101,78 +115,15 @@ public class EdgeDrawerLayout extends FrameLayout {
                 }
 
             }
+
         });
-    }
-
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        /*自行覆写的measure方法，觉得直接用super方法也行但是实践后不行*/
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        setMeasuredDimension(widthSize, heightSize);
-        mainView = getChildAt(0);
-        drawerView = getChildAt(1);
-        MarginLayoutParams main_lp = (MarginLayoutParams) mainView.getLayoutParams();
-        mainView.measure(
-                getChildMeasureSpec(
-                        widthMeasureSpec,
-                        main_lp.leftMargin + main_lp.rightMargin,
-                        main_lp.width
-                ), getChildMeasureSpec(
-                        heightMeasureSpec,
-                        main_lp.topMargin + main_lp.bottomMargin,
-                        main_lp.height
-                )
-        );
-        MarginLayoutParams drawer_lp = (MarginLayoutParams) drawerView.getLayoutParams();
-        drawerView.measure(getChildMeasureSpec(
-                        widthMeasureSpec,
-                        drawer_lp.leftMargin + drawer_lp.rightMargin,
-                        widthSize
-                ), getChildMeasureSpec(
-                        heightMeasureSpec,
-                        drawer_lp.topMargin + drawer_lp.bottomMargin,
-                        heightSize
-                )
-        );
 
     }
 
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        MarginLayoutParams main_lp = (MarginLayoutParams) mainView.getLayoutParams();
-        mainView.layout(main_lp.leftMargin,
-                main_lp.topMargin,
-                main_lp.leftMargin + mainView.getMeasuredWidth(),
-                main_lp.topMargin + mainView.getMeasuredHeight()
-        );
-        /*fragment切换时导致的主view不可见的暂时解决方案*/
-        if (mainView.getVisibility() == View.INVISIBLE) {
-            mainView.setVisibility(View.VISIBLE);
-        }
-        MarginLayoutParams drawer_lp = (MarginLayoutParams) drawerView.getLayoutParams();
-        /*layout的时候把drawerView lay到对应位置*/
-        drawerView.layout(
-                mainView.getMeasuredWidth(),
-                drawer_lp.topMargin,
-                mainView.getMeasuredWidth() + this.getMeasuredWidth(),
-                drawer_lp.topMargin + drawerView.getMeasuredHeight()
-        );
-
-    }
 
     @Override
-    public void computeScroll() {
-        if (myViewDragHelper.continueSettling(true)) {
-            ViewCompat.postInvalidateOnAnimation(EdgeDrawerLayout.this);
-            invalidate();
-        }
-    }
-
-    @Override
-    public boolean onInterceptHoverEvent(MotionEvent event) {
+    public boolean onInterceptTouchEvent(MotionEvent event) {
         return myViewDragHelper.shouldInterceptTouchEvent(event);
-
     }
 
     @Override
@@ -181,13 +132,63 @@ public class EdgeDrawerLayout extends FrameLayout {
         return true;
     }
 
-
     @Override
-    protected void onFinishInflate() {
-        super.onFinishInflate();
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        /*自行覆写的measure方法，子measure那块还是没弄明白*/
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        setMeasuredDimension(widthSize, heightSize);
+        mainView = getChildAt(0);
+        drawerView = getChildAt(1);
+
+        LayoutParams parent_lp = this.getLayoutParams();
+        mainView.measure(
+                getChildMeasureSpec(
+                        widthMeasureSpec,
+                        0,
+                        parent_lp.width
+                ), getChildMeasureSpec(
+                        heightMeasureSpec,
+                        0,
+                        parent_lp.height
+                )
+        );
+        drawerView.measure(getChildMeasureSpec(
+                widthMeasureSpec,
+                0,
+                parent_lp.width
+                ), getChildMeasureSpec(
+                heightMeasureSpec,
+                0,
+                parent_lp.width
+                )
+        );
 
     }
 
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        mainView = getChildAt(0);
+        drawerView = getChildAt(1);
+        mainView.layout(0,
+                0,
+                this.getMeasuredWidth(),
+                this.getMeasuredHeight()
+        );
+        /*fragment切换时导致的主view不可见的暂时解决方案*/
+        if (mainView.getVisibility() == View.INVISIBLE) {
+            mainView.setVisibility(View.VISIBLE);
+        }
+        /*layout的时候把drawerView lay到对应位置*/
+        drawerView.layout(
+                this.getMeasuredWidth() - edgeSize,
+                0,
+                this.getMeasuredWidth() * 2 - edgeSize,
+                this.getMeasuredHeight()
+        );
+
+
+    }
 
     public void openDrawer() {
 
@@ -198,7 +199,7 @@ public class EdgeDrawerLayout extends FrameLayout {
 
     public void closeDrawer() {
         mainView.setVisibility(View.VISIBLE);
-        myViewDragHelper.smoothSlideViewTo(drawerView, mainView.getRight(), drawerView.getTop());
+        myViewDragHelper.smoothSlideViewTo(drawerView, this.getWidth() - edgeSize, drawerView.getTop());
         drawerOpen = false;
         invalidate();
     }
@@ -216,13 +217,22 @@ public class EdgeDrawerLayout extends FrameLayout {
         }
         return isDrawerOpen();
     }
+
+    @Override
+    public void computeScroll() {
+        if (myViewDragHelper.continueSettling(true)) {
+            ViewCompat.postInvalidateOnAnimation(EdgeDrawerLayout.this);
+            invalidate();
+        }
+    }
 }
 /**
- * measure和layout还需要搞清楚
- * dragHelper一团糟糕
+ * measure和layouts稍微清楚了一些
+ * dragHelper也没有那么糟糕了
  * fragment切换带来的问题
- * 添加自定义属性以避免在mainView中用marginRight进行调整
+ * 已经有自定义属性edgeSize
  * 左边的drawerLayout导致的问题依然存在，成因大概可以猜测，但目前无法修复
  * 还是必须要设置被覆盖的主view未invisible才能避免它捕捉事件
- * 在4.4下居然会崩溃。。。
+ * 在4.4下还是会崩溃。。。
+ * 和右侧drawer的内部控件捕捉事件的冲突解决
  */

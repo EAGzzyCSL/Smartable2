@@ -1,10 +1,11 @@
 package entry;
 
+import android.content.ContentValues;
+
 import java.io.Serializable;
 
 /**
  * Created by EAGzzyCSL on 2016/2/11.
- *
  */
 //lily,略作修改:implements Serializable,为了能在页面间传递entry
 public abstract class Entry implements Serializable {
@@ -67,5 +68,7 @@ public abstract class Entry implements Serializable {
     public EntryTrigger castEntryTrigger() {
         return this instanceof EntryTrigger ? (EntryTrigger) this : null;
     }
+
+    public abstract ContentValues toContentValues();
 
 }
