@@ -71,6 +71,16 @@ public class DatabaseManager extends Entry implements TableFiled {
         return ScheduleList;
     }
 
+    //1.3 日程-删
+    public void deleteSchedule(int id){
+        sqLiteDatabase.delete("Schedule", "_id = ?", new String[]{String.valueOf(id)});
+    }
+
+    //1.4 日程-改
+    public void updateSchedule(int id, EntrySchedule entrySchedule) {
+        sqLiteDatabase.update("Schedule", entrySchedule.toContentValues(entrySchedule), "_id = ?", new String[]{String.valueOf(id)});
+    }
+
     //2.1 这两天-增 4.19
     public void insertTheseDays(EntryTheseDays entryTheseDays) {
         sqLiteDatabase.insert("TheseDays", null, entryTheseDays.toContentValues(entryTheseDays));
@@ -94,6 +104,16 @@ public class DatabaseManager extends Entry implements TableFiled {
         c.close();
         close();
         return TheseDaysList;
+    }
+
+    //2.3 这两天-删
+    public void deleteTheseDays(int id){
+        sqLiteDatabase.delete("TheseDays", "_id = ?", new String[]{String.valueOf(id)});
+    }
+
+    //2.4 这两天-改
+    public void updateTheseDays(int id, EntryTheseDays entryTheseDays) {
+        sqLiteDatabase.update("TheseDays", entryTheseDays.toContentValues(entryTheseDays), "_id = ?", new String[]{String.valueOf(id)});
     }
 
     //3.1 DDL-增 4.19
@@ -131,29 +151,15 @@ public class DatabaseManager extends Entry implements TableFiled {
         return DDLList;
     }
 
-    //3.3 DDL-查byId
-    public EntryDeadLine getDDLById(int id) {
-        EntryDeadLine DDL = new EntryDeadLine("testDDL1");
-
-        Cursor c = sqLiteDatabase.rawQuery("select * from ShortHand where _id=?", new String[]{
-                String.valueOf(id)
-        });
-//        Cursor c = sqLiteDatabase.query("DDL", null, null, null, null, null, null);
-
-        int i = 0;
-        if (c.moveToFirst()) {
-            do {
-                //EntryDeadLine entryDeadLine = new EntryDeadLine(c.getString(c.getColumnIndex(TableFiled.TITLE)));
-                DDL.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
-                //DDLList.add(entryDeadLine);
-                //shortHandList.add(c.getString(c.getColumnIndex(TableFiled.TITLE))); //返回String时，用这个
-            } while (c.moveToNext());
-        }
-        c.close();
-        close();
-        return DDL;
+    //3.3 DDL-删
+    public void deleteDDL(int id){
+        sqLiteDatabase.delete("DDL", "_id = ?", new String[]{String.valueOf(id)});
     }
 
+    //3.4 DDL-改
+    public void updateDDL(int id, EntryDeadLine entryDeadLine) {
+        sqLiteDatabase.update("DDL", entryDeadLine.toContentValues(entryDeadLine), "_id = ?", new String[]{String.valueOf(id)});
+    }
 
     //5.1 速记-增  4.19
     public void insertShortHand(EntryShortHand shortHand) {
@@ -181,6 +187,15 @@ public class DatabaseManager extends Entry implements TableFiled {
         c.close();
         close();
         return shortHandList;
+    }
+    //5.3 速记-删
+    public void deleteShortHand(int id){
+        sqLiteDatabase.delete("ShortHand", "_id = ?", new String[]{String.valueOf(id)});
+    }
+
+    //5.4 速记-改
+    public void updateShortHand(int id, EntryShortHand entryShortHand) {
+        sqLiteDatabase.update("ShortHand", entryShortHand.toContentValues(entryShortHand), "_id = ?", new String[]{String.valueOf(id)});
     }
 
 
