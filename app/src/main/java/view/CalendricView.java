@@ -93,16 +93,16 @@ public class CalendricView extends ViewPager {
         //日历的加减早在pager滚动的时候就完成了，这里只需要负责日历增加产生新的时间传一下再把日历reset了就好
 
         /*page_a*/
-        myAdapter.getPage_a().setEntrySchedule(MyDate.fromCalendar(viewCalendar),
+        myAdapter.getPage_a().setEntrySchedule(MyDate.createFromCalendar(viewCalendar),
                 myAdapter.getScheduleFromItemProvider());
         viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
         /*page_b*/
-        myAdapter.getPage_b().setEntrySchedule(MyDate.fromCalendar(
+        myAdapter.getPage_b().setEntrySchedule(MyDate.createFromCalendar(
                 viewCalendar
         ), myAdapter.getScheduleFromItemProvider());
         viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
         /*page_c*/
-        myAdapter.getPage_c().setEntrySchedule(MyDate.fromCalendar(
+        myAdapter.getPage_c().setEntrySchedule(MyDate.createFromCalendar(
                 viewCalendar
         ), myAdapter.getScheduleFromItemProvider());
         /*reset calendar and notify data change*/

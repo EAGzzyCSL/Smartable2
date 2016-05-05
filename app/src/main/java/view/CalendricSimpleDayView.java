@@ -66,7 +66,6 @@ public class CalendricSimpleDayView extends ViewGroup {
     }
 
 
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -86,9 +85,7 @@ public class CalendricSimpleDayView extends ViewGroup {
     //负责排布那些事件的按钮和那个添加的按钮
     private void arrangeLayout() {
         this.removeAllViews();
-        Log.i("arangeLayout", "before if");
         if (bs != null) {
-            Log.i("arrangeLayout", "not null" + bs.size());
             for (int i = 0; i < bs.size(); i++) {
 
                 //定义事件的view并为他们添加相关属性

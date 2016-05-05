@@ -2,6 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
+import my.MyMoment;
 import my.MyTime;
 import my.TableFiled;
 
@@ -112,22 +113,33 @@ public class EntrySchedule extends Entry {
 
     //以下是赵仲印写的-为了测试
     //临时的修改为了适应日历view
-    private MyTime start;
-    private MyTime end;
+    private MyMoment start;
+    private MyMoment end;
 
-    public EntrySchedule(int _id, String name, MyTime start, MyTime end) {
-        this.id = _id;
+//    public EntrySchedule(int _id, String name, MyTime start, MyTime end) {
+//        this.id = _id;
+//        this.name = name;
+//        this.start = start;
+//        this.end = end;
+//
+//    }
+
+    public EntrySchedule(int id, String name, MyMoment start, MyMoment end) {
+        this.id = id;
         this.name = name;
         this.start = start;
         this.end = end;
-
     }
 
-    public MyTime getStart() {
+    public EntrySchedule(int id, String name, String start, String end) {
+        this(id, name, MyMoment.createFromString(start), MyMoment.createFromString(end));
+    }
+
+    public MyMoment getStart() {
         return this.start;
     }
 
-    public MyTime getEnd() {
+    public MyMoment getEnd() {
         return this.end;
     }
 }

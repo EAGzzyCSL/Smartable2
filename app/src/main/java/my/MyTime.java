@@ -3,7 +3,7 @@ package my;
 
 import java.util.Calendar;
 
-public class MyTime {
+public class MyTime implements I_MyCalendar {
     private int year;
     private int month;
     private int day;
@@ -18,9 +18,13 @@ public class MyTime {
         this.minute = minute;
     }
 
-    public MyTime(int hour, int minute) {
+    private void valueSet(int hour, int minute) {
         this.hour = hour;
         this.minute = minute;
+    }
+
+    public MyTime(int hour, int minute) {
+        valueSet(hour, minute);
     }
 
     public MyTime() {
@@ -71,27 +75,53 @@ public class MyTime {
         this.minute = minute;
     }
 
-    public void setDate(int year ,int month ,int day){
-        this.year=year;
-        this.month=month;
-        this.day=day;
+    public void setDate(int year, int month, int day) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
     }
-    public void setMoment(int hour,int minute){
-        this.hour=hour;
-        this.minute=minute;
+
+    public void setMoment(int hour, int minute) {
+        this.hour = hour;
+        this.minute = minute;
     }
+
     public int compareTo(MyTime t) {
         return this.toMinutes() - t.toMinutes();
     }
 
 
-    public Calendar toCalendar(){
-        Calendar c=Calendar.getInstance();
-        c.set(Calendar.YEAR,year);
-        c.set(Calendar.MONTH,month-1);
-        c.set(Calendar.DAY_OF_MONTH,day);
-        c.set(Calendar.HOUR_OF_DAY,hour);
-        c.set(Calendar.MINUTE,minute);
+    public Calendar toCalendar() {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month - 1);
+        c.set(Calendar.DAY_OF_MONTH, day);
+        c.set(Calendar.HOUR_OF_DAY, hour);
+        c.set(Calendar.MINUTE, minute);
         return c;
+    }
+
+    public MyTime createFromCalendar(Calendar c) {
+        return new MyTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+    }
+
+    @Override
+    public void syncFromCalendar(Calendar c) {
+        valueSet(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+    }
+
+    @Override
+    public String convertToString() {
+        return String.format("%02d:%02d:00", hour, minute);
+    }
+
+    @Override
+    public void syncToCalendar(Calendar c) {
+        //待填充
+    }
+
+    public static MyTime createFromString(String s) {
+        String[] ss = s.split(":");
+        return new MyTime(Integer.valueOf(ss[0]), Integer.valueOf(ss[1]));
     }
 }

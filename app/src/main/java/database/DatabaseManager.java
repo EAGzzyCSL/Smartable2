@@ -3,6 +3,7 @@ package database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.TabLayout;
 
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import entry.EntryDeadLine;
 import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntryTheseDays;
+import my.MyDate;
 import my.TableFiled;
 
 /**
@@ -64,11 +66,27 @@ public class DatabaseManager implements TableFiled {
                 entrySchedule.setDate_alert(c.getString(c.getColumnIndex(TableFiled.DATE_alert)));
                 entrySchedule.setLocation(c.getString(c.getColumnIndex(TableFiled.LOCATION)));
                 ScheduleList.add(entrySchedule);
+
             } while (c.moveToNext());
         }
         c.close();
         close();
         return ScheduleList;
+    }
+
+    public ArrayList<EntrySchedule> readSchedule_byDate(MyDate myDate) {
+        ArrayList<EntrySchedule> arr = new ArrayList<>();
+        Cursor c = sqLiteDatabase.rawQuery("select * from Schedule", null);
+        while (c.moveToNext()) {
+            arr.add(new EntrySchedule(
+                    c.getInt(c.getColumnIndex(TableFiled.ID)),
+                    c.getString(c.getColumnIndex(TableFiled.TITLE)),
+                    c.getString(c.getColumnIndex(TableFiled.DATE_begin)),
+                    c.getString(c.getColumnIndex(TableFiled.DATE_end))
+            ));
+        }
+        c.close();
+        return arr;
     }
 
     //1.3 日程-删
