@@ -2,6 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
 import my.TableFiled;
 
 /**
@@ -11,6 +12,7 @@ public class EntryShortHand extends Entry {
     public EntryShortHand(String name) {
         super(name);
     }
+
 
 
     private String title = null;

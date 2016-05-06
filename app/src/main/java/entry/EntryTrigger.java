@@ -2,6 +2,8 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
+
 /**
  * Created by EAGzzyCSL on 2016/2/11.
  */
@@ -9,7 +11,13 @@ public class EntryTrigger extends Entry {
     public EntryTrigger(String name) {
         super(name);
     }
-
+    private String date_begin = null;
+    public void setDate_begin(String date_begin) {
+        this.date_begin = date_begin;
+    }
+    public String getDate_begin() {
+        return date_begin;
+    }
     @Override
     public ContentValues toContentValues() {
         return null;

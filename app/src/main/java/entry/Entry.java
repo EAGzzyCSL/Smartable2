@@ -4,6 +4,8 @@ import android.content.ContentValues;
 
 import java.io.Serializable;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
+
 /**
  * Created by EAGzzyCSL on 2016/2/11.
  */
@@ -11,6 +13,7 @@ import java.io.Serializable;
 public abstract class Entry implements Serializable {
     protected String name;
     protected int id;
+    protected double priority;
 
     public Entry(String name) {
         this.name = name;
@@ -18,6 +21,14 @@ public abstract class Entry implements Serializable {
 
     public Entry() {
 
+    }
+
+    public double getPriority() {
+        return this.priority;
+    }
+
+    public void setPriority(double priority) {
+        this.priority = priority;
     }
 
     public int getId() {
@@ -32,9 +43,32 @@ public abstract class Entry implements Serializable {
         return this.name;
     }
 
-    public String getType() {
-        return this.getClass().getSimpleName();
+    public EnumEntry getType() {
+        if (this instanceof EntryDeadLine) {
+            return EnumEntry.deadLine;
+        }
+        if (this instanceof EntryNoteChild) {
+            return EnumEntry.note;
+        }
+        if (this instanceof EntrySchedule) {
+            return EnumEntry.schedule;
+        }
+        if (this instanceof EntryShortHand) {
+
+            return EnumEntry.shortHand;
+        }
+        if (this instanceof EntrySomeDay) {
+            return EnumEntry.someDay;
+        }
+        if (this instanceof EntryTheseDays) {
+            return EnumEntry.theseDays;
+        }
+        if (this instanceof EntryTrigger) {
+            return EnumEntry.trigger;
+        }
+        return null;
     }
+
 
     public EntryDeadLine castEntryDeadLine() {
         return this instanceof EntryDeadLine ? (EntryDeadLine) this : null;
