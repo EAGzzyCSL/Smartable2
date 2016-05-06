@@ -14,7 +14,7 @@ import bit.eagzzycsl.smartable2.R;
 import entry.EntrySchedule;
 import my.MyDate;
 
-
+/*在最简单的日视图的基础上的嵌套，以提供滚动和左上角角标，同时也是为了降低单页视图的复杂度*/
 public class CalendricCombineDayView extends FrameLayout implements CalendricPagerView {
     private TextView textView_showDay;
     private CalendricSimpleDayView calendricSimpleDayView;
@@ -29,20 +29,19 @@ public class CalendricCombineDayView extends FrameLayout implements CalendricPag
     }
 
 
-    private ArrayList<EntrySchedule> schedules;
-
-    public void setEntrySchedule(MyDate date, ArrayList<EntrySchedule> schedules) {
-        this.schedules = schedules;
-        calendricSimpleDayView.setBussiness(schedules);
+    @Override
+    public void transData(MyDate date, ArrayList<EntrySchedule> schedules, CalendricViewItemClick calendricViewItemClick) {
+        calendricSimpleDayView.setEntrySchedule(schedules);
+        calendricSimpleDayView.setCalendricViewItemClick(calendricViewItemClick);
         textView_showDay.setText(date.getDay() + "");
-
     }
 
-
+    @Override
     public int myGetScroll() {
         return scrollView.getScrollY();
     }
 
+    @Override
     public void mySetScroll(int y) {
         scrollView.setScrollY(y);
     }

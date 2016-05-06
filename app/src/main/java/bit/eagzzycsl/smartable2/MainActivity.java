@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
 
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        if (true) {
+        if (false) {
             /*默认显示*/
             getFragmentManager().beginTransaction().hide(fragment_main_calendric)
                     .commit();
