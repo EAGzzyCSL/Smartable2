@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ import database.DatabaseManager;
 import entry.EntrySchedule;
 import my.MyDate;
 import view.CalendricView;
+import view.CalendricViewItemClick;
 import view.CalendricViewItemProvider;
 import view.EnumCalendricViewType;
 
@@ -69,6 +71,17 @@ public class Fragment_main_calendric extends Fragment {
                     @Override
                     public ArrayList<EntrySchedule> readFromDatabase(int i) {
                         return DatabaseManager.getInstance(getActivity()).readSchedule_byDate(null);
+                    }
+                },
+                new CalendricViewItemClick() {
+                    @Override
+                    public void onItemClick(View v, EntrySchedule entrySchedule) {
+                        Toast.makeText(getActivity(), "a item click", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onAddClick(View v, EntrySchedule entrySchedule) {
+                        Toast.makeText(getActivity(), "a add click", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
