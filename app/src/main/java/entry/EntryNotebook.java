@@ -2,13 +2,17 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
+
 /**
  * Created by 宇 on 2016/3/12.
  */
 public class EntryNotebook extends Entry{
+    /*为社么notebook会出现在entry中？*/
     public EntryNotebook(String name) {
         super(name);
     }
+
 
     @Override
     public ContentValues toContentValues() {

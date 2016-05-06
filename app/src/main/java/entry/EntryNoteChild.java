@@ -2,6 +2,8 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
+
 /**
  * Created by 宇 on 2016/3/12.
  */
@@ -9,6 +11,7 @@ public class EntryNoteChild extends Entry{
     public EntryNoteChild(String name) {
         super(name);
     }
+
 
     @Override
     public ContentValues toContentValues() {

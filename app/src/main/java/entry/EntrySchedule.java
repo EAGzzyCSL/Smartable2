@@ -2,6 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
 import my.MyMoment;
 import my.MyTime;
 import my.TableFiled;
@@ -11,6 +12,7 @@ public class EntrySchedule extends Entry {
     public EntrySchedule(String name) {
         super(name);
     }
+
 
     private String title = null;
     private String annotation = null;
