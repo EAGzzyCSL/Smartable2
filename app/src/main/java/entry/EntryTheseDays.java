@@ -2,6 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
 import my.TableFiled;
 
 /**
@@ -11,6 +12,7 @@ public class EntryTheseDays extends Entry {
     public EntryTheseDays(String name) {
         super(name);
     }
+
 
     private String title = null;
     private String annotation = null;
@@ -50,12 +52,12 @@ public class EntryTheseDays extends Entry {
         this.status = status;
     }
 
-    public ContentValues toContentValues(EntryTheseDays entryTheseDays){
+    public ContentValues toContentValues(){
         ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, entryTheseDays.getTitle());
-        cv.put(TableFiled.ANNOTATION, entryTheseDays.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, entryTheseDays.getDate_create());
-        cv.put(TableFiled.STATUS, entryTheseDays.getStatus());
+        cv.put(TableFiled.TITLE, this.getTitle());
+        cv.put(TableFiled.ANNOTATION, this.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, this.getDate_create());
+        cv.put(TableFiled.STATUS, this.getStatus());
         return cv;
     }
 }

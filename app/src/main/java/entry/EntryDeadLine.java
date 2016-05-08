@@ -2,6 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
 import my.TableFiled;
 
 /**
@@ -11,6 +12,7 @@ public class EntryDeadLine extends Entry {
     public EntryDeadLine(String name) {
         super(name);
     }
+
 
     private String title = null;
     private String annotation = null;
@@ -106,20 +108,20 @@ public class EntryDeadLine extends Entry {
         this.date_ddl = date_ddl;
     }
 
-    public ContentValues toContentValues(EntryDeadLine entryDeadLine){
+    public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, entryDeadLine.getTitle());
-        cv.put(TableFiled.ANNOTATION, entryDeadLine.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, entryDeadLine.getDate_create());
-        cv.put(TableFiled.STATUS, entryDeadLine.getStatus());
+        cv.put(TableFiled.TITLE, this.getTitle());
+        cv.put(TableFiled.ANNOTATION, this.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, this.getDate_create());
+        cv.put(TableFiled.STATUS, this.getStatus());
 
-        cv.put(TableFiled.ALERT, entryDeadLine.getAlert());
-        cv.put(TableFiled.DATE_alert, entryDeadLine.getDate_alert());
-        cv.put(TableFiled.LOCATION, entryDeadLine.getLocation());
+        cv.put(TableFiled.ALERT, this.getAlert());
+        cv.put(TableFiled.DATE_alert, this.getDate_alert());
+        cv.put(TableFiled.LOCATION, this.getLocation());
 
-        cv.put(TableFiled.TODO_DURATION, entryDeadLine.getTodo_duration());
-        cv.put(TableFiled.TODO_NUMBERS, entryDeadLine.getTodo_numbers());
-        cv.put(TableFiled.DATE_ddl, entryDeadLine.getDate_ddl());
+        cv.put(TableFiled.TODO_DURATION, this.getTodo_duration());
+        cv.put(TableFiled.TODO_NUMBERS, this.getTodo_numbers());
+        cv.put(TableFiled.DATE_ddl, this.getDate_ddl());
         return cv;
     }
 }

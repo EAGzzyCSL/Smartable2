@@ -2,14 +2,17 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
+import my.MyMoment;
 import my.MyTime;
 import my.TableFiled;
 
 public class EntrySchedule extends Entry {
 
-    public EntrySchedule(String name){
+    public EntrySchedule(String name) {
         super(name);
     }
+
 
     private String title = null;
     private String annotation = null;
@@ -95,37 +98,50 @@ public class EntrySchedule extends Entry {
         this.location = location;
     }
 
-    public ContentValues toContentValues(EntrySchedule entrySchedule){
+    public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, entrySchedule.getTitle());
-        cv.put(TableFiled.ANNOTATION, entrySchedule.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, entrySchedule.getDate_create());
-        cv.put(TableFiled.STATUS, entrySchedule.getStatus());
+        cv.put(TableFiled.TITLE, this.getTitle());
+        cv.put(TableFiled.ANNOTATION, this.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, this.getDate_create());
+        cv.put(TableFiled.STATUS, this.getStatus());
 
-        cv.put(TableFiled.DATE_begin, entrySchedule.getDate_begin());
-        cv.put(TableFiled.DATE_end, entrySchedule.getDate_end());
-        cv.put(TableFiled.ALERT, entrySchedule.getAlert());
-        cv.put(TableFiled.DATE_alert, entrySchedule.getDate_alert());
-        cv.put(TableFiled.LOCATION, entrySchedule.getLocation());
+        cv.put(TableFiled.DATE_begin, this.getDate_begin());
+        cv.put(TableFiled.DATE_end, this.getDate_end());
+        cv.put(TableFiled.ALERT, this.getAlert());
+        cv.put(TableFiled.DATE_alert, this.getDate_alert());
+        cv.put(TableFiled.LOCATION, this.getLocation());
         return cv;
     }
 
     //以下是赵仲印写的-为了测试
     //临时的修改为了适应日历view
-    private MyTime start;
-    private MyTime end;
+    private MyMoment start;
+    private MyMoment end;
 
-    public EntrySchedule(int _id, String name, MyTime start, MyTime end) {
-        this.id=_id;
-        this.name=name;
-        this.start=start;
-        this.end=end;
+//    public EntrySchedule(int _id, String name, MyTime start, MyTime end) {
+//        this.id = _id;
+//        this.name = name;
+//        this.start = start;
+//        this.end = end;
+//
+//    }
 
+    public EntrySchedule(int id, String name, MyMoment start, MyMoment end) {
+        this.id = id;
+        this.name = name;
+        this.start = start;
+        this.end = end;
     }
-    public MyTime getStart(){
+
+    public EntrySchedule(int id, String name, String start, String end) {
+        this(id, name, MyMoment.createFromString(start), MyMoment.createFromString(end));
+    }
+
+    public MyMoment getStart() {
         return this.start;
     }
-    public MyTime getEnd(){
+
+    public MyMoment getEnd() {
         return this.end;
     }
 }

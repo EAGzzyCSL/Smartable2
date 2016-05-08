@@ -3,14 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edgeDrawerLayout"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="match_parent">
-    <!--第一个layout为主view，第二个为抽屉中的，其中主view的rightMargin决定了抽屉露出来多少-->
+    android:layout_height="match_parent"
+    app:edgeSize="20dp">
+    <!--第一个layout为主view，第二个为抽屉中的，使用自定义的edgeSize属性来定义边边露出来多少-->
     <LinearLayout
         android:id="@+id/linearLayout_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="20dp"
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
@@ -33,22 +32,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
-        android:elevation="40dp">
+        android:elevation="10dp"
+        tools:targetApi="lollipop">
 
-        <!--<Button
-            android:id="@+id/button_test"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="点这儿看通知" />-->
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/id_smart_latest"
-            android:divider="#ffff0000"
-
-            android:dividerHeight="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:divider="#ffff0000"
+            android:dividerHeight="10dp" />
 
     </LinearLayout>
 

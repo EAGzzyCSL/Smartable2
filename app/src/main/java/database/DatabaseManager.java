@@ -3,6 +3,7 @@ package database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.widget.TabLayout;
 
 import java.util.ArrayList;
 
@@ -11,12 +12,13 @@ import entry.EntryDeadLine;
 import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntryTheseDays;
+import my.MyDate;
 import my.TableFiled;
 
 /**
  * Created by 宇 on 2016/3/12.
  */
-public class DatabaseManager extends Entry implements TableFiled {
+public class DatabaseManager implements TableFiled {
 
     private SQLHelper dbHelper;
     private static DatabaseManager instance = null;
@@ -41,7 +43,7 @@ public class DatabaseManager extends Entry implements TableFiled {
 
     //1.1 日程-增 4.19
     public void insertSchedule(EntrySchedule entrySchedule) {
-        sqLiteDatabase.insert("Schedule", null, entrySchedule.toContentValues(entrySchedule));
+        sqLiteDatabase.insert("Schedule", null, entrySchedule.toContentValues());
     }
 
     //1.2 日程-查
@@ -50,7 +52,7 @@ public class DatabaseManager extends Entry implements TableFiled {
 
         Cursor c = sqLiteDatabase.rawQuery("select * from Schedule order by date_create desc", null);
         if (c.moveToFirst()) {
-            do{
+            do {
                 EntrySchedule entrySchedule = new EntrySchedule(c.getString(c.getColumnIndex(TableFiled.TITLE)));
                 entrySchedule.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
                 entrySchedule.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
@@ -64,6 +66,7 @@ public class DatabaseManager extends Entry implements TableFiled {
                 entrySchedule.setDate_alert(c.getString(c.getColumnIndex(TableFiled.DATE_alert)));
                 entrySchedule.setLocation(c.getString(c.getColumnIndex(TableFiled.LOCATION)));
                 ScheduleList.add(entrySchedule);
+
             } while (c.moveToNext());
         }
         c.close();
@@ -71,19 +74,34 @@ public class DatabaseManager extends Entry implements TableFiled {
         return ScheduleList;
     }
 
+    public ArrayList<EntrySchedule> readSchedule_byDate(MyDate myDate) {
+        ArrayList<EntrySchedule> arr = new ArrayList<>();
+        Cursor c = sqLiteDatabase.rawQuery("select * from Schedule", null);
+        while (c.moveToNext()) {
+            arr.add(new EntrySchedule(
+                    c.getInt(c.getColumnIndex(TableFiled.ID)),
+                    c.getString(c.getColumnIndex(TableFiled.TITLE)),
+                    c.getString(c.getColumnIndex(TableFiled.DATE_begin)),
+                    c.getString(c.getColumnIndex(TableFiled.DATE_end))
+            ));
+        }
+        c.close();
+        return arr;
+    }
+
     //1.3 日程-删
-    public void deleteSchedule(int id){
+    public void deleteSchedule(int id) {
         sqLiteDatabase.delete("Schedule", "_id = ?", new String[]{String.valueOf(id)});
     }
 
     //1.4 日程-改
     public void updateSchedule(int id, EntrySchedule entrySchedule) {
-        sqLiteDatabase.update("Schedule", entrySchedule.toContentValues(entrySchedule), "_id = ?", new String[]{String.valueOf(id)});
+        sqLiteDatabase.update("Schedule", entrySchedule.toContentValues(), "_id = ?", new String[]{String.valueOf(id)});
     }
 
     //2.1 这两天-增 4.19
     public void insertTheseDays(EntryTheseDays entryTheseDays) {
-        sqLiteDatabase.insert("TheseDays", null, entryTheseDays.toContentValues(entryTheseDays));
+        sqLiteDatabase.insert("TheseDays", null, entryTheseDays.toContentValues());
     }
 
     //2.2 这两天-查
@@ -92,7 +110,7 @@ public class DatabaseManager extends Entry implements TableFiled {
 
         Cursor c = sqLiteDatabase.rawQuery("select * from TheseDays order by date_create desc", null);
         if (c.moveToFirst()) {
-            do{
+            do {
                 EntryTheseDays entryTheseDays = new EntryTheseDays(c.getString(c.getColumnIndex(TITLE)));
                 entryTheseDays.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
                 entryTheseDays.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
@@ -107,18 +125,18 @@ public class DatabaseManager extends Entry implements TableFiled {
     }
 
     //2.3 这两天-删
-    public void deleteTheseDays(int id){
+    public void deleteTheseDays(int id) {
         sqLiteDatabase.delete("TheseDays", "_id = ?", new String[]{String.valueOf(id)});
     }
 
     //2.4 这两天-改
     public void updateTheseDays(int id, EntryTheseDays entryTheseDays) {
-        sqLiteDatabase.update("TheseDays", entryTheseDays.toContentValues(entryTheseDays), "_id = ?", new String[]{String.valueOf(id)});
+        sqLiteDatabase.update("TheseDays", entryTheseDays.toContentValues(), "_id = ?", new String[]{String.valueOf(id)});
     }
 
     //3.1 DDL-增 4.19
     public void insertDDL(EntryDeadLine entryDeadLine) {
-        sqLiteDatabase.insert("DDL", null, entryDeadLine.toContentValues(entryDeadLine));
+        sqLiteDatabase.insert("DDL", null, entryDeadLine.toContentValues());
     }
 
     //3.2 DDL-查
@@ -127,7 +145,7 @@ public class DatabaseManager extends Entry implements TableFiled {
 
         Cursor c = sqLiteDatabase.rawQuery("select * from DDL order by date_create desc", null);
         if (c.moveToFirst()) {
-            do{
+            do {
                 EntryDeadLine entryDeadLine = new EntryDeadLine(c.getString(c.getColumnIndex(TableFiled.TITLE)));
                 entryDeadLine.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
                 entryDeadLine.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
@@ -152,18 +170,18 @@ public class DatabaseManager extends Entry implements TableFiled {
     }
 
     //3.3 DDL-删
-    public void deleteDDL(int id){
+    public void deleteDDL(int id) {
         sqLiteDatabase.delete("DDL", "_id = ?", new String[]{String.valueOf(id)});
     }
 
     //3.4 DDL-改
     public void updateDDL(int id, EntryDeadLine entryDeadLine) {
-        sqLiteDatabase.update("DDL", entryDeadLine.toContentValues(entryDeadLine), "_id = ?", new String[]{String.valueOf(id)});
+        sqLiteDatabase.update("DDL", entryDeadLine.toContentValues(), "_id = ?", new String[]{String.valueOf(id)});
     }
 
     //5.1 速记-增  4.19
     public void insertShortHand(EntryShortHand shortHand) {
-        sqLiteDatabase.insert("ShortHand", null, shortHand.toContentValues(shortHand));
+        sqLiteDatabase.insert("ShortHand", null, shortHand.toContentValues());
     }
 
     //5.2 速记-查询
@@ -188,14 +206,15 @@ public class DatabaseManager extends Entry implements TableFiled {
         close();
         return shortHandList;
     }
+
     //5.3 速记-删
-    public void deleteShortHand(int id){
+    public void deleteShortHand(int id) {
         sqLiteDatabase.delete("ShortHand", "_id = ?", new String[]{String.valueOf(id)});
     }
 
     //5.4 速记-改
     public void updateShortHand(int id, EntryShortHand entryShortHand) {
-        sqLiteDatabase.update("ShortHand", entryShortHand.toContentValues(entryShortHand), "_id = ?", new String[]{String.valueOf(id)});
+        sqLiteDatabase.update("ShortHand", entryShortHand.toContentValues(), "_id = ?", new String[]{String.valueOf(id)});
     }
 
 

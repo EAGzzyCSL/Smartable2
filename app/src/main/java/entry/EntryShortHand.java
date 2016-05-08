@@ -2,6 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
 import my.TableFiled;
 
 /**
@@ -11,6 +12,8 @@ public class EntryShortHand extends Entry {
     public EntryShortHand(String name) {
         super(name);
     }
+
+
 
     private String title = null;
     private String annotation = null;
@@ -69,15 +72,15 @@ public class EntryShortHand extends Entry {
         this.date_upper = date_upper;
     }
 
-    public ContentValues toContentValues(EntryShortHand shortHand){
+    public ContentValues toContentValues(){
         ContentValues cv = new ContentValues();
-        cv.put(TableFiled.TITLE, shortHand.getTitle());
-        cv.put(TableFiled.ANNOTATION, shortHand.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, shortHand.getDate_create());
-        cv.put(TableFiled.STATUS, shortHand.getStatus());
+        cv.put(TableFiled.TITLE, this.getTitle());
+        cv.put(TableFiled.ANNOTATION, this.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, this.getDate_create());
+        cv.put(TableFiled.STATUS, this.getStatus());
 
-        cv.put(TableFiled.IS_UPPER, shortHand.getIsUpper());
-        cv.put(TableFiled.DATE_upper, shortHand.getDate_upper());
+        cv.put(TableFiled.IS_UPPER, this.getIsUpper());
+        cv.put(TableFiled.DATE_upper, this.getDate_upper());
         return cv;
     }
 }

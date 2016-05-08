@@ -10,17 +10,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import adapter.Adapter_view_calendric;
 import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.R;
-import entry.Entry;
+import database.DatabaseManager;
 import entry.EntrySchedule;
 import my.MyDate;
-import my.MyTime;
 import view.CalendricView;
+import view.CalendricViewItemClick;
 import view.CalendricViewItemProvider;
 import view.EnumCalendricViewType;
 
@@ -69,12 +70,18 @@ public class Fragment_main_calendric extends Fragment {
                 new CalendricViewItemProvider() {
                     @Override
                     public ArrayList<EntrySchedule> readFromDatabase(int i) {
-                        return new ArrayList<EntrySchedule>() {
-                            {
-                                this.add(new EntrySchedule(1, "3:00-8:00", new MyTime(3, 0), new MyTime(8, 0)));
+                        return DatabaseManager.getInstance(getActivity()).readSchedule_byDate(null);
+                    }
+                },
+                new CalendricViewItemClick() {
+                    @Override
+                    public void onItemClick(View v, EntrySchedule entrySchedule) {
+                        Toast.makeText(getActivity(), "a item click", Toast.LENGTH_SHORT).show();
+                    }
 
-                            }
-                        };
+                    @Override
+                    public void onAddClick(View v, EntrySchedule entrySchedule) {
+                        Toast.makeText(getActivity(), "a add click", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -82,7 +89,7 @@ public class Fragment_main_calendric extends Fragment {
 
     private void mySetView() {
         calendricView_day.setAdapter(adapter_view_calendric);
-        calendricView_day.setFirstDay(new MyDate(2016,4,29));
+        calendricView_day.setFirstDay(new MyDate(2016, 4, 29));
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

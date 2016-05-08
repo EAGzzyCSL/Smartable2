@@ -10,20 +10,13 @@ import java.util.Calendar;
 import adapter.Adapter_view_calendric;
 import my.MyDate;
 
-
+/*继承自viewPager以实现日历的左右无限滚动*/
 public class CalendricView extends ViewPager {
     private Calendar viewCalendar;//一个日历，用来表计三张视图中第一张的起始日期
     /*adapter负责提供数据，日供日历的加减，adapter的数据从item提供器获取，pager提供根据指定日期更新内容的方法*/
     private Adapter_view_calendric myAdapter;
     private Context context;
-
-    public void setFirstDay(MyDate date) {
-        viewCalendar.set(Calendar.YEAR, date.getYear());
-        viewCalendar.set(Calendar.MONTH, date.getMonth());
-        viewCalendar.set(Calendar.DAY_OF_MONTH, date.getDay());
-        pagerUpdate();
-    }
-
+    /*创建一个自定义的pageChangeListener，以实现无限滚动*/
     private OnPageChangeListener onPageChangeListener = new OnPageChangeListener() {
         private boolean haveScrolled = false;//是否已经滚动
         private int scrolledIndex;
@@ -89,42 +82,50 @@ public class CalendricView extends ViewPager {
         }
     };
 
-    private void pagerUpdate() {
-        //日历的加减早在pager滚动的时候就完成了，这里只需要负责日历增加产生新的时间传一下再把日历reset了就好
-
-        /*page_a*/
-        myAdapter.getPage_a().setEntrySchedule(MyDate.fromCalendar(viewCalendar),
-                myAdapter.getScheduleFromItemProvider());
-        viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
-        /*page_b*/
-        myAdapter.getPage_b().setEntrySchedule(MyDate.fromCalendar(
-                viewCalendar
-        ), myAdapter.getScheduleFromItemProvider());
-        viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
-        /*page_c*/
-        myAdapter.getPage_c().setEntrySchedule(MyDate.fromCalendar(
-                viewCalendar
-        ), myAdapter.getScheduleFromItemProvider());
-        /*reset calendar and notify data change*/
-        viewCalendar.add(Calendar.DAY_OF_MONTH, -2 * myAdapter.getEnumViewType().getDiv());
-        myAdapter.notifyDataSetChanged();
-    }
-
+    /*在构造方法中设置一个适配器*/
     public CalendricView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         viewCalendar = Calendar.getInstance();
         viewCalendar.set(Calendar.DAY_OF_MONTH, 15);//15是我找了个数来测试
-        this.setOffscreenPageLimit(3);//设置viewpager的限制为3，有助于优化滑动
         /*为viewpager增加滑动监听，为了在pager滑动的时候更换内容*/
         this.addOnPageChangeListener(onPageChangeListener);
 
     }
 
-    @Override
-    protected void onPageScrolled(int position, float offset, int offsetPixels) {
-        super.onPageScrolled(position, offset, offsetPixels);
+    /*设置首日，不管对于月日周，凭借首日都可以知道日历视图需要滚动到那个时期，因此该函数用于设定日历视图跳转到某个时候*/
+    public void setFirstDay(MyDate date) {
+        viewCalendar.set(Calendar.YEAR, date.getYear());
+        viewCalendar.set(Calendar.MONTH, date.getMonth());
+        viewCalendar.set(Calendar.DAY_OF_MONTH, date.getDay());
+        pagerUpdate();
     }
+
+
+    /*更新page中的内容*/
+    private void pagerUpdate() {
+        //日历的加减早在pager滚动的时候就完成了，这里只需要负责日历增加产生新的时间传一下再把日历reset了就好
+
+        /*page_a*/
+        myAdapter.getPage_a().transData(MyDate.createFromCalendar(viewCalendar),
+                myAdapter.getScheduleFromItemProvider(),
+                myAdapter.getCalendricViewItemClick());
+        viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
+        /*page_b*/
+        myAdapter.getPage_b().transData(MyDate.createFromCalendar(viewCalendar),
+                myAdapter.getScheduleFromItemProvider(),
+                myAdapter.getCalendricViewItemClick());
+        viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
+        /*page_c*/
+        myAdapter.getPage_c().transData(MyDate.createFromCalendar(viewCalendar),
+                myAdapter.getScheduleFromItemProvider(),
+                myAdapter.getCalendricViewItemClick()
+        );
+        /*reset calendar and notify data change*/
+        viewCalendar.add(Calendar.DAY_OF_MONTH, -2 * myAdapter.getEnumViewType().getDiv());
+        myAdapter.notifyDataSetChanged();
+    }
+
 
     @Override
     public void setAdapter(PagerAdapter adapter) {
