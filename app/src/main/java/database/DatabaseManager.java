@@ -3,6 +3,7 @@ package database;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.design.internal.ParcelableSparseArray;
 import android.support.design.widget.TabLayout;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntryTheseDays;
 import my.MyDate;
+import my.MyMoment;
 import my.TableFiled;
 
 /**
@@ -183,27 +185,39 @@ public class DatabaseManager implements TableFiled {
     public void insertShortHand(EntryShortHand shortHand) {
         sqLiteDatabase.insert("ShortHand", null, shortHand.toContentValues());
     }
+    public void insert(Entry entry){
+        //以这个为近似的例子，采用一句话来完成insert和update操作。
+        sqLiteDatabase.insert(entry.getClass().getSimpleName(),null,entry.toContentValues());
+    }
 
     //5.2 速记-查询
     public ArrayList<Entry> getShortHand() {
         ArrayList<Entry> shortHandList = new ArrayList<>();
 
         Cursor c = sqLiteDatabase.rawQuery("select * from ShortHand order by date_create desc", null);
-        if (c.moveToFirst()) {
-            do {
-                EntryShortHand entryShortHand = new EntryShortHand(c.getString(c.getColumnIndex(TableFiled.TITLE)));
-                entryShortHand.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
-                entryShortHand.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
-                entryShortHand.setAnnotation(c.getString(c.getColumnIndex(TableFiled.ANNOTATION)));
-                entryShortHand.setDate_create(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE)));
-                entryShortHand.setStatus(c.getString(c.getColumnIndex(TableFiled.STATUS)));
-
-                entryShortHand.setIsUpper(c.getString(c.getColumnIndex(TableFiled.DATE_upper)));
-                shortHandList.add(entryShortHand);
-            } while (c.moveToNext());
+        while (c.moveToNext()) {
+            shortHandList.add(new EntryShortHand(
+                    c.getInt(c.getColumnIndex(TableFiled.ID)),
+                    c.getString(c.getColumnIndex(TableFiled.TITLE)),
+                    c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
+                    MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE)))
+            ));
         }
+//        if (c.moveToFirst()) {
+//            do {
+//                EntryShortHand entryShortHand = new EntryShortHand(c.getString(c.getColumnIndex(TableFiled.TITLE)));
+//                entryShortHand.setId(Integer.valueOf(c.getString(c.getColumnIndex(TableFiled.ID))));
+//                entryShortHand.setTitle(c.getString(c.getColumnIndex(TableFiled.TITLE)));
+//                entryShortHand.setAnnotation(c.getString(c.getColumnIndex(TableFiled.ANNOTATION)));
+//                entryShortHand.setDate_create(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE)));
+//                entryShortHand.setStatus(c.getString(c.getColumnIndex(TableFiled.STATUS)));
+//
+//                entryShortHand.setIsUpper(c.getString(c.getColumnIndex(TableFiled.DATE_upper)));
+//                shortHandList.add(entryShortHand);
+//            } while (c.moveToNext());
+//        }
         c.close();
-        close();
+//        close();
         return shortHandList;
     }
 

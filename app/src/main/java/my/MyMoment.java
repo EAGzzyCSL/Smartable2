@@ -43,7 +43,7 @@ public class MyMoment implements I_MyCalendar {
 
     @Override
     public String convertToString() {
-        return myDate.convertToString() + " " + myDate.convertToString();
+        return myDate.convertToString() + " " + myTime.convertToString();
     }
 
     @Override
@@ -55,4 +55,5 @@ public class MyMoment implements I_MyCalendar {
         String[] ss = s.split(" ");
         return new MyMoment(MyDate.createFromString(ss[0]), MyTime.createFromString(ss[1]));
     }
+
 }
