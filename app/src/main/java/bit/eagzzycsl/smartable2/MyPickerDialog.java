@@ -9,7 +9,7 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-import my.MyTime;
+import my.MyMoment;
 import my.MyUtil;
 
 public class MyPickerDialog {
@@ -17,12 +17,12 @@ public class MyPickerDialog {
     // 因为日期时间的选择有相似性而且雷同多所以先为他们写一个父类
     Context context;// 字面意思是上下文，就是表示这个dialog算是哪个activity上的
     AppCompatTextView textView;// 当选定时间后修改哪个文本的内容
-    MyTime myTime;//对应的time
+    MyMoment myMoment;//对应的time
 
-    public MyPickerDialog(Context context, AppCompatTextView textView, MyTime myTime) {
+    public MyPickerDialog(Context context, AppCompatTextView textView, MyMoment myMoment) {
         this.context = context;
         this.textView = textView;
-        this.myTime = myTime;
+        this.myMoment = myMoment;
     }
 
     public static String getDate(int year, int monthOfYear, int dayOfMonth) {
@@ -50,8 +50,8 @@ public class MyPickerDialog {
 }
 
 class MyDatePickerDialog extends MyPickerDialog {
-    public MyDatePickerDialog(Context context, AppCompatTextView textView, MyTime myTime) {
-        super(context, textView, myTime);
+    public MyDatePickerDialog(Context context, AppCompatTextView textView, MyMoment myMoment) {
+        super(context, textView, myMoment);
     }
 
     // show方法其实就是显示一个日期的选框
@@ -60,12 +60,12 @@ class MyDatePickerDialog extends MyPickerDialog {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                myTime.setDate(year, monthOfYear + 1, dayOfMonth);
+                myMoment.setDate(year, monthOfYear + 1, dayOfMonth);
                 textView.setText(MyPickerDialog.getShortDate(year, monthOfYear + 1,
                         dayOfMonth));//getShortDate不显示星期
             }
-        }, myTime.getYear(), myTime.getMonth() - 1,
-                myTime.getDay()).show();
+        }, myMoment.getYear(), myMoment.getMonth() - 1,
+                myMoment.getDay()).show();
 
 
 //        new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
@@ -85,27 +85,27 @@ class MyDatePickerDialog extends MyPickerDialog {
 }
 
 class MyTimePickerDialog extends MyPickerDialog {
-    public MyTimePickerDialog(Context context, AppCompatTextView textView, MyTime myTime) {
-        super(context, textView, myTime);
+    public MyTimePickerDialog(Context context, AppCompatTextView textView,MyMoment myMoment) {
+        super(context, textView, myMoment);
     }
 
     public void show() {
         new TimePickerDialog(context, R.style.MyTimePickerDialogYellowTheme,new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                myTime.setMoment(hourOfDay, minute);
+                myMoment.setTime(hourOfDay, minute);
                 textView.setText(MyPickerDialog.getMoment(hourOfDay, minute));
             }
-        }, myTime.getHour(), myTime.getMinute(), true).show();
+        }, myMoment.getHour(), myMoment.getMinute(), true).show();
     }
 
     public void show(int themeResId) {
         new TimePickerDialog(context, themeResId,new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                myTime.setMoment(hourOfDay, minute);
+                myMoment.setTime(hourOfDay, minute);
                 textView.setText(MyPickerDialog.getMoment(hourOfDay, minute));
             }
-        }, myTime.getHour(), myTime.getMinute(), true).show();
+        }, myMoment.getHour(), myMoment.getMinute(), true).show();
     }
 }

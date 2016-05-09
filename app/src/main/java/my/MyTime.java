@@ -9,14 +9,16 @@ public class MyTime implements I_MyCalendar {
     private int day;
     private int hour;
     private int minute;
-
-    public MyTime(int year, int month, int day, int hour, int minute) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
-        this.hour = hour;
-        this.minute = minute;
+    public void setTime(int hour,int minute){
+        valueSet(hour,minute);
     }
+//    public MyTime(int year, int month, int day, int hour, int minute) {
+//        this.year = year;
+//        this.month = month;
+//        this.day = day;
+//        this.hour = hour;
+//        this.minute = minute;
+//    }
 
     private void valueSet(int hour, int minute) {
         this.hour = hour;
@@ -101,7 +103,7 @@ public class MyTime implements I_MyCalendar {
         return c;
     }
 
-    public MyTime createFromCalendar(Calendar c) {
+    public static MyTime createFromCalendar(Calendar c) {
         return new MyTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
     }
 
@@ -116,8 +118,16 @@ public class MyTime implements I_MyCalendar {
     }
 
     @Override
+    public Calendar convertToCalendar() {
+        Calendar c=Calendar.getInstance();
+        syncFromCalendar(c);
+        return c;
+    }
+
+    @Override
     public void syncToCalendar(Calendar c) {
-        //待填充
+        c.set(Calendar.HOUR_OF_DAY,hour);
+        c.set(Calendar.MINUTE,minute);
     }
 
     public static MyTime createFromString(String s) {

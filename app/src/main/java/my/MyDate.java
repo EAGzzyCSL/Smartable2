@@ -12,9 +12,14 @@ public class MyDate implements I_MyCalendar {
         this.month = month;
         this.day = day;
     }
-
+    public void setDate(int year,int month,int day){
+        valueSet(year,month,day);
+    }
     public MyDate(int year, int month, int day) {
         valueSet(year, month, day);
+    }
+    public MyDate(){
+
     }
 
     public int getMonth() {
@@ -47,8 +52,20 @@ public class MyDate implements I_MyCalendar {
     }
 
     @Override
+    public Calendar convertToCalendar() {
+        Calendar c=Calendar.getInstance();
+        syncFromCalendar(c);
+
+        return c;
+    }
+
+    @Override
     public void syncToCalendar(Calendar c) {
         //待填充
+        c.set(Calendar.YEAR,year);
+        c.set(Calendar.MONTH,month);
+        c.set(Calendar.DAY_OF_MONTH,day);
+
     }
 
     public static MyDate createFromString(String s) {
