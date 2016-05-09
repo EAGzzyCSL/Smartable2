@@ -76,8 +76,7 @@ public class EditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyRed));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyOrange));
         }
         myFindView();
         myInit();
@@ -162,18 +161,30 @@ public class EditActivity extends AppCompatActivity {
                 if (checkedId == edit_rbtn1.getId()) {  //速记
                     set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
                     edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyOrange));
+                    if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyOrange));
+                    }
                     flag_nowWhatPage = 0;
                 } else if (checkedId == edit_rbtn2.getId()) { //日程
                     set_layout_visible(View.VISIBLE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE);
                     edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyYellow));
+                    if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyYellow));
+                    }
                     flag_nowWhatPage = 1;
                 } else if (checkedId == edit_rbtn3.getId()) { //这两天
                     set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
                     edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyPurple));
+                    if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyPurple));
+                    }
                     flag_nowWhatPage = 2;
                 } else if (checkedId == edit_rbtn4.getId()) { //DDL
                     set_layout_visible(View.GONE, View.VISIBLE, View.VISIBLE, View.VISIBLE, View.VISIBLE);
                     edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyBlue));
+                    if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                        getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyBlue));
+                    }
                     flag_nowWhatPage = 3;
                 }
                 Log.i("TAG", flag_nowWhatPage.toString());

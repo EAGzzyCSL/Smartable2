@@ -228,22 +228,37 @@ public class ModifyDetailActivity extends AppCompatActivity {
         if (entry instanceof EntryShortHand) {//速记
             set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
             edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyOrange));
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyOrange));
+            }
             flag_nowWhatPage = 0;
         } else if (entry instanceof EntrySchedule) {//日程
             set_layout_visible(View.VISIBLE, View.GONE, View.VISIBLE, View.VISIBLE, View.GONE);
             edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyYellow));
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyYellow));
+            }
             flag_nowWhatPage = 1;
         } else if (entry instanceof EntrySomeDay) {//有朝一日
             set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
             edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyRed));
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyRed));
+            }
             //TODO:有朝一日flag_nowWhatPage?
         } else if (entry instanceof EntryTheseDays) {//这两天
             set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
             edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyPurple));
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyPurple));
+            }
             flag_nowWhatPage = 2;
         } else if (entry instanceof EntryDeadLine) {//DDL
             set_layout_visible(View.GONE, View.VISIBLE, View.VISIBLE, View.VISIBLE, View.VISIBLE);
             edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyBlue));
+            if (android.os.Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                getWindow().setStatusBarColor(getResources().getColor(R.color.colorMyBlue));
+            }
             flag_nowWhatPage = 3;
         }
 
