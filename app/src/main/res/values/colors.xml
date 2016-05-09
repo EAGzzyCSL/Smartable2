@@ -36,4 +36,5 @@
     <color name="colorMyActivityBg">#eeeeee</color>
     <color name="colorMyTransparent">#00000000</color>
 
+    <color name="colorMyLineEditText">#55FFFFFF</color>
 </resources>
