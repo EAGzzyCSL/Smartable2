@@ -29,6 +29,7 @@ import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntrySomeDay;
 import entry.EntryTheseDays;
+import my.MyMoment;
 import my.MyTime;
 import my.MyUtil;
 public class ModifyDetailActivity extends AppCompatActivity {
@@ -143,7 +144,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                     EntryShortHand shortHand = new EntryShortHand(edit_activity_title.getText().toString());
                     shortHand.setTitle(edit_activity_title.getText().toString());
                     shortHand.setAnnotation("");
-                    shortHand.setDate_create(simpleDateFormat.format(now.getTime()));
+                    shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                     shortHand.setStatus("1");
                     DatabaseManager.getInstance(ModifyDetailActivity.this).updateShortHand(id_forModify, shortHand);
                     break;
@@ -356,7 +357,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         EntryShortHand shortHand = new EntryShortHand(edit_activity_title.getText().toString());
                         shortHand.setTitle(edit_activity_title.getText().toString());
                         shortHand.setAnnotation("");
-                        shortHand.setDate_create(simpleDateFormat.format(now.getTime()));
+                        shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
                         DatabaseManager.getInstance(ModifyDetailActivity.this).insertShortHand(shortHand);
 
@@ -484,7 +485,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         EntryShortHand shortHand = new EntryShortHand(edit_activity_title.getText().toString());
                         shortHand.setTitle(edit_activity_title.getText().toString());
                         shortHand.setAnnotation("");
-                        shortHand.setDate_create(simpleDateFormat.format(now.getTime()));
+                        shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
                         DatabaseManager.getInstance(ModifyDetailActivity.this).insertShortHand(shortHand);
 

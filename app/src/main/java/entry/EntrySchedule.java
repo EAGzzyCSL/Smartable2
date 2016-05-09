@@ -1,6 +1,7 @@
 package entry;
 
 import android.content.ContentValues;
+import android.support.design.widget.TabLayout;
 
 import bit.eagzzycsl.smartable2.EnumEntry;
 import my.MyMoment;
