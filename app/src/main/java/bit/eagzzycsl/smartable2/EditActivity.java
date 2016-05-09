@@ -17,9 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import database.DatabaseManager;
 import entry.EntryDeadLine;
@@ -27,7 +25,6 @@ import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntryTheseDays;
 import my.MyMoment;
-import my.MyTime;
 import my.MyUtil;
 
 public class EditActivity extends AppCompatActivity {
@@ -58,9 +55,9 @@ public class EditActivity extends AppCompatActivity {
     private android.support.v7.widget.AppCompatTextView textView_endDate;
     private android.support.v7.widget.AppCompatTextView textView_startTime;
     private android.support.v7.widget.AppCompatTextView textView_endTime;
-    private MyTime timeStart = new MyTime();
-    private MyTime timeEnd = new MyTime();
-    private MyTime timeDDL = new MyTime();
+    private MyMoment timeStart = new MyMoment();
+    private MyMoment timeEnd = new MyMoment();
+    private MyMoment timeDDL = new MyMoment();
 
     private AlertDialog remindDialog;
     private Button btn_remind_time1;
@@ -113,40 +110,38 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void myInit() {
-        //yu---预置数据
-//        DatabaseManager.getInstance(EditActivity.this).insertDDL(presetData.testDDL1());
-//        Toast.makeText(EditActivity.this, "成功ye", Toast.LENGTH_SHORT).show();
 
         edit_rbtn1.setSelected(true);
         set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
         edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyOrange));
 
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date_ddl = new Date(timeDDL.getYear() - 1900, timeDDL.getMonth() - 1, timeDDL.getDay(), timeDDL.getHour(), timeDDL.getMinute());//年份要减去1900；月份要注意转换， 1月是0
-
-
         Calendar c = Calendar.getInstance();
-//        Date date2 = c.getTime();
-//        String date2_2 = simpleDateFormat.format(date2);
-//        Log.i("TAG_date2", date2.toString());
-//        Log.i("TAG_date2_2", date2_2);
 
-        timeStart = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
-        timeEnd = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
-        timeDDL = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
+        timeStart=MyMoment.createFromCalendar(c);
+        timeEnd=MyMoment.createFromCalendar(c);
+        timeDDL=MyMoment.createFromCalendar(c);
+//        timeStart = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
+//        timeEnd = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
+//        timeDDL = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
 
-
-        textView_startDate.setText(MyPickerDialog.getShortDate(timeStart.getYear(),
-                timeStart.getMonth(), timeStart.getDay()));
-        textView_endDate.setText(MyPickerDialog.getShortDate(timeEnd.getYear(),
-                timeEnd.getMonth(), timeEnd.getDay()));
-        textView_startTime.setText(MyPickerDialog.getMoment(timeStart.getHour(), timeStart.getMinute()));
-        textView_endTime.setText(MyPickerDialog.getMoment(timeEnd.getHour(), timeEnd.getMinute()));
-        edit_ddl_datetime_picker.setText(MyPickerDialog.getShortDate(timeDDL.getYear(),
-                timeDDL.getMonth(), timeDDL.getDay()));
-        edit_ddl_datetime_picker2.setText(MyPickerDialog.getMoment(timeDDL.getHour(), timeDDL.getMinute()));
-
+        if((!textView_startDate.equals("")) && textView_startDate != null){
+            textView_startDate.setText(MyPickerDialog.getShortDate(timeStart.getYear(), timeStart.getMonth(), timeStart.getDay()));
+        }
+        if(!textView_endDate.equals("")){
+           textView_endDate.setText(MyPickerDialog.getShortDate(timeEnd.getYear(), timeEnd.getMonth(), timeEnd.getDay()));
+        }
+        if(!textView_startTime.equals("")){
+            textView_startTime.setText(MyPickerDialog.getMoment(timeStart.getHour(), timeStart.getMinute()));
+        }
+        if(!textView_endTime.equals("")){
+            textView_endTime.setText(MyPickerDialog.getMoment(timeEnd.getHour(), timeEnd.getMinute()));
+        }
+        if(!edit_ddl_datetime_picker.equals("")){
+            edit_ddl_datetime_picker.setText(MyPickerDialog.getShortDate(timeDDL.getYear(), timeDDL.getMonth(), timeDDL.getDay()));
+        }
+        if(!edit_ddl_datetime_picker2.equals("")){
+            edit_ddl_datetime_picker2.setText(MyPickerDialog.getMoment(timeDDL.getHour(), timeDDL.getMinute()));
+        }
     }
 
     private void mySetView() {
@@ -249,8 +244,6 @@ public class EditActivity extends AppCompatActivity {
         //点击确定按钮，绑定事件  edit_done_btn
         edit_done_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Calendar now = Calendar.getInstance();
 
                 Log.i("TAG666", flag_nowWhatPage.toString());
                 switch (flag_nowWhatPage) {
@@ -271,20 +264,17 @@ public class EditActivity extends AppCompatActivity {
                         EntrySchedule entrySchedule = new EntrySchedule(edit_activity_title.getText().toString());
                         entrySchedule.setTitle(edit_activity_title.getText().toString());
                         entrySchedule.setAnnotation("");//todo 暂时没有数据
-                        entrySchedule.setDate_create(simpleDateFormat.format(now.getTime()));//创建时间
+                        entrySchedule.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));//创建时间
                         entrySchedule.setStatus("1");//未完成标记
+                        entrySchedule.setDate_begin(timeStart);
+                        entrySchedule.setDate_end(timeEnd);
 
-                        String date_begin = simpleDateFormat.format(new Date(timeStart.getYear() - 1900, timeStart.getMonth() - 1, timeStart.getDay(), timeStart.getHour(), timeStart.getMinute()));//年份要减去1900；月份要注意转换， 1月是0
-                        String date_end = simpleDateFormat.format(new Date(timeEnd.getYear() - 1900, timeEnd.getMonth() - 1, timeEnd.getDay(), timeEnd.getHour(), timeEnd.getMinute()));//年份要减去1900；月份要注意转换， 1月是0
-
-                        entrySchedule.setDate_begin(date_begin);
-                        entrySchedule.setDate_end(date_end);
                         if (edit_remind_picker.getText().toString().equals("不提醒")) { //判断是否有提醒时间
                             entrySchedule.setAlert("0");
                         } else {
                             entrySchedule.setAlert("1");//提醒标记
                             try {
-                                entrySchedule.setDate_alert(MyUtil.getAlertTime(date_begin, edit_remind_picker.getText().toString()));
+                                entrySchedule.setDate_alert(MyUtil.getAlertTime(timeStart, edit_remind_picker.getText().toString()));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
@@ -298,7 +288,7 @@ public class EditActivity extends AppCompatActivity {
                         EntryTheseDays theseDays = new EntryTheseDays(edit_activity_title.getText().toString());
                         theseDays.setTitle(edit_activity_title.getText().toString());
                         theseDays.setAnnotation("");
-                        theseDays.setDate_create(simpleDateFormat.format(now.getTime()));
+                        theseDays.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         theseDays.setStatus("1");
                         DatabaseManager.getInstance(EditActivity.this).insertTheseDays(theseDays);
                         break;
@@ -308,23 +298,22 @@ public class EditActivity extends AppCompatActivity {
                         EntryDeadLine ddl = new EntryDeadLine(edit_activity_title.getText().toString());
                         ddl.setTitle(edit_activity_title.getText().toString());
                         ddl.setAnnotation("");//todo 暂时没有数据
-                        ddl.setDate_create(simpleDateFormat.format(now.getTime()));//创建时间
+                        ddl.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));//创建时间
                         ddl.setStatus("1");//未完成标记
 
-                        String date_ddl = simpleDateFormat.format(new Date(timeDDL.getYear() - 1900, timeDDL.getMonth() - 1, timeDDL.getDay(), timeDDL.getHour(), timeDDL.getMinute()));//年份要减去1900；月份要注意转换， 1月是0
                         if (edit_remind_picker.getText().toString().equals("不提醒")) { //判断是否有提醒时间
                             ddl.setAlert("0");
                         } else {
                             ddl.setAlert("1");//提醒标记
                             try {
-                                ddl.setDate_alert(MyUtil.getAlertTime(date_ddl, edit_remind_picker.getText().toString()));
+                                ddl.setDate_alert(MyUtil.getAlertTime(timeDDL, edit_remind_picker.getText().toString()));
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
                         }
                         ddl.setLocation(edit_location_et.getText().toString());
 
-                        ddl.setDate_ddl(date_ddl);//截止时间
+                        ddl.setDate_ddl(timeDDL);//截止时间
                         ddl.setTodo_numbers(Integer.valueOf(edit_ddl_expand_et.getText().toString()));//准备做几次
                         ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
 

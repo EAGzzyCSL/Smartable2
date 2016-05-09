@@ -2,7 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
-import bit.eagzzycsl.smartable2.EnumEntry;
+import my.MyMoment;
 import my.TableFiled;
 
 /**
@@ -13,20 +13,34 @@ public class EntryDeadLine extends Entry {
         super(name);
     }
 
-
     private String title = null;
     private String annotation = null;
-    private String date_create = null;
+    private MyMoment date_create = null;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）
 
     private String alert = null;//不提醒(0) 提醒(1)
-    private String date_alert = null;
+    private MyMoment date_alert = null;
     private String location = null;
 
-    private Integer todo_duration;//总共想花的时间
-    private Integer todo_numbers;//想用几次完成（注意加s）
-    private String date_ddl = null;
+    private int todo_duration;//总共想花的时间
+    private int todo_numbers;//想用几次完成（注意加s）
+    private MyMoment date_ddl = null;
 
+    public EntryDeadLine(int id,String title,String annotation,MyMoment date_create, String status, String alert,
+                         MyMoment date_alert, String location, int todo_duration, int todo_numbers, MyMoment date_ddl){
+        this.id=id;
+        this.title=title;
+        this.annotation=annotation;
+        this.date_create=date_create;
+        this.status=status;
+
+        this.alert=alert;
+        this.date_alert=date_alert;
+        this.location=location;
+        this.todo_duration=todo_duration;
+        this.todo_numbers=todo_numbers;
+        this.date_ddl=date_ddl;
+    }
 
     public String getLocation() {
         return location;
@@ -68,43 +82,43 @@ public class EntryDeadLine extends Entry {
         this.status = status;
     }
 
-    public Integer getTodo_duration() {
+    public int getTodo_duration() {
         return todo_duration;
     }
 
-    public void setTodo_duration(Integer todo_duration) {
+    public void setTodo_duration(int todo_duration) {
         this.todo_duration = todo_duration;
     }
 
-    public Integer getTodo_numbers() {
+    public int getTodo_numbers() {
         return todo_numbers;
     }
 
-    public void setTodo_numbers(Integer todo_numbers) {
+    public void setTodo_numbers(int todo_numbers) {
         this.todo_numbers = todo_numbers;
     }
 
-    public String getDate_create() {
+    public MyMoment getDate_create() {
         return date_create;
     }
 
-    public void setDate_create(String date_create) {
+    public void setDate_create(MyMoment date_create) {
         this.date_create = date_create;
     }
 
-    public String getDate_alert() {
+    public MyMoment getDate_alert() {
         return date_alert;
     }
 
-    public void setDate_alert(String date_alert) {
+    public void setDate_alert(MyMoment date_alert) {
         this.date_alert = date_alert;
     }
 
-    public String getDate_ddl() {
+    public MyMoment getDate_ddl() {
         return date_ddl;
     }
 
-    public void setDate_ddl(String date_ddl) {
+    public void setDate_ddl(MyMoment date_ddl) {
         this.date_ddl = date_ddl;
     }
 
@@ -112,16 +126,16 @@ public class EntryDeadLine extends Entry {
         ContentValues cv = new ContentValues();
         cv.put(TableFiled.TITLE, this.getTitle());
         cv.put(TableFiled.ANNOTATION, this.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, this.getDate_create());
+        cv.put(TableFiled.DATE_CREATE, this.getDate_create().convertToString());
         cv.put(TableFiled.STATUS, this.getStatus());
 
         cv.put(TableFiled.ALERT, this.getAlert());
-        cv.put(TableFiled.DATE_alert, this.getDate_alert());
+        cv.put(TableFiled.DATE_alert, this.getDate_alert().convertToString());
         cv.put(TableFiled.LOCATION, this.getLocation());
 
         cv.put(TableFiled.TODO_DURATION, this.getTodo_duration());
         cv.put(TableFiled.TODO_NUMBERS, this.getTodo_numbers());
-        cv.put(TableFiled.DATE_ddl, this.getDate_ddl());
+        cv.put(TableFiled.DATE_ddl, this.getDate_ddl().convertToString());
         return cv;
     }
 }

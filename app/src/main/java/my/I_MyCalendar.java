@@ -10,7 +10,7 @@ public interface I_MyCalendar {
     /*--------###数据从自己流向calendar###--------*/
 
     /*产生和自己日期一致的日历对象*/
-    //Calendar convertToCalendar();
+    Calendar convertToCalendar();
 
     /*将日历对象的时间更新为自己的时间*/
     void syncToCalendar(Calendar c);

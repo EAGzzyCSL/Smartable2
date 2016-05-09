@@ -6,9 +6,22 @@ public class MyMoment implements I_MyCalendar {
     private MyDate myDate;
     private MyTime myTime;
 
+    public MyMoment() {
+        this.myDate = new MyDate();
+        this.myTime = new MyTime();
+    }
+
+    public void setTime(int hour, int minute) {
+        myTime.setTime(hour, minute);
+    }
+
     public MyMoment(MyDate myDate, MyTime myTime) {
         this.myDate = myDate;
         this.myTime = myTime;
+    }
+
+    public void setDate(int year, int month, int day) {
+        myDate.setDate(year, month, day);
     }
 
     public int getYear() {
@@ -33,12 +46,13 @@ public class MyMoment implements I_MyCalendar {
     }
 
     public static MyMoment createFromCalendar(Calendar c) {
-        return null;
+        return new MyMoment(MyDate.createFromCalendar(c), MyTime.createFromCalendar(c));
     }
 
     @Override
     public void syncFromCalendar(Calendar c) {
-        //待填充
+        myDate.syncFromCalendar(c);
+        myTime.syncFromCalendar(c);
     }
 
     @Override
@@ -47,8 +61,16 @@ public class MyMoment implements I_MyCalendar {
     }
 
     @Override
+    public Calendar convertToCalendar() {
+        Calendar c = Calendar.getInstance();
+        syncFromCalendar(c);
+        return c;
+    }
+
+    @Override
     public void syncToCalendar(Calendar c) {
-        //待填充
+        myDate.syncFromCalendar(c);
+        myTime.syncFromCalendar(c);
     }
 
     public static MyMoment createFromString(String s) {

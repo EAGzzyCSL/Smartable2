@@ -2,7 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
-import bit.eagzzycsl.smartable2.EnumEntry;
+import my.MyMoment;
 import my.TableFiled;
 
 /**
@@ -16,9 +16,16 @@ public class EntryTheseDays extends Entry {
 
     private String title = null;
     private String annotation = null;
-    private String date_create = null;
+    private MyMoment date_create = null;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）
 
+    public EntryTheseDays(int id,String title,String annotation,MyMoment date_create, String status){
+        this.id=id;
+        this.title=title;
+        this.annotation=annotation;
+        this.date_create=date_create;
+        this.status=status;
+    }
 
     public String getTitle() {
         return title;
@@ -36,11 +43,11 @@ public class EntryTheseDays extends Entry {
         this.annotation = annotation;
     }
 
-    public String getDate_create() {
+    public MyMoment getDate_create() {
         return date_create;
     }
 
-    public void setDate_create(String date_create) {
+    public void setDate_create(MyMoment date_create) {
         this.date_create = date_create;
     }
 
@@ -56,7 +63,7 @@ public class EntryTheseDays extends Entry {
         ContentValues cv = new ContentValues();
         cv.put(TableFiled.TITLE, this.getTitle());
         cv.put(TableFiled.ANNOTATION, this.getAnnotation());
-        cv.put(TableFiled.DATE_CREATE, this.getDate_create());
+        cv.put(TableFiled.DATE_CREATE, this.getDate_create().convertToString());
         cv.put(TableFiled.STATUS, this.getStatus());
         return cv;
     }
