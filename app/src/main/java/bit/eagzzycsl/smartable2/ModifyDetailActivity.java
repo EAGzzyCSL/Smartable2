@@ -31,6 +31,7 @@ import entry.EntrySomeDay;
 import entry.EntryTheseDays;
 import my.MyMoment;
 import my.MyUtil;
+
 public class ModifyDetailActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
@@ -119,9 +120,9 @@ public class ModifyDetailActivity extends AppCompatActivity {
         textView_endTime = (android.support.v7.widget.AppCompatTextView) findViewById(R.id.textView_endTime);
 
         //new
-        linearlaayout_rbtngroup = (LinearLayout)findViewById(R.id.linearlaayout_rbtngroup);
-        linearlayout_aboveKey = (LinearLayout)findViewById(R.id.linearlayout_aboveKey);
-        btn_modify_delete = (Button)findViewById(R.id.btn_modify_delete);
+        linearlaayout_rbtngroup = (LinearLayout) findViewById(R.id.linearlaayout_rbtngroup);
+        linearlayout_aboveKey = (LinearLayout) findViewById(R.id.linearlayout_aboveKey);
+        btn_modify_delete = (Button) findViewById(R.id.btn_modify_delete);
         //new END
     }
 
@@ -133,6 +134,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main_modify_detail, menu);
         return true;
     }
+
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
@@ -210,7 +212,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                     //todo 判断是否有分几次，每次多长时间
                     break;
                 }
-                default: Toast.makeText(ModifyDetailActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                default:
+                    Toast.makeText(ModifyDetailActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
             }
             return true;
         }
@@ -220,7 +223,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
         //new
         //判断是哪一类事物的页面
         Bundle bundle = this.getIntent().getExtras();
-        Entry entry = (Entry)bundle.getSerializable("entry");
+        Entry entry = (Entry) bundle.getSerializable("entry");
         if (entry instanceof EntryShortHand) {//速记
             set_layout_visible(View.GONE, View.GONE, View.GONE, View.GONE, View.GONE);
             edit_barlayout.setBackgroundColor(getResources().getColor(R.color.colorMyOrange));
@@ -265,15 +268,14 @@ public class ModifyDetailActivity extends AppCompatActivity {
         //new END
 
 
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date_ddl = new Date(timeDDL.getYear() - 1900, timeDDL.getMonth() - 1, timeDDL.getDay(), timeDDL.getHour(), timeDDL.getMinute());//年份要减去1900；月份要注意转换， 1月是0
 
 
         Calendar c = Calendar.getInstance();
-        timeStart=MyMoment.createFromCalendar(c);
-        timeEnd=MyMoment.createFromCalendar(c);
-        timeDDL=MyMoment.createFromCalendar(c);
+        timeStart = MyMoment.createFromCalendar(c);
+        timeEnd = MyMoment.createFromCalendar(c);
+        timeDDL = MyMoment.createFromCalendar(c);
 
         textView_startDate.setText(MyPickerDialog.getShortDate(timeStart.getYear(),
                 timeStart.getMonth(), timeStart.getDay()));
@@ -358,7 +360,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         shortHand.setAnnotation("");
                         shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertShortHand(shortHand);
+//                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertShortHand(shortHand);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(shortHand);
 
                         //跳转到显示界面
                         //Intent intent = new Intent(EditActivity.this, Fragment_main_smart_classify.class);
@@ -387,7 +390,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         }
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertSchedule(entrySchedule);
+//                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertSchedule(entrySchedule);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(entrySchedule);
                         break;
                     }
                     case 2: {    //这两天
@@ -396,7 +400,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         theseDays.setAnnotation("");
                         theseDays.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         theseDays.setStatus("1");
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertTheseDays(theseDays);
+//                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertTheseDays(theseDays);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(theseDays);
                         break;
                     }
                     case 3: {    // DDL
@@ -423,7 +428,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         ddl.setTodo_numbers(Integer.valueOf(edit_ddl_expand_et.getText().toString()));//准备做几次
                         ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
 
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertDDL(ddl);
+//                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertDDL(ddl);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(ddl);
 
                         //todo 判断是否有分几次，每次多长时间
                         break;
@@ -480,7 +486,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         shortHand.setAnnotation("");
                         shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertShortHand(shortHand);
+//                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertShortHand(shortHand);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(shortHand);
 
                         //跳转到显示界面
                         //Intent intent = new Intent(EditActivity.this, Fragment_main_smart_classify.class);
@@ -508,7 +515,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         }
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertSchedule(entrySchedule);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(entrySchedule);
+//                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertSchedule(entrySchedule);
                         Toast.makeText(ModifyDetailActivity.this, "成功", Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -518,7 +526,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         theseDays.setAnnotation("");
                         theseDays.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         theseDays.setStatus("1");
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertTheseDays(theseDays);
+//                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertTheseDays(theseDays);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(theseDays);
                         Toast.makeText(ModifyDetailActivity.this, "成功", Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -547,7 +556,8 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         ddl.setTodo_numbers(Integer.valueOf(edit_ddl_expand_et.getText().toString()));//准备做几次
                         ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
 
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertDDL(ddl);
+//                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertDDL(ddl);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(ddl);
                         Toast.makeText(ModifyDetailActivity.this, "成功", Toast.LENGTH_SHORT).show();
 
                         //todo 判断是否有分几次，每次多长时间
@@ -563,28 +573,28 @@ public class ModifyDetailActivity extends AppCompatActivity {
 
     //lily
     //初始化entry具体信息
-    private void show_entry_infor(Entry entry){
+    private void show_entry_infor(Entry entry) {
         id_forModify = entry.getId();
         edit_activity_title.setText(entry.getName());
-        switch (flag_nowWhatPage){
+        switch (flag_nowWhatPage) {
             case 0: {//速记
                 break;
             }
             case 1: {//日程
-                EntrySchedule myentry = (EntrySchedule)entry;
-                if(myentry.getDate_begin().convertToString()!="" && myentry.getDate_begin()!=null){
+                EntrySchedule myentry = (EntrySchedule) entry;
+                if (myentry.getDate_begin().convertToString() != "" && myentry.getDate_begin() != null) {
                     String date_begin[] = myentry.getDate_begin().convertToString().split(" ");
                     textView_startDate.setText(date_begin[0]);
                     textView_startTime.setText(date_begin[1]);
                 }
-                if(myentry.getDate_end().convertToString()!="" && myentry.getDate_end()!=null){
+                if (myentry.getDate_end().convertToString() != "" && myentry.getDate_end() != null) {
                     String date_end[] = myentry.getDate_end().convertToString().split(" ");
                     textView_endDate.setText(date_end[0]);
                     textView_endDate.setText(date_end[1]);
                 }
-                if(myentry.getAlert()=="0" || myentry.getAlert()==null){
+                if (myentry.getAlert() == "0" || myentry.getAlert() == null) {
                     edit_remind_picker.setText("不提醒");
-                }else{
+                } else {
                     edit_remind_picker.setText(myentry.getDate_alert().convertToString());
                 }
                 edit_location_et.setText(myentry.getLocation());
@@ -594,29 +604,31 @@ public class ModifyDetailActivity extends AppCompatActivity {
                 break;
             }
             case 3: {// DDL
-                EntryDeadLine myentry = (EntryDeadLine)entry;
-                if(myentry.getDate_ddl().convertToString()!="" && myentry.getDate_ddl()!=null){
+                EntryDeadLine myentry = (EntryDeadLine) entry;
+                if (myentry.getDate_ddl().convertToString() != "" && myentry.getDate_ddl() != null) {
                     String date_ddl[] = myentry.getDate_ddl().convertToString().split(" ");
                     edit_ddl_datetime_picker.setText(date_ddl[0]);
                     edit_ddl_datetime_picker2.setText(date_ddl[1]);
                 }
-                if(myentry.getAlert()=="0"){
+                if (myentry.getAlert() == "0") {
                     edit_remind_picker.setText("不提醒");
-                }else{
+                } else {
                     edit_remind_picker.setText(myentry.getDate_alert().convertToString());
                 }
                 edit_location_et.setText(myentry.getLocation());
-                if(String.valueOf(myentry.getTodo_duration()) != "" && String.valueOf(myentry.getTodo_duration()) != ""){
-                    edit_ddl_expand_et.setText(""+myentry.getTodo_numbers());
+                if (String.valueOf(myentry.getTodo_duration()) != "" && String.valueOf(myentry.getTodo_duration()) != "") {
+                    edit_ddl_expand_et.setText("" + myentry.getTodo_numbers());
                     int ddl_expand_et2 = myentry.getTodo_duration() / myentry.getTodo_numbers();
-                    edit_ddl_expand_et2.setText(""+ddl_expand_et2);
+                    edit_ddl_expand_et2.setText("" + ddl_expand_et2);
                 }
 
                 break;
             }
-            default:break;
+            default:
+                break;
         }
     }
+
     //控制不同类别entry的各种属性的显示隐藏
     private void set_layout_visible(int visible1, int visible2, int visible3, int visible4, int visible5) {
         linearlayout_schedule.setVisibility(visible1);

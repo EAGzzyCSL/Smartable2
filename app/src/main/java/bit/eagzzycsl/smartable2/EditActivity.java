@@ -117,29 +117,29 @@ public class EditActivity extends AppCompatActivity {
 
         Calendar c = Calendar.getInstance();
 
-        timeStart=MyMoment.createFromCalendar(c);
-        timeEnd=MyMoment.createFromCalendar(c);
-        timeDDL=MyMoment.createFromCalendar(c);
+        timeStart = MyMoment.createFromCalendar(c);
+        timeEnd = MyMoment.createFromCalendar(c);
+        timeDDL = MyMoment.createFromCalendar(c);
 //        timeStart = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
 //        timeEnd = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
 //        timeDDL = new MyTime(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH), c.get(Calendar.HOUR_OF_DAY), 0);
 
-        if((!textView_startDate.equals("")) && textView_startDate != null){
+        if ((!textView_startDate.equals("")) && textView_startDate != null) {
             textView_startDate.setText(MyPickerDialog.getShortDate(timeStart.getYear(), timeStart.getMonth(), timeStart.getDay()));
         }
-        if(!textView_endDate.equals("")){
-           textView_endDate.setText(MyPickerDialog.getShortDate(timeEnd.getYear(), timeEnd.getMonth(), timeEnd.getDay()));
+        if (!textView_endDate.equals("")) {
+            textView_endDate.setText(MyPickerDialog.getShortDate(timeEnd.getYear(), timeEnd.getMonth(), timeEnd.getDay()));
         }
-        if(!textView_startTime.equals("")){
+        if (!textView_startTime.equals("")) {
             textView_startTime.setText(MyPickerDialog.getMoment(timeStart.getHour(), timeStart.getMinute()));
         }
-        if(!textView_endTime.equals("")){
+        if (!textView_endTime.equals("")) {
             textView_endTime.setText(MyPickerDialog.getMoment(timeEnd.getHour(), timeEnd.getMinute()));
         }
-        if(!edit_ddl_datetime_picker.equals("")){
+        if (!edit_ddl_datetime_picker.equals("")) {
             edit_ddl_datetime_picker.setText(MyPickerDialog.getShortDate(timeDDL.getYear(), timeDDL.getMonth(), timeDDL.getDay()));
         }
-        if(!edit_ddl_datetime_picker2.equals("")){
+        if (!edit_ddl_datetime_picker2.equals("")) {
             edit_ddl_datetime_picker2.setText(MyPickerDialog.getMoment(timeDDL.getHour(), timeDDL.getMinute()));
         }
     }
@@ -253,7 +253,8 @@ public class EditActivity extends AppCompatActivity {
                         shortHand.setAnnotation("");
                         shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
-                        DatabaseManager.getInstance(EditActivity.this).insertShortHand(shortHand);
+//                        DatabaseManager.getInstance(EditActivity.this).insertShortHand(shortHand);
+                        DatabaseManager.getInstance(EditActivity.this).insert(shortHand);
 
                         //跳转到显示界面
                         //Intent intent = new Intent(EditActivity.this, Fragment_main_smart_classify.class);
@@ -281,7 +282,8 @@ public class EditActivity extends AppCompatActivity {
                         }
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
-                        DatabaseManager.getInstance(EditActivity.this).insertSchedule(entrySchedule);
+//                        DatabaseManager.getInstance(EditActivity.this).insertSchedule(entrySchedule);
+                        DatabaseManager.getInstance(EditActivity.this).insert(entrySchedule);
                         break;
                     }
                     case 2: {    //这两天
@@ -290,7 +292,8 @@ public class EditActivity extends AppCompatActivity {
                         theseDays.setAnnotation("");
                         theseDays.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         theseDays.setStatus("1");
-                        DatabaseManager.getInstance(EditActivity.this).insertTheseDays(theseDays);
+//                        DatabaseManager.getInstance(EditActivity.this).insertTheseDays(theseDays);
+                        DatabaseManager.getInstance(EditActivity.this).insert(theseDays);
                         break;
                     }
                     case 3: {    // DDL
@@ -317,7 +320,8 @@ public class EditActivity extends AppCompatActivity {
                         ddl.setTodo_numbers(Integer.valueOf(edit_ddl_expand_et.getText().toString()));//准备做几次
                         ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
 
-                        DatabaseManager.getInstance(EditActivity.this).insertDDL(ddl);
+//                        DatabaseManager.getInstance(EditActivity.this).insertDDL(ddl);
+                        DatabaseManager.getInstance(EditActivity.this).insert(ddl);
 
                         //todo 判断是否有分几次，每次多长时间
                         break;

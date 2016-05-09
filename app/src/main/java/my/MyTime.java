@@ -12,13 +12,7 @@ public class MyTime implements I_MyCalendar {
     public void setTime(int hour,int minute){
         valueSet(hour,minute);
     }
-//    public MyTime(int year, int month, int day, int hour, int minute) {
-//        this.year = year;
-//        this.month = month;
-//        this.day = day;
-//        this.hour = hour;
-//        this.minute = minute;
-//    }
+
 
     private void valueSet(int hour, int minute) {
         this.hour = hour;
@@ -31,14 +25,6 @@ public class MyTime implements I_MyCalendar {
 
     public MyTime() {
 
-    }
-
-    public int getYear() {
-        return this.year;
-    }
-
-    public int getMonth() {
-        return this.month;
     }
 
     public int getDay() {
@@ -57,13 +43,6 @@ public class MyTime implements I_MyCalendar {
         return this.getHour() * 60 + this.getMinute();
     }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public void setMonth(int month) {
-        this.month = month;
-    }
 
     public void setDay(int day) {
         this.day = day;
@@ -77,11 +56,6 @@ public class MyTime implements I_MyCalendar {
         this.minute = minute;
     }
 
-    public void setDate(int year, int month, int day) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
-    }
 
     public void setMoment(int hour, int minute) {
         this.hour = hour;
@@ -93,15 +67,6 @@ public class MyTime implements I_MyCalendar {
     }
 
 
-    public Calendar toCalendar() {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month - 1);
-        c.set(Calendar.DAY_OF_MONTH, day);
-        c.set(Calendar.HOUR_OF_DAY, hour);
-        c.set(Calendar.MINUTE, minute);
-        return c;
-    }
 
     public static MyTime createFromCalendar(Calendar c) {
         return new MyTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
@@ -134,4 +99,5 @@ public class MyTime implements I_MyCalendar {
         String[] ss = s.split(":");
         return new MyTime(Integer.valueOf(ss[0]), Integer.valueOf(ss[1]));
     }
+
 }

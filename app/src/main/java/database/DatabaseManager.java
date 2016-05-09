@@ -41,10 +41,10 @@ public class DatabaseManager implements TableFiled {
         return instance;
     }
 
-    //1.1 日程-增 4.19
-    public void insertSchedule(EntrySchedule entrySchedule) {
-        sqLiteDatabase.insert("Schedule", null, entrySchedule.toContentValues());
-    }
+//    //1.1 日程-增 4.19
+//    public void insertSchedule(EntrySchedule entrySchedule) {
+//        sqLiteDatabase.insert("Schedule", null, entrySchedule.toContentValues());
+//    }
 
     //1.2 日程-查
     public ArrayList<Entry> getSchedule() {
@@ -94,10 +94,10 @@ public class DatabaseManager implements TableFiled {
         sqLiteDatabase.update("Schedule", entrySchedule.toContentValues(), "_id = ?", new String[]{String.valueOf(id)});
     }
 
-    //2.1 这两天-增 4.19
-    public void insertTheseDays(EntryTheseDays entryTheseDays) {
-        sqLiteDatabase.insert("TheseDays", null, entryTheseDays.toContentValues());
-    }
+//    //2.1 这两天-增 4.19
+//    public void insertTheseDays(EntryTheseDays entryTheseDays) {
+//        sqLiteDatabase.insert("TheseDays", null, entryTheseDays.toContentValues());
+//    }
 
     //2.2 这两天-查
     public ArrayList<Entry> getTheseDays() {
@@ -126,10 +126,10 @@ public class DatabaseManager implements TableFiled {
         sqLiteDatabase.update("TheseDays", entryTheseDays.toContentValues(), "_id = ?", new String[]{String.valueOf(id)});
     }
 
-    //3.1 DDL-增 4.19
-    public void insertDDL(EntryDeadLine entryDeadLine) {
-        sqLiteDatabase.insert("DDL", null, entryDeadLine.toContentValues());
-    }
+//    //3.1 DDL-增 4.19
+//    public void insertDDL(EntryDeadLine entryDeadLine) {
+//        sqLiteDatabase.insert("DDL", null, entryDeadLine.toContentValues());
+//    }
 
     //3.2 DDL-查
     public ArrayList<Entry> getDDL() {
@@ -165,15 +165,12 @@ public class DatabaseManager implements TableFiled {
         sqLiteDatabase.update("DDL", entryDeadLine.toContentValues(), "_id = ?", new String[]{String.valueOf(id)});
     }
 
-    //5.1 速记-增  4.19
-    public void insertShortHand(EntryShortHand shortHand) {
-        sqLiteDatabase.insert("ShortHand", null, shortHand.toContentValues());
-    }
+//    //5.1 速记-增  4.19
+//    public void insertShortHand(EntryShortHand shortHand) {
+//        sqLiteDatabase.insert("ShortHand", null, shortHand.toContentValues());
+//    }
 
-    public void insert(Entry entry) {
-        //以这个为近似的例子，采用一句话来完成insert和update操作。
-        sqLiteDatabase.insert(entry.getClass().getSimpleName(), null, entry.toContentValues());
-    }
+
 
     //5.2 速记-查询
     public ArrayList<Entry> getShortHand() {
@@ -215,5 +212,9 @@ public class DatabaseManager implements TableFiled {
         if (instance != null)
             instance = null;
     }
-
+    //EAGzzyCSL数据库代码修改
+    public void insert(Entry entry) {
+        //以这个为近似的例子，采用一句话来完成insert和update操作。
+        sqLiteDatabase.insert(entry.getType().getTableName(), null, entry.toContentValues());
+    }
 }

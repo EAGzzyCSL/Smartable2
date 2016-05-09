@@ -8,6 +8,7 @@ import bit.eagzzycsl.smartable2.EnumEntry;
  * Created by EAGzzyCSL on 2016/2/11.
  */
 public class EntryTrigger extends Entry {
+    //TODO triger中的代码还未修改
     public EntryTrigger(String name) {
         super(name);
     }

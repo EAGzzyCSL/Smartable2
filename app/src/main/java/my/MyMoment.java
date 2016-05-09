@@ -10,6 +10,9 @@ public class MyMoment implements I_MyCalendar {
         this.myDate = new MyDate();
         this.myTime = new MyTime();
     }
+    public MyMoment(int year,int month,int day,int hour,int minute){
+        this(new MyDate(year,month,day),new MyTime(hour,minute));
+    }
 
     public void setTime(int hour, int minute) {
         myTime.setTime(hour, minute);
@@ -76,6 +79,19 @@ public class MyMoment implements I_MyCalendar {
     public static MyMoment createFromString(String s) {
         String[] ss = s.split(" ");
         return new MyMoment(MyDate.createFromString(ss[0]), MyTime.createFromString(ss[1]));
+    }
+    public int compareToNow(){
+        return this.compareToNow(Calendar.getInstance());
+    }
+    public int compareToNow(Calendar c){
+        return this.convertToCalendar().compareTo(c);
+    }
+    public int computeDiff(Calendar c){
+        //实现方法不是很好但是比宦的要好
+        return (int)(c.getTimeInMillis()-this.convertToCalendar().getTimeInMillis()/1000);
+    }
+    public int computeDiff(){
+        return computeDiff(Calendar.getInstance());
     }
 
 }

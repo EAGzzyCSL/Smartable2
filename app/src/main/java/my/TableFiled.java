@@ -5,6 +5,12 @@ package my;
  */
 public interface TableFiled {
 
+    interface TableName{
+        String Schedule="Schedule";
+        String TheseDays="TheseDays";
+        String DDL="DDL";
+        String ShortHand="ShortHand";
+    }
     //公有的
     String ID = "_id";
     String TITLE = "title";
