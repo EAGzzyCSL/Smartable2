@@ -26,6 +26,7 @@ import entry.EntryDeadLine;
 import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntryTheseDays;
+import my.MyMoment;
 import my.MyTime;
 import my.MyUtil;
 
@@ -246,7 +247,7 @@ public class EditActivity extends AppCompatActivity {
                         EntryShortHand shortHand = new EntryShortHand(edit_activity_title.getText().toString());
                         shortHand.setTitle(edit_activity_title.getText().toString());
                         shortHand.setAnnotation("");
-                        shortHand.setDate_create(simpleDateFormat.format(now.getTime()));
+                        shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
                         DatabaseManager.getInstance(EditActivity.this).insertShortHand(shortHand);
 
