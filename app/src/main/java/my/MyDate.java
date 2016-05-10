@@ -40,12 +40,18 @@ public class MyDate implements I_MyCalendar {
 
 
     public static MyDate createFromCalendar(Calendar c) {
-        return new MyDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        if (c != null) {
+            return new MyDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void syncFromCalendar(Calendar c) {
-        valueSet(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        if(c!=null){
+            valueSet(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        }
     }
 
     @Override
@@ -63,21 +69,24 @@ public class MyDate implements I_MyCalendar {
     public Calendar convertToCalendar() {
         Calendar c = Calendar.getInstance();
         syncFromCalendar(c);
-
         return c;
     }
 
     @Override
     public void syncToCalendar(Calendar c) {
-        //待填充
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, day);
-
+        if (c != null) {
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month);
+            c.set(Calendar.DAY_OF_MONTH, day);
+        }
     }
 
     public static MyDate createFromString(String s) {
-        String[] ss = s.split("-");
-        return new MyDate(Integer.valueOf(ss[0]), Integer.valueOf(ss[1]), Integer.valueOf(ss[2]));
+        if (s != null) {
+            String[] ss = s.split("-");
+            return new MyDate(Integer.valueOf(ss[0]), Integer.valueOf(ss[1]), Integer.valueOf(ss[2]));
+        } else {
+            return null;
+        }
     }
 }

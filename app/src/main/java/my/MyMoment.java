@@ -53,23 +53,37 @@ public class MyMoment implements I_MyCalendar {
     }
 
     public static MyMoment createFromCalendar(Calendar c) {
-        return new MyMoment(MyDate.createFromCalendar(c), MyTime.createFromCalendar(c));
+        if(c!=null){
+            return new MyMoment(MyDate.createFromCalendar(c), MyTime.createFromCalendar(c));
+        }else{
+            return null;
+        }
     }
 
     @Override
     public void syncFromCalendar(Calendar c) {
-        myDate.syncFromCalendar(c);
-        myTime.syncFromCalendar(c);
+        if(c!=null){
+            myDate.syncFromCalendar(c);
+            myTime.syncFromCalendar(c);
+        }
     }
 
     @Override
     public String convertToString() {
-        return myDate.convertToString() + " " + myTime.convertToString();
+        if(myDate!=null&&myTime!=null){
+            return myDate.convertToString() + " " + myTime.convertToString();
+        }else{
+            return null;
+        }
     }
 
     @Override
     public String convertToLocalString() {
-        return myDate.convertToLocalString() + myTime.convertToLocalString();
+        if(myDate!=null&&myTime!=null){
+            return myDate.convertToLocalString() + myTime.convertToLocalString();
+        }else{
+            return null;
+        }
     }
 
     @Override
@@ -81,13 +95,19 @@ public class MyMoment implements I_MyCalendar {
 
     @Override
     public void syncToCalendar(Calendar c) {
-        myDate.syncFromCalendar(c);
-        myTime.syncFromCalendar(c);
+        if(c!=null){
+            myDate.syncFromCalendar(c);
+            myTime.syncFromCalendar(c);
+        }
     }
 
     public static MyMoment createFromString(String s) {
-        String[] ss = s.split(" ");
-        return new MyMoment(MyDate.createFromString(ss[0]), MyTime.createFromString(ss[1]));
+        if(s!=null){
+            String[] ss = s.split(" ");
+            return new MyMoment(MyDate.createFromString(ss[0]), MyTime.createFromString(ss[1]));
+        }else{
+            return null;
+        }
     }
 
     public int compareToNow() {

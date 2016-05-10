@@ -2,7 +2,6 @@ package my;
 
 
 import java.util.Calendar;
-import java.util.StringTokenizer;
 
 public class MyTime implements I_MyCalendar {
     private int hour;
@@ -55,17 +54,24 @@ public class MyTime implements I_MyCalendar {
     }
 
     public int compareTo(MyTime t) {
+
         return this.toMinutes() - t.toMinutes();
     }
 
 
     public static MyTime createFromCalendar(Calendar c) {
-        return new MyTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        if(c!=null){
+            return new MyTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        }else{
+            return null;
+        }
     }
 
     @Override
     public void syncFromCalendar(Calendar c) {
-        valueSet(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        if(c!=null){
+            valueSet(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        }
     }
 
     @Override
@@ -87,13 +93,19 @@ public class MyTime implements I_MyCalendar {
 
     @Override
     public void syncToCalendar(Calendar c) {
-        c.set(Calendar.HOUR_OF_DAY, hour);
-        c.set(Calendar.MINUTE, minute);
+        if(c!=null){
+            c.set(Calendar.HOUR_OF_DAY, hour);
+            c.set(Calendar.MINUTE, minute);
+        }
     }
 
     public static MyTime createFromString(String s) {
-        String[] ss = s.split(":");
-        return new MyTime(Integer.valueOf(ss[0]), Integer.valueOf(ss[1]));
+        if (s != null) {
+            String[] ss = s.split(":");
+            return new MyTime(Integer.valueOf(ss[0]), Integer.valueOf(ss[1]));
+        } else {
+            return null;
+        }
     }
 
 }

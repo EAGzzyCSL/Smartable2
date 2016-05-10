@@ -61,9 +61,9 @@ public class ModifyDetailActivity extends AppCompatActivity {
     private android.support.v7.widget.AppCompatTextView textView_endDate;
     private android.support.v7.widget.AppCompatTextView textView_startTime;
     private android.support.v7.widget.AppCompatTextView textView_endTime;
-    private MyMoment timeStart = new MyMoment();
-    private MyMoment timeEnd = new MyMoment();
-    private MyMoment timeDDL = new MyMoment();
+    private MyMoment timeStart ;
+    private MyMoment timeEnd ;
+    private MyMoment timeDDL ;
 
     private AlertDialog remindDialog;
     private Button btn_remind_time1;
@@ -259,9 +259,6 @@ public class ModifyDetailActivity extends AppCompatActivity {
         show_entry_infor(entry);
         //new END
 
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date_ddl = new Date(timeDDL.getYear() - 1900, timeDDL.getMonth() - 1, timeDDL.getDay(), timeDDL.getHour(), timeDDL.getMinute());//年份要减去1900；月份要注意转换， 1月是0
 
 
         Calendar c = Calendar.getInstance();
