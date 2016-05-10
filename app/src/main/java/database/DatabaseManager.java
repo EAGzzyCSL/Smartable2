@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
+import bit.eagzzycsl.smartable2.EnumEntry;
 import entry.Entry;
 import entry.EntryDeadLine;
 import entry.EntrySchedule;
@@ -14,6 +15,7 @@ import entry.EntryTheseDays;
 import my.MyDate;
 import my.MyMoment;
 import my.TableFiled;
+import view.EnumCalendricViewType;
 
 /**
  * Created by 宇 on 2016/3/12.
@@ -103,7 +105,7 @@ public class DatabaseManager implements TableFiled {
     public ArrayList<Entry> getTheseDays() {
         ArrayList<Entry> TheseDaysList = new ArrayList<>();
         Cursor c = sqLiteDatabase.rawQuery("select * from TheseDays order by date_create desc", null);
-        while (c.moveToNext()){
+        while (c.moveToNext()) {
             TheseDaysList.add(new EntryTheseDays(
                     c.getInt(c.getColumnIndex(TableFiled.ID)),
                     c.getString(c.getColumnIndex(TableFiled.TITLE)),
@@ -171,7 +173,6 @@ public class DatabaseManager implements TableFiled {
 //    }
 
 
-
     //5.2 速记-查询
     public ArrayList<Entry> getShortHand() {
         ArrayList<Entry> shortHandList = new ArrayList<>();
@@ -212,9 +213,39 @@ public class DatabaseManager implements TableFiled {
         if (instance != null)
             instance = null;
     }
-    //EAGzzyCSL数据库代码修改
-    public void insert(Entry entry) {
+
+    //EAGzzyCSL数据库代码修改，增删查改都可以用一句话来实现
+    public void create(Entry entry) {
         //以这个为近似的例子，采用一句话来完成insert和update操作。
         sqLiteDatabase.insert(entry.getType().getTableName(), null, entry.toContentValues());
+    }
+
+    public void delete(Entry entry) {
+        sqLiteDatabase.delete(entry.getType().getTableName(), "_id = ?",
+                new String[]{
+                        String.valueOf(entry.getId())
+                }
+        );
+    }
+
+    public void update(Entry entry) {
+        sqLiteDatabase.update(entry.getType().getTableName(), entry.toContentValues(), "_id = ?",
+                new String[]{String.valueOf(entry.getId())});
+
+    }
+    //尝试使用类集
+    public ArrayList<? extends Entry> read(EnumEntry enumEntry){
+        ArrayList<EntrySchedule> arr = new ArrayList<>();
+        Cursor c = sqLiteDatabase.rawQuery("select * from "+enumEntry.getTableName(), null);
+        while (c.moveToNext()) {
+            arr.add(new EntrySchedule(
+                    c.getInt(c.getColumnIndex(TableFiled.ID)),
+                    c.getString(c.getColumnIndex(TableFiled.TITLE)),
+                    c.getString(c.getColumnIndex(TableFiled.DATE_begin)),
+                    c.getString(c.getColumnIndex(TableFiled.DATE_end))
+            ));
+        }
+        c.close();
+        return arr;
     }
 }

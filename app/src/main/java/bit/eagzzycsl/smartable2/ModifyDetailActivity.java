@@ -361,7 +361,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
 //                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertShortHand(shortHand);
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(shortHand);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).create(shortHand);
 
                         //跳转到显示界面
                         //Intent intent = new Intent(EditActivity.this, Fragment_main_smart_classify.class);
@@ -391,7 +391,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
 //                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertSchedule(entrySchedule);
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(entrySchedule);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).create(entrySchedule);
                         break;
                     }
                     case 2: {    //这两天
@@ -401,7 +401,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         theseDays.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         theseDays.setStatus("1");
 //                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertTheseDays(theseDays);
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(theseDays);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).create(theseDays);
                         break;
                     }
                     case 3: {    // DDL
@@ -429,7 +429,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
 
 //                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertDDL(ddl);
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(ddl);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).create(ddl);
 
                         //todo 判断是否有分几次，每次多长时间
                         break;
@@ -487,7 +487,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
 //                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertShortHand(shortHand);
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(shortHand);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).create(shortHand);
 
                         //跳转到显示界面
                         //Intent intent = new Intent(EditActivity.this, Fragment_main_smart_classify.class);
@@ -515,7 +515,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         }
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(entrySchedule);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).create(entrySchedule);
 //                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertSchedule(entrySchedule);
                         Toast.makeText(ModifyDetailActivity.this, "成功", Toast.LENGTH_SHORT).show();
                         break;
@@ -527,7 +527,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         theseDays.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         theseDays.setStatus("1");
 //                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertTheseDays(theseDays);
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(theseDays);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).create(theseDays);
                         Toast.makeText(ModifyDetailActivity.this, "成功", Toast.LENGTH_SHORT).show();
                         break;
                     }
@@ -557,7 +557,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
 
 //                        DatabaseManager.getInstance(ModifyDetailActivity.this).insertDDL(ddl);
-                        DatabaseManager.getInstance(ModifyDetailActivity.this).insert(ddl);
+                        DatabaseManager.getInstance(ModifyDetailActivity.this).create(ddl);
                         Toast.makeText(ModifyDetailActivity.this, "成功", Toast.LENGTH_SHORT).show();
 
                         //todo 判断是否有分几次，每次多长时间

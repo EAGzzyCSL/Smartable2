@@ -1,12 +1,9 @@
 package algorithm;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 
 
 import entry.Entry;
@@ -21,20 +18,18 @@ import my.MyMoment;
 /*
 author:宦
  */
-class Sort implements Comparator {
-
-    @Override
-    public int compare(Object o1, Object o2) {
-        return ((Entry) o1).getPriority() < ((Entry) o2).getPriority() ? 1 : -1;
-    }
-}
 
 public class Recently {
-    static ArrayList schedule, note, ans, in;//ans为最后结果，有序，内容与in一样，in是输入Entry
+    private static Comparator<Entry> myComparator = new Comparator<Entry>() {
+        @Override
+        public int compare(Entry lhs, Entry rhs) {
+            return lhs.getPriority() < rhs.getPriority() ? 1 : -1;
+        }
+    };
     static double sea, seb, tria, ddla;
     static double theseday, shor, dream, upper, ispass;
 
-    static void init() {
+    private static void init() {
         sea = 4000;
         seb = 4000;
         tria = 4000;
@@ -43,65 +38,30 @@ public class Recently {
         shor = 800;
         ispass = 3;
         upper = 10;
-        in = new ArrayList();
-        //一下in里面均为测试部分
-        EntryDeadLine a = new EntryDeadLine("汇编");
-//        a.setDate_ddl("2016-05-07 00:00:00");
-        a.setDate_ddl(new MyMoment(2016,05,07,0,0));
-        in.add(a);
-//        EntryTrigger b = new EntryTrigger("编译");
-//        b.setDate_begin("2016-05-07 00:00:00");
-//        b.setDate_begin(new MyMoment(2016,05,07,0,0));
-//        in.add(b);
-        EntrySchedule c = new EntrySchedule("理发");
-        c.setDate_begin(new MyMoment(2016,05,05,0,0));
-//        c.setDate_begin("2016-05-05 00:00:00");
+    }
 
-//        c.setDate_end("2016-05-07 00:00:00");
-        c.setDate_end(new MyMoment(2016,05,07,0,0));
+    private static ArrayList<Entry> createTestDate() {
+        ArrayList<Entry> in = new ArrayList<>();
+        EntryDeadLine a = new EntryDeadLine("汇编");
+        a.setDate_ddl(new MyMoment(2016, 5, 7, 0, 0));
+        in.add(a);
+        EntrySchedule c = new EntrySchedule("理发");
+        c.setDate_begin(new MyMoment(2016, 5, 5, 0, 0));
+        c.setDate_end(new MyMoment(2016, 5, 7, 0, 0));
         in.add(c);
         EntryShortHand d = new EntryShortHand("吃饭");
-//        d.setDate_create("2016-05-01 00:00:00");
-        d.setDate_create(new MyMoment(2016,05,01,0,0));
+        d.setDate_create(new MyMoment(2016, 5, 1, 0, 0));
         d.setIsUpper("1");
         in.add(d);
         EntryShortHand f;
         f = new EntryShortHand("哈哈");
-//        f.setDate_create("2016-05-01 00:00:00");
-        f.setDate_create(new MyMoment(2016,05,01,0,0));
+        f.setDate_create(new MyMoment(2016, 5, 1, 0, 0));
         in.add(f);
-        schedule = new ArrayList();
-        note = new ArrayList();
-        ans = new ArrayList();
+
+        return in;
     }
 
-    static int gettime(String time) {
-        int s = 0;
-        for (int i = 0; i < 4; i++) {
-            s = s * 10 + time.charAt(i) - '0';
-        }
-        s = s * 24 * 3600 * 365;
-        int mounth = (time.charAt(5) - '0') * 10 + (time.charAt(6) - '0');
-        int day = (time.charAt(8) - '0') * 10 + (time.charAt(9) - '0');
-        int hour = (time.charAt(11) - '0') * 10 + (time.charAt(12) - '0');
-        int mint = (time.charAt(14) - '0') * 10 + (time.charAt(15) - '0');
-        int sec = (time.charAt(17) - '0') * 10 + (time.charAt(18) - '0');
-        s += mounth * 30 * 24 * 3600;
-        s += day * 24 * 3600;
-        s += hour * 3600;
-        s += mint * 60;
-        s += sec;
-        return s;
-    }
-
-    static String getnotime() {
-        Date date = new Date();
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = format.format(date);
-        return time;
-    }
-
-    static double getDeadline(EntryDeadLine a) {
+    private static double getDeadline(EntryDeadLine a) {
         Calendar c = Calendar.getInstance();
         if (a.getDate_ddl().compareToNow(c) <= 0) {
             return 0;
@@ -110,71 +70,59 @@ public class Recently {
         return ddla / w;
     }
 
-    static double getShedule(EntrySchedule a) {
+    private static double getShedule(EntrySchedule a) {
         Calendar c = Calendar.getInstance();
-//        String no = getnotime();
-        if(a.getDate_end().compareToNow(c)<=0){
+        if (a.getDate_end().compareToNow(c) <= 0) {
             return 0;
         }
-//        if (no.compareTo(a.getDate_end()) > 0) {
-//            return 0;
-//        }
         int w;
-        if(a.getDate_begin().compareToNow(c)<=0){
-            w=a.getDate_end().computeDiff(c);
+        if (a.getDate_begin().compareToNow(c) <= 0) {
+            w = a.getDate_end().computeDiff(c);
             return seb * ispass / w;
 
         }
-//        if (no.compareTo(a.getDate_begin()) > 0) {
-//            w = gettime(a.getDate_end()) - gettime(no);
-//            return seb * ispass / w;
-//        }
-        w=a.getDate_end().computeDiff(c);
-//        w = gettime(a.getDate_end()) - gettime(no);
-//        int w1 = gettime(a.getDate_begin()) - gettime(no);
-        int w1=a.getDate_begin().computeDiff(c);
-        double s = sea / w1 + seb / w;
-        return s;
+        w = a.getDate_end().computeDiff(c);
+        int w1 = a.getDate_begin().computeDiff(c);
+        return sea / w1 + seb / w;
     }
 
-    static double gettrigger(EntryTrigger a) {
-        String no = getnotime();
-        if (no.compareTo(a.getDate_begin()) > 0) {
+    private static double gettrigger(EntryTrigger a) {
+        Calendar c = Calendar.getInstance();
+        if (a.getDate_begin().compareToNow(c) <= 0) {
             return 0;
         }
-        int w = gettime(a.getDate_begin()) - gettime(no);
+
+        int w = a.getDate_begin().computeDiff(c);
         return tria / w;
     }
 
-    static double gettheseday(EntryTheseDays a) {
-        String no = getnotime();
-        int w=-a.getDate_create().computeDiff();
-//        int w = gettime(no) - gettime(a.getDate_create());
+    private static double gettheseday(EntryTheseDays a) {
+        int w = -a.getDate_create().computeDiffWithNow();
         return theseday / w;
     }
 
-    static double getShorthand(EntryShortHand a) {
-        String no = getnotime();
-        int w=-a.getDate_create().computeDiff();
-//        int w = gettime(no) - gettime(a.getDate_create());
+    private static double getShorthand(EntryShortHand a) {
+        int w = -a.getDate_create().computeDiffWithNow();
         if (a.getIsUpper() == "1") {
             return shor * upper / w;
         }
         return shor / w;
     }
 
-    static double getdream(EntrySomeDay a) {
-        String no = getnotime();
-        int w = gettime(no) - gettime(a.getDate_create());
+    private static double getdream(EntrySomeDay a) {
+        int w = -(a.getDate_create().computeDiffWithNow());
         return dream / w;
     }
 
 
-    static void exec() {
+    private static ArrayList<Entry> exec(ArrayList<Entry> in) {
         init();
+        ArrayList<Entry> schedule = new ArrayList<>();
+        ArrayList<Entry> note = new ArrayList<>();
+        ArrayList<Entry> ans = new ArrayList<>();
         int p = in.size();
         for (int i = 0; i < p; i++) {
-            Entry c = (Entry) in.get(i);
+            Entry c = in.get(i);
             switch (c.getType()) {
                 case deadLine: {
                     EntryDeadLine a = c.castEntryDeadLine();
@@ -192,28 +140,33 @@ public class Recently {
                     EntryTrigger a = c.castEntryTrigger();
                     a.setPriority(gettrigger(a));
                     schedule.add(a);
+                    break;
                 }
                 case someDay: {
                     EntrySomeDay a = (EntrySomeDay) c;
                     a.setPriority(getdream(a));
                     note.add(a);
+                    break;
                 }
                 case shortHand: {
                     EntryShortHand a = (EntryShortHand) c;
                     a.setPriority(getShorthand(a));
                     note.add(a);
+                    break;
                 }
                 case theseDays: {
                     EntryTheseDays a = (EntryTheseDays) c;
                     a.setPriority(gettheseday(a));
                     note.add(a);
+                    break;
                 }
 
             }
         }
-        Collections.sort(schedule, new Sort());
-        Collections.sort(note, new Sort());
-        int tot = 0;
+        Collections.sort(schedule, myComparator);
+        Collections.sort(note, myComparator);
+        Collections.sort(note, myComparator);
+        int tot;
         p = schedule.size();
         int x = 0, y = 0, z = 0;
         if (p < 9) {
@@ -224,7 +177,7 @@ public class Recently {
         } else {
             tot = 9;
             for (int i = 0; i < 9; i++) {
-                Object c = schedule.get(i);
+                Entry c = schedule.get(i);
                 if (c instanceof EntrySchedule) {
                     x++;
                 } else if (c instanceof EntryTrigger) {
@@ -234,7 +187,7 @@ public class Recently {
             if (x < 2) {
                 x = 0;
                 for (int i = 0; i < p; i++) {
-                    Object c = schedule.get(i);
+                    Entry c = schedule.get(i);
                     if (c instanceof EntrySchedule) {
                         x++;
                         if (x == 2) break;
@@ -245,7 +198,7 @@ public class Recently {
             if (y < 2) {
                 y = 0;
                 for (int i = 0; i < p; i++) {
-                    Object c = schedule.get(i);
+                    Entry c = schedule.get(i);
                     if (c instanceof EntryTrigger) {
                         y++;
                         if (y == 2) break;
@@ -255,7 +208,7 @@ public class Recently {
             if (z < 2) {
                 z = 0;
                 for (int i = 0; i < p; i++) {
-                    Object c = schedule.get(i);
+                    Entry c = schedule.get(i);
                     if (c instanceof EntryDeadLine) {
                         z++;
                         if (z == 2) break;
@@ -280,7 +233,7 @@ public class Recently {
                 }
             }
             for (int i = 0; i < p; i++) {
-                Object c = schedule.get(i);
+                Entry c = schedule.get(i);
                 if (c instanceof EntrySchedule) {
                     x--;
                     ans.add(c);
@@ -288,7 +241,7 @@ public class Recently {
                 }
             }
             for (int i = 0; i < p; i++) {
-                Object c = schedule.get(i);
+                Entry c = schedule.get(i);
                 if (c instanceof EntryTrigger) {
                     y--;
                     ans.add(c);
@@ -296,7 +249,7 @@ public class Recently {
                 }
             }
             for (int i = 0; i < p; i++) {
-                Object c = schedule.get(i);
+                Entry c = schedule.get(i);
                 if (c instanceof EntryDeadLine) {
                     z--;
                     ans.add(c);
@@ -310,7 +263,7 @@ public class Recently {
         z = 0;
         int k = 0;
         for (int i = 0; i < p; i++) {
-            Object c = note.get(i);
+            Entry c = note.get(i);
             if (c instanceof EntryShortHand) {
                 EntryShortHand a = (EntryShortHand) c;
                 if (a.getIsUpper() == "1") {
@@ -324,7 +277,7 @@ public class Recently {
         while (x + y + k + z + tot < 12) {
             int f = 0;
             for (int i = prex; i < p; i++) {
-                Object c = note.get(i);
+                Entry c = note.get(i);
                 if (c instanceof EntryTheseDays) {
                     EntryTheseDays a = (EntryTheseDays) c;
                     ans.add(a);
@@ -336,7 +289,7 @@ public class Recently {
             }
             if (x == 0) {
                 for (int i = prey; i < p; i++) {
-                    Object c = note.get(i);
+                    Entry c = note.get(i);
                     if (c instanceof EntryShortHand) {
                         EntryShortHand a = (EntryShortHand) c;
                         ans.add(a);
@@ -348,7 +301,7 @@ public class Recently {
                 }
             }
             for (int i = prez; i < p; i++) {
-                Object c = note.get(i);
+                Entry c = note.get(i);
                 if (c instanceof EntrySomeDay) {
                     EntrySomeDay a = (EntrySomeDay) c;
                     ans.add(a);
@@ -360,7 +313,7 @@ public class Recently {
             }
             if (x != 0) {
                 for (int i = prey; i < p; i++) {
-                    Object c = note.get(i);
+                    Entry c = note.get(i);
                     if (c instanceof EntryShortHand) {
                         EntryShortHand a = (EntryShortHand) c;
                         if (a.getIsUpper() == "1") continue;
@@ -374,14 +327,25 @@ public class Recently {
             }
             if (f == 0) break;
         }
-        Collections.sort(ans, new Sort());
-        p = ans.size();
-        for (int i = 0; i < p; i++) {
-            System.out.println(((Entry) ans.get(i)).getName());
-        }
+        Collections.sort(ans, myComparator);
+
+        return ans;
+
     }
 
-    static public void main(String[] args) {
-        exec();
+    public static ArrayList<Entry> sort(ArrayList<Entry> in) {
+        ArrayList<Entry> ans = exec(in);
+        printResult(ans);
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        sort(createTestDate());
+    }
+
+    private static void printResult(ArrayList<Entry> ans) {
+        for (Entry entry : ans) {
+            System.out.println(entry.getName());
+        }
     }
 }

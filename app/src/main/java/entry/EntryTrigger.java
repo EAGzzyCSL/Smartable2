@@ -3,6 +3,7 @@ package entry;
 import android.content.ContentValues;
 
 import bit.eagzzycsl.smartable2.EnumEntry;
+import my.MyMoment;
 
 /**
  * Created by EAGzzyCSL on 2016/2/11.
@@ -16,8 +17,8 @@ public class EntryTrigger extends Entry {
     public void setDate_begin(String date_begin) {
         this.date_begin = date_begin;
     }
-    public String getDate_begin() {
-        return date_begin;
+    public MyMoment getDate_begin() {
+        return null;
     }
     @Override
     public ContentValues toContentValues() {

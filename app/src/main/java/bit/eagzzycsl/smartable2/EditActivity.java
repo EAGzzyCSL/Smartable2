@@ -254,7 +254,7 @@ public class EditActivity extends AppCompatActivity {
                         shortHand.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         shortHand.setStatus("1");
 //                        DatabaseManager.getInstance(EditActivity.this).insertShortHand(shortHand);
-                        DatabaseManager.getInstance(EditActivity.this).insert(shortHand);
+                        DatabaseManager.getInstance(EditActivity.this).create(shortHand);
 
                         //跳转到显示界面
                         //Intent intent = new Intent(EditActivity.this, Fragment_main_smart_classify.class);
@@ -283,7 +283,7 @@ public class EditActivity extends AppCompatActivity {
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
 //                        DatabaseManager.getInstance(EditActivity.this).insertSchedule(entrySchedule);
-                        DatabaseManager.getInstance(EditActivity.this).insert(entrySchedule);
+                        DatabaseManager.getInstance(EditActivity.this).create(entrySchedule);
                         break;
                     }
                     case 2: {    //这两天
@@ -293,7 +293,7 @@ public class EditActivity extends AppCompatActivity {
                         theseDays.setDate_create(MyMoment.createFromCalendar(Calendar.getInstance()));
                         theseDays.setStatus("1");
 //                        DatabaseManager.getInstance(EditActivity.this).insertTheseDays(theseDays);
-                        DatabaseManager.getInstance(EditActivity.this).insert(theseDays);
+                        DatabaseManager.getInstance(EditActivity.this).create(theseDays);
                         break;
                     }
                     case 3: {    // DDL
@@ -321,7 +321,7 @@ public class EditActivity extends AppCompatActivity {
                         ddl.setTodo_duration(Integer.valueOf(edit_ddl_expand_et2.getText().toString()) * Integer.valueOf(edit_ddl_expand_et.getText().toString()));//总共做多长时间
 
 //                        DatabaseManager.getInstance(EditActivity.this).insertDDL(ddl);
-                        DatabaseManager.getInstance(EditActivity.this).insert(ddl);
+                        DatabaseManager.getInstance(EditActivity.this).create(ddl);
 
                         //todo 判断是否有分几次，每次多长时间
                         break;

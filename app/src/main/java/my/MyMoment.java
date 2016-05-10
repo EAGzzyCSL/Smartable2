@@ -90,7 +90,7 @@ public class MyMoment implements I_MyCalendar {
         //实现方法不是很好但是比宦的要好
         return (int)(c.getTimeInMillis()-this.convertToCalendar().getTimeInMillis()/1000);
     }
-    public int computeDiff(){
+    public int computeDiffWithNow(){
         return computeDiff(Calendar.getInstance());
     }
 

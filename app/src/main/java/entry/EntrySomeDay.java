@@ -3,6 +3,7 @@ package entry;
 import android.content.ContentValues;
 
 import bit.eagzzycsl.smartable2.EnumEntry;
+import my.MyMoment;
 
 /**
  * Created by EAGzzyCSL on 2016/2/11.
@@ -18,8 +19,8 @@ public class EntrySomeDay extends Entry {
         return null;
     }
     private String date_create = null;
-    public String getDate_create() {
-        return date_create;
+    public MyMoment getDate_create() {
+        return null;
     }
 
     private String title;

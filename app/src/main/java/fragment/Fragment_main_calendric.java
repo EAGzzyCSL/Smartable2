@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import adapter.Adapter_view_calendric;
 import bit.eagzzycsl.smartable2.EditActivity;
+import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.R;
 import database.DatabaseManager;
 import entry.EntrySchedule;
@@ -70,7 +71,7 @@ public class Fragment_main_calendric extends Fragment {
                 new CalendricViewItemProvider() {
                     @Override
                     public ArrayList<EntrySchedule> readFromDatabase(int i) {
-                        return DatabaseManager.getInstance(getActivity()).readSchedule_byDate(null);
+                        return (ArrayList<EntrySchedule>) DatabaseManager.getInstance(getActivity()).read(EnumEntry.schedule);
                     }
                 },
                 new CalendricViewItemClick() {
