@@ -12,13 +12,16 @@ public class MyDate implements I_MyCalendar {
         this.month = month;
         this.day = day;
     }
-    public void setDate(int year,int month,int day){
-        valueSet(year,month,day);
+
+    public void setDate(int year, int month, int day) {
+        valueSet(year, month, day);
     }
+
     public MyDate(int year, int month, int day) {
         valueSet(year, month, day);
     }
-    public MyDate(){
+
+    public MyDate() {
 
     }
 
@@ -52,8 +55,13 @@ public class MyDate implements I_MyCalendar {
     }
 
     @Override
+    public String convertToLocalString() {
+        return String.format("%d年%d月%d日", year, month, day);
+    }
+
+    @Override
     public Calendar convertToCalendar() {
-        Calendar c=Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         syncFromCalendar(c);
 
         return c;
@@ -62,9 +70,9 @@ public class MyDate implements I_MyCalendar {
     @Override
     public void syncToCalendar(Calendar c) {
         //待填充
-        c.set(Calendar.YEAR,year);
-        c.set(Calendar.MONTH,month);
-        c.set(Calendar.DAY_OF_MONTH,day);
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, day);
 
     }
 

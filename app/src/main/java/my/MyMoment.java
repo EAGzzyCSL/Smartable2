@@ -10,8 +10,12 @@ public class MyMoment implements I_MyCalendar {
         this.myDate = new MyDate();
         this.myTime = new MyTime();
     }
-    public MyMoment(int year,int month,int day,int hour,int minute){
-        this(new MyDate(year,month,day),new MyTime(hour,minute));
+    public static MyMoment getNow(){
+        return MyMoment.createFromCalendar(Calendar.getInstance());
+    }
+
+    public MyMoment(int year, int month, int day, int hour, int minute) {
+        this(new MyDate(year, month, day), new MyTime(hour, minute));
     }
 
     public void setTime(int hour, int minute) {
@@ -64,6 +68,11 @@ public class MyMoment implements I_MyCalendar {
     }
 
     @Override
+    public String convertToLocalString() {
+        return myDate.convertToLocalString() + myTime.convertToLocalString();
+    }
+
+    @Override
     public Calendar convertToCalendar() {
         Calendar c = Calendar.getInstance();
         syncFromCalendar(c);
@@ -80,18 +89,28 @@ public class MyMoment implements I_MyCalendar {
         String[] ss = s.split(" ");
         return new MyMoment(MyDate.createFromString(ss[0]), MyTime.createFromString(ss[1]));
     }
-    public int compareToNow(){
+
+    public int compareToNow() {
         return this.compareToNow(Calendar.getInstance());
     }
-    public int compareToNow(Calendar c){
+
+    public int compareToNow(Calendar c) {
         return this.convertToCalendar().compareTo(c);
     }
-    public int computeDiff(Calendar c){
+
+    public int computeDiff(Calendar c) {
         //实现方法不是很好但是比宦的要好
-        return (int)(c.getTimeInMillis()-this.convertToCalendar().getTimeInMillis()/1000);
+        return (int) (c.getTimeInMillis() - this.convertToCalendar().getTimeInMillis() / 1000);
     }
-    public int computeDiffWithNow(){
+
+    public int computeDiffWithNow() {
         return computeDiff(Calendar.getInstance());
+    }
+    public MyDate getDate(){
+        return this.myDate;
+    }
+    public MyTime getTime(){
+        return this.myTime;
     }
 
 }

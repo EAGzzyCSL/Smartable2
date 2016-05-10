@@ -34,5 +34,7 @@ public interface I_MyCalendar {
     /*这里也是同样的问题，替代方法为在各个类中写三遍*/
     //static Object createFromString(String s);
 
+    /*将时间转换为xx年xx月xx日格式*/
+     String convertToLocalString();
 
 }

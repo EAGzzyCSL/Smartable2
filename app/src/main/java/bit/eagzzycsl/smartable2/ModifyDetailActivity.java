@@ -163,11 +163,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         entrySchedule.setAlert("0");
                     } else {
                         entrySchedule.setAlert("1");//提醒标记
-                        try {
-                            entrySchedule.setDate_alert(MyUtil.getAlertTime(timeStart, edit_remind_picker.getText().toString()));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        entrySchedule.setDate_alert(MyUtil.getAlertTime(timeStart, edit_remind_picker.getText().toString()));
                     }
                     entrySchedule.setLocation(edit_location_et.getText().toString());
 
@@ -195,11 +191,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                         ddl.setAlert("0");
                     } else {
                         ddl.setAlert("1");//提醒标记
-                        try {
-                            ddl.setDate_alert(MyUtil.getAlertTime(timeDDL, edit_remind_picker.getText().toString()));
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
+                        ddl.setDate_alert(MyUtil.getAlertTime(timeDDL, edit_remind_picker.getText().toString()));
                     }
                     ddl.setLocation(edit_location_et.getText().toString());
 
@@ -277,15 +269,12 @@ public class ModifyDetailActivity extends AppCompatActivity {
         timeEnd = MyMoment.createFromCalendar(c);
         timeDDL = MyMoment.createFromCalendar(c);
 
-        textView_startDate.setText(MyPickerDialog.getShortDate(timeStart.getYear(),
-                timeStart.getMonth(), timeStart.getDay()));
-        textView_endDate.setText(MyPickerDialog.getShortDate(timeEnd.getYear(),
-                timeEnd.getMonth(), timeEnd.getDay()));
-        textView_startTime.setText(MyPickerDialog.getMoment(timeStart.getHour(), timeStart.getMinute()));
-        textView_endTime.setText(MyPickerDialog.getMoment(timeEnd.getHour(), timeEnd.getMinute()));
-        edit_ddl_datetime_picker.setText(MyPickerDialog.getShortDate(timeDDL.getYear(),
-                timeDDL.getMonth(), timeDDL.getDay()));
-        edit_ddl_datetime_picker2.setText(MyPickerDialog.getMoment(timeDDL.getHour(), timeDDL.getMinute()));
+        textView_startDate.setText(timeStart.getDate().convertToLocalString());
+        textView_endDate.setText(timeEnd.getDate().convertToLocalString());
+        textView_startTime.setText(timeStart.getTime().convertToLocalString());
+        textView_endTime.setText(timeEnd.getTime().convertToLocalString());
+        edit_ddl_datetime_picker.setText(timeDDL.getDate().convertToLocalString());
+        edit_ddl_datetime_picker2.setText(timeDDL.getTime().convertToLocalString());
 
     }
 
@@ -382,11 +371,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                             entrySchedule.setAlert("0");
                         } else {
                             entrySchedule.setAlert("1");//提醒标记
-                            try {
-                                entrySchedule.setDate_alert(MyUtil.getAlertTime(timeStart, edit_remind_picker.getText().toString()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            entrySchedule.setDate_alert(MyUtil.getAlertTime(timeStart, edit_remind_picker.getText().toString()));
                         }
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
@@ -416,11 +401,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                             ddl.setAlert("0");
                         } else {
                             ddl.setAlert("1");//提醒标记
-                            try {
-                                ddl.setDate_alert(MyUtil.getAlertTime(timeDDL, edit_remind_picker.getText().toString()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            ddl.setDate_alert(MyUtil.getAlertTime(timeDDL, edit_remind_picker.getText().toString()));
                         }
                         ddl.setLocation(edit_location_et.getText().toString());
 
@@ -507,11 +488,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                             entrySchedule.setAlert("0");
                         } else {
                             entrySchedule.setAlert("1");//提醒标记
-                            try {
-                                entrySchedule.setDate_alert(MyUtil.getAlertTime(timeStart, edit_remind_picker.getText().toString()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            entrySchedule.setDate_alert(MyUtil.getAlertTime(timeStart, edit_remind_picker.getText().toString()));
                         }
                         entrySchedule.setLocation(edit_location_et.getText().toString());
 
@@ -544,11 +521,7 @@ public class ModifyDetailActivity extends AppCompatActivity {
                             ddl.setAlert("0");
                         } else {
                             ddl.setAlert("1");//提醒标记
-                            try {
-                                ddl.setDate_alert(MyUtil.getAlertTime(timeDDL, edit_remind_picker.getText().toString()));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            ddl.setDate_alert(MyUtil.getAlertTime(timeDDL, edit_remind_picker.getText().toString()));
                         }
                         ddl.setLocation(edit_location_et.getText().toString());
 

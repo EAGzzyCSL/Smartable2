@@ -2,15 +2,14 @@ package my;
 
 
 import java.util.Calendar;
+import java.util.StringTokenizer;
 
 public class MyTime implements I_MyCalendar {
-    private int year;
-    private int month;
-    private int day;
     private int hour;
     private int minute;
-    public void setTime(int hour,int minute){
-        valueSet(hour,minute);
+
+    public void setTime(int hour, int minute) {
+        valueSet(hour, minute);
     }
 
 
@@ -27,9 +26,6 @@ public class MyTime implements I_MyCalendar {
 
     }
 
-    public int getDay() {
-        return this.day;
-    }
 
     public int getHour() {
         return this.hour;
@@ -43,10 +39,6 @@ public class MyTime implements I_MyCalendar {
         return this.getHour() * 60 + this.getMinute();
     }
 
-
-    public void setDay(int day) {
-        this.day = day;
-    }
 
     public void setHour(int hour) {
         this.hour = hour;
@@ -67,7 +59,6 @@ public class MyTime implements I_MyCalendar {
     }
 
 
-
     public static MyTime createFromCalendar(Calendar c) {
         return new MyTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
     }
@@ -83,16 +74,21 @@ public class MyTime implements I_MyCalendar {
     }
 
     @Override
+    public String convertToLocalString() {
+        return String.format("%d分%d秒", hour, minute);
+    }
+
+    @Override
     public Calendar convertToCalendar() {
-        Calendar c=Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         syncFromCalendar(c);
         return c;
     }
 
     @Override
     public void syncToCalendar(Calendar c) {
-        c.set(Calendar.HOUR_OF_DAY,hour);
-        c.set(Calendar.MINUTE,minute);
+        c.set(Calendar.HOUR_OF_DAY, hour);
+        c.set(Calendar.MINUTE, minute);
     }
 
     public static MyTime createFromString(String s) {

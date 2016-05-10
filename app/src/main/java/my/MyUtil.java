@@ -21,7 +21,7 @@ public class MyUtil {
     }
 
     //传过来一个日期和时间，并给一个提醒类型，返回一个具体的提醒时间
-    public static MyMoment getAlertTime(MyMoment date, String remind_picker) throws ParseException {
+    public static MyMoment getAlertTime(MyMoment date, String remind_picker)  {
         Calendar c = date.convertToCalendar();
 
         switch (remind_picker) {
