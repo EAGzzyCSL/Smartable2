@@ -24,10 +24,11 @@ public class CalendricView extends ViewPager {
         @Override
         public void onPageScrolled(int i, float v, int i1) {
             /*同步滚动*/
-            int scrollY = myAdapter.getPage_b().myGetScroll();
-            myAdapter.getPage_a().mySetScroll(scrollY);
-            myAdapter.getPage_c().mySetScroll(scrollY);
-
+            if (myAdapter != null && myAdapter.getPage_b() != null) {
+                int scrollY = myAdapter.getPage_b().myGetScroll();
+                myAdapter.getPage_a().mySetScroll(scrollY);
+                myAdapter.getPage_c().mySetScroll(scrollY);
+            }
         }
 
         @Override

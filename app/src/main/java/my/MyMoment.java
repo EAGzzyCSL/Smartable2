@@ -1,8 +1,9 @@
 package my;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class MyMoment implements I_MyCalendar {
+public class MyMoment implements I_MyCalendar, Serializable {
     private MyDate myDate;
     private MyTime myTime;
 
@@ -10,7 +11,16 @@ public class MyMoment implements I_MyCalendar {
         this.myDate = new MyDate();
         this.myTime = new MyTime();
     }
-    public static MyMoment getNow(){
+
+    public MyMoment add() {
+        //TODO 纯属写了用来当测试使用，一定要重构
+        MyMoment m = new MyMoment();
+        m.setDate(this.getYear(), this.getMonth(), this.getDay());
+        m.setTime(this.getHour() + 1, this.getMinute());
+        return m;
+    }
+
+    public static MyMoment getNow() {
         return MyMoment.createFromCalendar(Calendar.getInstance());
     }
 
@@ -53,16 +63,16 @@ public class MyMoment implements I_MyCalendar {
     }
 
     public static MyMoment createFromCalendar(Calendar c) {
-        if(c!=null){
+        if (c != null) {
             return new MyMoment(MyDate.createFromCalendar(c), MyTime.createFromCalendar(c));
-        }else{
+        } else {
             return null;
         }
     }
 
     @Override
     public void syncFromCalendar(Calendar c) {
-        if(c!=null){
+        if (c != null) {
             myDate.syncFromCalendar(c);
             myTime.syncFromCalendar(c);
         }
@@ -70,18 +80,18 @@ public class MyMoment implements I_MyCalendar {
 
     @Override
     public String convertToString() {
-        if(myDate!=null&&myTime!=null){
+        if (myDate != null && myTime != null) {
             return myDate.convertToString() + " " + myTime.convertToString();
-        }else{
+        } else {
             return null;
         }
     }
 
     @Override
     public String convertToLocalString() {
-        if(myDate!=null&&myTime!=null){
+        if (myDate != null && myTime != null) {
             return myDate.convertToLocalString() + myTime.convertToLocalString();
-        }else{
+        } else {
             return null;
         }
     }
@@ -95,17 +105,17 @@ public class MyMoment implements I_MyCalendar {
 
     @Override
     public void syncToCalendar(Calendar c) {
-        if(c!=null){
+        if (c != null) {
             myDate.syncFromCalendar(c);
             myTime.syncFromCalendar(c);
         }
     }
 
     public static MyMoment createFromString(String s) {
-        if(s!=null){
+        if (s != null) {
             String[] ss = s.split(" ");
             return new MyMoment(MyDate.createFromString(ss[0]), MyTime.createFromString(ss[1]));
-        }else{
+        } else {
             return null;
         }
     }
@@ -126,10 +136,12 @@ public class MyMoment implements I_MyCalendar {
     public int computeDiffWithNow() {
         return computeDiff(Calendar.getInstance());
     }
-    public MyDate getDate(){
+
+    public MyDate getDate() {
         return this.myDate;
     }
-    public MyTime getTime(){
+
+    public MyTime getTime() {
         return this.myTime;
     }
 

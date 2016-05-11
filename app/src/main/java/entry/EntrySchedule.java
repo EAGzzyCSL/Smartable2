@@ -7,11 +7,11 @@ import my.TableFiled;
 
 public class EntrySchedule extends Entry {
 
+    //TODO 使用tilte还是使用name问题，我当时文档上写的是title，但是entry类中写的是name，既然这样那就用title好了。
     public EntrySchedule(String name) {
         super(name);
     }
 
-    private String title = null;
     private String annotation = null;
     private MyMoment date_create = null;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）
@@ -25,7 +25,7 @@ public class EntrySchedule extends Entry {
     public EntrySchedule(int id,String title,String annotation,MyMoment date_create, String status
             ,MyMoment date_begin, MyMoment date_end, String alert, MyMoment date_alert, String location){
         this.id=id;
-        this.title=title;
+        //TODO 删除子类中的title变量和方法。
         this.annotation=annotation;
         this.date_create=date_create;
         this.status=status;
@@ -108,7 +108,7 @@ public class EntrySchedule extends Entry {
     public void setLocation(String location) {
         this.location = location;
     }
-
+    //TODO toCV方法要防止空指针异常
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
         cv.put(TableFiled.TITLE, this.getTitle());
@@ -122,37 +122,5 @@ public class EntrySchedule extends Entry {
         cv.put(TableFiled.DATE_alert, this.getDate_alert().convertToString());
         cv.put(TableFiled.LOCATION, this.getLocation());
         return cv;
-    }
-
-    //以下是赵仲印写的-为了测试
-    //临时的修改为了适应日历view
-    private MyMoment start;
-    private MyMoment end;
-
-//    public EntrySchedule(int _id, String name, MyTime start, MyTime end) {
-//        this.id = _id;
-//        this.name = name;
-//        this.start = start;
-//        this.end = end;
-//
-//    }
-
-    public EntrySchedule(int id, String name, MyMoment start, MyMoment end) {
-        this.id = id;
-        this.name = name;
-        this.start = start;
-        this.end = end;
-    }
-
-    public EntrySchedule(int id, String name, String start, String end) {
-        this(id, name, MyMoment.createFromString(start), MyMoment.createFromString(end));
-    }
-
-    public MyMoment getStart() {
-        return this.start;
-    }
-
-    public MyMoment getEnd() {
-        return this.end;
     }
 }

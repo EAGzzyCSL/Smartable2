@@ -79,7 +79,7 @@ public class CalendricSimpleDayView extends ViewGroup {
         b.setBackgroundResource(R.drawable.bkg_view_calendric_day_item_preview);
         b.setGravity(Gravity.LEFT);
         b.setTextColor(Color.BLACK);
-        b.setText(schedule.getName());
+        b.setText(schedule.getTitle());
         b.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,13 +102,13 @@ public class CalendricSimpleDayView extends ViewGroup {
                 不要使用时间的差值，因为差值计算出来的小时无法判断中间有没有跨越一条横线所以不能准确绘制
                  */
                 int bt = topBlank + lineWidth +
-                        schedules.get(i).getStart().getHour() * (height1h + lineWidth) +
-                        schedules.get(i).getStart().getMinute() * hpm;
+                        schedules.get(i).getDate_begin().getHour() * (height1h + lineWidth) +
+                        schedules.get(i).getDate_begin().getMinute() * hpm;
                 int bm = topBlank + lineWidth +
-                        schedules.get(i).getEnd().getHour() * (height1h + lineWidth) +
-                        schedules.get(i).getEnd().getMinute() * hpm;
+                        schedules.get(i).getDate_end().getHour() * (height1h + lineWidth) +
+                        schedules.get(i).getDate_end().getMinute() * hpm;
                 /*如果这个事件结束时间是整点的话绘制的时候减去两个像素为了美观*/
-                bm -= schedules.get(i).getEnd().getMinute() == 0 ? 2 * lineWidth : 0;
+                bm -= schedules.get(i).getDate_end().getMinute() == 0 ? 2 * lineWidth : 0;
                 getChildAt(i).layout(lineLeft, bt, lineRight, bm);
             }
         }

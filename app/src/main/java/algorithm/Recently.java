@@ -345,7 +345,7 @@ public class Recently {
 
     private static void printResult(ArrayList<Entry> ans) {
         for (Entry entry : ans) {
-            System.out.println(entry.getName());
+            System.out.println(entry.getTitle());
         }
     }
 }

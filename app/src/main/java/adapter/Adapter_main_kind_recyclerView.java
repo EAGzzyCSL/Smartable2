@@ -82,11 +82,11 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
         }
 
         public void setContent(final Entry entry) {
-            textView_name.setText(entry.getName());
+            textView_name.setText(entry.getTitle());
             textView_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, entry.getName() + "/" + entry.getId(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, entry.getTitle() + "/" + entry.getId(), Toast.LENGTH_SHORT).show();
                     to_ModifyDetail_click(ll_item_smart_serialize, entry);
                 }
             });

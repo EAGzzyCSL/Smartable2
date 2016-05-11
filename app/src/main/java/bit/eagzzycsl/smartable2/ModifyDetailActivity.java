@@ -59,17 +59,17 @@ public class ModifyDetailActivity extends EntryEditActivity {
 
     /*根据传入的entry展示entry的信息*/
     private void show_entry_infor(Entry entry) {
-        edit_activity_title.setText(entry.getName());
+        edit_activity_title.setText(entry.getTitle());
         switch (enumEntry) {
             case shortHand: {//速记
                 break;
             }
             case schedule: {//日程
                 EntrySchedule schedule = (EntrySchedule) entryToEdit;
-                textView_startDate.setText(schedule.getStart().getDate().convertToLocalString());
-                textView_startTime.setText(schedule.getStart().getTime().convertToLocalString());
-                textView_endDate.setText(schedule.getEnd().getDate().convertToLocalString());
-                textView_endTime.setText(schedule.getEnd().getTime().convertToLocalString());
+                textView_startDate.setText(schedule.getDate_begin().getDate().convertToLocalString());
+                textView_startTime.setText(schedule.getDate_begin().getTime().convertToLocalString());
+                textView_endDate.setText(schedule.getDate_end().getDate().convertToLocalString());
+                textView_endTime.setText(schedule.getDate_end().getTime().convertToLocalString());
                 if (schedule.getAlert() == "0" || schedule.getAlert() == null) {
                     edit_remind_picker.setText("不提醒");
                 } else {

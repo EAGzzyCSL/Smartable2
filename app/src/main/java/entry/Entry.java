@@ -11,12 +11,12 @@ import bit.eagzzycsl.smartable2.EnumEntry;
  */
 //lily,略作修改:implements Serializable,为了能在页面间传递entry
 public abstract class Entry implements Serializable {
-    protected String name;
+    protected String title;
     protected int id;
     protected double priority;
 
-    public Entry(String name) {
-        this.name = name;
+    public Entry(String title) {
+        this.title = title;
     }
 
     public Entry() {
@@ -39,8 +39,8 @@ public abstract class Entry implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public String getTitle() {
+        return this.title;
     }
 
     public EnumEntry getType() {

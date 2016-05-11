@@ -1,8 +1,9 @@
 package my;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class MyDate implements I_MyCalendar {
+public class MyDate implements I_MyCalendar,Serializable {
     private int year;
     private int month;
     private int day;

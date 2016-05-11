@@ -17,10 +17,15 @@ import java.util.ArrayList;
 import adapter.Adapter_view_calendric;
 import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.EnumEntry;
+import bit.eagzzycsl.smartable2.EnumExtra;
+import bit.eagzzycsl.smartable2.ExtraFiled;
 import bit.eagzzycsl.smartable2.R;
 import database.SQLMan;
+import entry.Entry;
 import entry.EntrySchedule;
 import my.MyDate;
+import my.MyLog;
+import my.MyMoment;
 import view.CalendricView;
 import view.CalendricViewItemClick;
 import view.CalendricViewItemProvider;
@@ -71,7 +76,9 @@ public class Fragment_main_calendric extends Fragment {
                 new CalendricViewItemProvider() {
                     @Override
                     public ArrayList<EntrySchedule> readFromDatabase(int i) {
+
                         return (ArrayList<EntrySchedule>) SQLMan.getInstance(getActivity()).read(EnumEntry.schedule);
+
                     }
                 },
                 new CalendricViewItemClick() {
@@ -94,7 +101,10 @@ public class Fragment_main_calendric extends Fragment {
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), EditActivity.class));
+                Intent intent = new Intent(getActivity(), EditActivity.class);
+                intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithDate);
+                intent.putExtra(ExtraFiled.myMoment, MyMoment.getNow());
+                startActivity(intent);
             }
         });
     }

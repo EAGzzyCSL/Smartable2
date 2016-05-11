@@ -28,9 +28,6 @@ import my.EnumMyMoment;
 import my.MyMoment;
 import my.MyUtil;
 
-/**
- * Created by eagzzycsl on 5/11/16.
- */
 public abstract class EntryEditActivity extends AppCompatActivity {
     protected Toolbar toolbar;
     protected AppCompatEditText edit_activity_title;
@@ -70,9 +67,12 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         myFindView();
+        /*myInit必须在find和set之间，否则会出现空指针等*/
         myInit();
         mySetView();
+
     }
+
     /*抽象方法，一定需要覆写来完成初始化的操作*/
     protected abstract void myInit();
 
@@ -131,7 +131,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
             }
         });
         textView_startDate.setOnClickListener(createOnclickListener(EnumMyMoment.myDate, timeStart));
-        textView_endDate.setOnClickListener(createOnclickListener(EnumMyMoment.myTime, timeEnd));
+        textView_endDate.setOnClickListener(createOnclickListener(EnumMyMoment.myDate, timeEnd));
         textView_startTime.setOnClickListener(createOnclickListener(EnumMyMoment.myTime, timeStart));
         textView_endTime.setOnClickListener(createOnclickListener(EnumMyMoment.myTime, timeEnd));
         edit_ddl_datetime_picker.setOnClickListener(createOnclickListener(EnumMyMoment.myDate, timeDDL));
@@ -176,6 +176,48 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         edit_barlayout.setBackgroundColor(getResources().getColor(enumEntry.getColorId()));
         changeStatusBarColor(getResources().getColor(enumEntry.getColorId()));
     }
+
+    protected void selectedRadio(EnumEntry enumEntry) {
+        switch (enumEntry) {
+            case shortHand: {
+                edit_rbtn1.setChecked(true);
+                break;
+            }
+            case schedule: {
+                edit_rbtn2.setChecked(true);
+                break;
+            }
+            case theseDays: {
+                edit_rbtn3.setChecked(true);
+                break;
+            }
+            case deadLine: {
+                edit_rbtn4.setChecked(true);
+                break;
+            }
+        }
+    }
+
+    private void setTimeToTextView(MyMoment myMoment, AppCompatTextView vDate, AppCompatTextView vTime) {
+        vDate.setText(myMoment.getDate().convertToLocalString());
+        vTime.setText(myMoment.getTime().convertToLocalString());
+    }
+
+    //TODO 填充此处方法，将旧的那些重复代码改用函数实现
+    protected void setTimeStart(MyMoment myMoment) {
+        this.timeStart = myMoment;
+        setTimeToTextView(myMoment, textView_startDate, textView_startTime);
+    }
+
+    protected void setTimeEnd(MyMoment myMoment) {
+        this.timeEnd = myMoment;
+        setTimeToTextView(myMoment, textView_endDate, textView_endTime);
+    }
+
+    protected void setTimeDDL(MyMoment myMoment) {
+
+    }
+
 
     /*保存到数据库*/
     protected void saveEntryToDB(boolean update) {
@@ -235,9 +277,9 @@ public abstract class EntryEditActivity extends AppCompatActivity {
             }
         }
         Toast.makeText(EntryEditActivity.this, "成功", Toast.LENGTH_SHORT).show();
-        if(update){
+        if (update) {
             SQLMan.getInstance(EntryEditActivity.this).update(entry);
-        }else{
+        } else {
             SQLMan.getInstance(EntryEditActivity.this).create(entry);
         }
     }
@@ -273,8 +315,8 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 R.id.btn_remind_time6,
                 R.id.btn_remind_time7,
         };
-        for (int i = 0; i < idArray.length; i++) {
-            view.findViewById(idArray[i]).setOnClickListener(cl);
+        for (int id : idArray) {
+            view.findViewById(id).setOnClickListener(cl);
         }
         remindDialog.show();
     }

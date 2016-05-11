@@ -1,57 +1,47 @@
 package my;
 
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class MyTime implements I_MyCalendar {
-    private int hour;
-    private int minute;
+public class MyTime implements I_MyCalendar, Serializable {
+    private Calendar cTime;
 
-    public void setTime(int hour, int minute) {
-        valueSet(hour, minute);
-    }
-
-
-    private void valueSet(int hour, int minute) {
-        this.hour = hour;
-        this.minute = minute;
+    public MyTime() {
+        cTime = Calendar.getInstance();
     }
 
     public MyTime(int hour, int minute) {
-        valueSet(hour, minute);
+        this();
+        setTime(hour, minute);
     }
-
-    public MyTime() {
-
-    }
-
 
     public int getHour() {
-        return this.hour;
+        return cTime.get(Calendar.HOUR_OF_DAY);
     }
 
     public int getMinute() {
-        return this.minute;
+        return cTime.get(Calendar.MINUTE);
     }
+
+    public void setHour(int hour) {
+        cTime.set(Calendar.HOUR_OF_DAY, hour);
+    }
+
+    public void setMinute(int minute) {
+        cTime.set(Calendar.MINUTE, minute);
+    }
+
+    public void setTime(int hour, int minute) {
+        setHour(hour);
+        setMinute(minute);
+    }
+    /*以下为方便其它地方调用而创建*/
 
     public int toMinutes() {
         return this.getHour() * 60 + this.getMinute();
     }
 
-
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
-
-    public void setMinute(int minute) {
-        this.minute = minute;
-    }
-
-
-    public void setMoment(int hour, int minute) {
-        this.hour = hour;
-        this.minute = minute;
-    }
 
     public int compareTo(MyTime t) {
 
@@ -60,28 +50,28 @@ public class MyTime implements I_MyCalendar {
 
 
     public static MyTime createFromCalendar(Calendar c) {
-        if(c!=null){
+        if (c != null) {
             return new MyTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
-        }else{
+        } else {
             return null;
         }
     }
 
     @Override
     public void syncFromCalendar(Calendar c) {
-        if(c!=null){
-            valueSet(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
+        if (c != null) {
+            setTime(c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE));
         }
     }
 
     @Override
     public String convertToString() {
-        return String.format("%02d:%02d:00", hour, minute);
+        return String.format("%02d:%02d:00", getHour(), getMinute());
     }
 
     @Override
     public String convertToLocalString() {
-        return String.format("%d分%d秒", hour, minute);
+        return String.format("%d时%d分", getHour(), getMinute());
     }
 
     @Override
@@ -93,9 +83,9 @@ public class MyTime implements I_MyCalendar {
 
     @Override
     public void syncToCalendar(Calendar c) {
-        if(c!=null){
-            c.set(Calendar.HOUR_OF_DAY, hour);
-            c.set(Calendar.MINUTE, minute);
+        if (c != null) {
+            c.set(Calendar.HOUR_OF_DAY, getHour());
+            c.set(Calendar.MINUTE, getMinute());
         }
     }
 

@@ -9,7 +9,7 @@ public abstract class CalendricViewItemProvider {
     private HashMap<Integer, ArrayList<EntrySchedule>> his = new HashMap<>();
 
     /*一个hash表用作缓存，但是该如何建立key还是一个问题*/
-    public ArrayList<EntrySchedule> getItems(int i) {
+    public ArrayList<EntrySchedule > getItems(int i) {
         if (his.containsKey(i)) {
             return his.get(i);
         } else {
