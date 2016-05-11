@@ -26,7 +26,7 @@ import entry.EntryTheseDays;
 
 public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter_main_kind_recyclerView.ViewHolder> {
     private Context context;
-    private ArrayList<Entry> entries;
+    private ArrayList<? extends Entry> entries;
 
     //yu---
     private OnItemClickListener mListener;
@@ -39,7 +39,7 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
         void onItemClick(int position);
     }
 
-    public Adapter_main_kind_recyclerView(ArrayList<Entry> entries, Context context) {
+    public Adapter_main_kind_recyclerView(ArrayList<? extends Entry> entries, Context context) {
         this.entries = entries;
         this.context = context;
     }
@@ -73,11 +73,12 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
         private TextView textView_name;
         private View view_color_indicator;
         private LinearLayout ll_item_smart_serialize;//lily
+
         public ViewHolder(View itemView) {
             super(itemView);
             textView_name = (TextView) itemView.findViewById(R.id.id_num_smart_serialize);
             view_color_indicator = itemView.findViewById(R.id.view_color_indicator);
-            ll_item_smart_serialize = (LinearLayout)itemView.findViewById(R.id.ll_item_smart_serialize);
+            ll_item_smart_serialize = (LinearLayout) itemView.findViewById(R.id.ll_item_smart_serialize);
         }
 
         public void setContent(final Entry entry) {
@@ -85,14 +86,14 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
             textView_name.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, entry.getName() +"/"+ entry.getId(), Toast.LENGTH_SHORT).show();
-                    to_ModifyDetail_click(ll_item_smart_serialize,entry);
+                    Toast.makeText(context, entry.getName() + "/" + entry.getId(), Toast.LENGTH_SHORT).show();
+                    to_ModifyDetail_click(ll_item_smart_serialize, entry);
                 }
             });
-            ll_item_smart_serialize.setOnClickListener(new View.OnClickListener(){
+            ll_item_smart_serialize.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    to_ModifyDetail_click(ll_item_smart_serialize,entry);
+                    to_ModifyDetail_click(ll_item_smart_serialize, entry);
                 }
             });
             if (entry instanceof EntryShortHand) {
@@ -120,7 +121,7 @@ public class Adapter_main_kind_recyclerView extends RecyclerView.Adapter<Adapter
      * 跳转到编辑页面lily
      * ps:两个地方用到这个函数是因为textView_name的点击事件会把ll_item_smart_serialize的点击事件吞掉
      */
-    public void to_ModifyDetail_click(View view, Entry entry){
+    public void to_ModifyDetail_click(View view, Entry entry) {
         Activity currentActivity = (Activity) view.getContext();
         Bundle bundle = new Bundle();
         bundle.putSerializable("entry", entry);

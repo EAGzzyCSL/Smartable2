@@ -8,7 +8,7 @@ import android.widget.ListView;
 import java.text.ParseException;
 import java.util.ArrayList;
 
-import database.DatabaseManager;
+import database.SQLMan;
 import entry.Entry;
 
 /**
@@ -42,10 +42,10 @@ public class showActivity  extends AppCompatActivity {
 
         //shortHand.set_id(1);
         ArrayList<Entry> shortHand = new ArrayList<Entry>();
-        shortHand = DatabaseManager.getInstance(this).getShortHand();
+        shortHand = SQLMan.getInstance(this).getShortHand();
 
         ArrayList<Entry> DDL = new ArrayList<Entry>();
-        DDL = DatabaseManager.getInstance(this).getDDL();
+        DDL = SQLMan.getInstance(this).getDDL();
 
         ArrayAdapter<Entry> adapter = new ArrayAdapter<>(showActivity.this, android.R.layout.simple_list_item_1, shortHand);
         ArrayAdapter<Entry> adapter_ddl = new ArrayAdapter<>(showActivity.this, android.R.layout.simple_list_item_1, DDL);

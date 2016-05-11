@@ -32,7 +32,7 @@ public class Adapter_main_viewPager_kind extends PagerAdapter {
         return view == object;
     }
 
-    public Adapter_main_viewPager_kind(ArrayList<ArrayList<Entry>> entries, Context context, String[]pageTitle, int titleSort[]) {
+    public Adapter_main_viewPager_kind(ArrayList<ArrayList< ? extends Entry>> entries, Context context, String[]pageTitle, int titleSort[]) {
         //在构造方法里完成recycler的创建
         RecyclerView[] pages=new RecyclerView[]{
                 (RecyclerView) View.inflate(context, R.layout.adapter_main_smart_pager, null),

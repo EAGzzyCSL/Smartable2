@@ -15,8 +15,9 @@ import java.util.ArrayList;
 
 import adapter.Adapter_main_kind_recyclerView;
 import adapter.Adapter_main_viewPager_kind;
+import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.R;
-import database.DatabaseManager;
+import database.SQLMan;
 import decorator.DividerItemDecoration;
 import entry.Entry;
 import entry.EntryDeadLine;
@@ -93,12 +94,12 @@ public class Fragment_main_smart_classify extends Fragment {
             }
         };
         adapter_main_viewPager_kind = new Adapter_main_viewPager_kind(
-                new ArrayList<ArrayList<Entry>>() {
+                new ArrayList<ArrayList<? extends Entry>>() {
                     {
 
-                        this.add(DatabaseManager.getInstance(getActivity()).getShortHand());
-                        this.add(DatabaseManager.getInstance(getActivity()).getDDL());
-                        this.add(DatabaseManager.getInstance(getActivity()).getTheseDays());
+                        this.add((SQLMan.getInstance(getActivity()).read(EnumEntry.shortHand)));
+                        this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.deadLine));
+                        this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.theseDays));
                         this.add(entry);
                     }
                 },
