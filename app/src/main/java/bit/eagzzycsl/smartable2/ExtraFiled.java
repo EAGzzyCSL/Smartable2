@@ -5,4 +5,5 @@ package bit.eagzzycsl.smartable2;
  */
 public interface ExtraFiled {
     String myMoment = "myMoment";
+    String entry = "entry";
 }

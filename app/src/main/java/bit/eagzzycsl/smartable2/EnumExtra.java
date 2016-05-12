@@ -6,7 +6,7 @@ import my.I_MyCalendar;
  * Created by eagzzycsl on 5/11/16.
  */
 public enum EnumExtra {
-    addScheduleWithDate;
+    addScheduleWithMoment, modifyEntry;
 
     public static String getName() {
         return "EnumExtra";

@@ -3,40 +3,50 @@ package my;
 import java.io.Serializable;
 import java.util.Calendar;
 
-public class MyDate implements I_MyCalendar,Serializable {
-    private int year;
-    private int month;
-    private int day;
+public class MyDate implements I_MyCalendar, Serializable {
+    private Calendar cDate;
 
-    private void valueSet(int year, int month, int day) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
+    public MyDate() {
+        this.cDate = Calendar.getInstance();
     }
-
-    public void setDate(int year, int month, int day) {
-        valueSet(year, month, day);
+    //TODO 不安全
+    public MyDate(Calendar c){
+        this.cDate=c;
     }
 
     public MyDate(int year, int month, int day) {
-        valueSet(year, month, day);
-    }
-
-    public MyDate() {
-
-    }
-
-    public int getMonth() {
-        return this.month;
+        this();
+        setDate(year, month, day);
     }
 
     public int getYear() {
+        return cDate.get(Calendar.YEAR);
+    }
 
-        return this.year;
+    public int getMonth() {
+        return cDate.get(Calendar.MONTH);
     }
 
     public int getDay() {
-        return this.day;
+        return cDate.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public void setYear(int year) {
+        cDate.set(Calendar.YEAR, year);
+    }
+
+    public void setMonth(int month) {
+        cDate.set(Calendar.MONTH, month);
+    }
+
+    public void setDay(int day) {
+        cDate.set(Calendar.DAY_OF_MONTH, day);
+    }
+
+    public void setDate(int year, int month, int day) {
+        setYear(year);
+        setMonth(month);
+        setDay(day);
     }
 
 
@@ -50,20 +60,20 @@ public class MyDate implements I_MyCalendar,Serializable {
 
     @Override
     public void syncFromCalendar(Calendar c) {
-        if(c!=null){
-            valueSet(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+        if (c != null) {
+            setDate(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
         }
     }
 
     @Override
     public String convertToString() {
         //这种方法也不是最好的，目前先用这种
-        return String.format("%02d-%02d-%02d", year, month, day);
+        return String.format("%02d-%02d-%02d", getYear(), getMonth(), getDay());
     }
 
     @Override
     public String convertToLocalString() {
-        return String.format("%d年%d月%d日", year, month, day);
+        return String.format("%d年%d月%d日", getYear(), getMonth(), getDay());
     }
 
     @Override
@@ -76,9 +86,9 @@ public class MyDate implements I_MyCalendar,Serializable {
     @Override
     public void syncToCalendar(Calendar c) {
         if (c != null) {
-            c.set(Calendar.YEAR, year);
-            c.set(Calendar.MONTH, month);
-            c.set(Calendar.DAY_OF_MONTH, day);
+            c.set(Calendar.YEAR, getYear());
+            c.set(Calendar.MONTH, getMonth());
+            c.set(Calendar.DAY_OF_MONTH, getDay());
         }
     }
 

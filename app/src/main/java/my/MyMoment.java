@@ -2,30 +2,41 @@ package my;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class MyMoment implements I_MyCalendar, Serializable {
     private MyDate myDate;
     private MyTime myTime;
+    private Calendar cM;
 
     public MyMoment() {
-        this.myDate = new MyDate();
-        this.myTime = new MyTime();
+        this.cM = Calendar.getInstance();
+        this.myDate = new MyDate(cM);
+        this.myTime = new MyTime(cM);
     }
 
-    public MyMoment add() {
-        //TODO 纯属写了用来当测试使用，一定要重构
+    public MyMoment newSameMoment() {
+        /*创建一个新的moment并为它设置时间，如果需要的话写一个从MyMoment创建对象的构造方法*/
         MyMoment m = new MyMoment();
         m.setDate(this.getYear(), this.getMonth(), this.getDay());
-        m.setTime(this.getHour() + 1, this.getMinute());
+        m.setTime(this.getHour(), this.getMinute());
         return m;
     }
+
+    public MyMoment hourAdd(int h) {
+        myTime.hourAdd(h);
+        return this;
+    }
+
 
     public static MyMoment getNow() {
         return MyMoment.createFromCalendar(Calendar.getInstance());
     }
 
     public MyMoment(int year, int month, int day, int hour, int minute) {
-        this(new MyDate(year, month, day), new MyTime(hour, minute));
+        this();
+        setDate(year, month, day);
+        setTime(hour, minute);
     }
 
     public void setTime(int hour, int minute) {
@@ -33,8 +44,9 @@ public class MyMoment implements I_MyCalendar, Serializable {
     }
 
     public MyMoment(MyDate myDate, MyTime myTime) {
-        this.myDate = myDate;
-        this.myTime = myTime;
+        this();
+        setDate(myDate.getYear(), myDate.getMonth(), myDate.getDay());
+        setTime(myTime.getHour(), myTime.getMinute());
     }
 
     public void setDate(int year, int month, int day) {

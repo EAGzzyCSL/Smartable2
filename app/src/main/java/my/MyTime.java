@@ -8,7 +8,11 @@ public class MyTime implements I_MyCalendar, Serializable {
     private Calendar cTime;
 
     public MyTime() {
-        cTime = Calendar.getInstance();
+        this.cTime = Calendar.getInstance();
+    }
+
+    public MyTime(Calendar c) {
+        this.cTime = c;
     }
 
     public MyTime(int hour, int minute) {
@@ -35,6 +39,10 @@ public class MyTime implements I_MyCalendar, Serializable {
     public void setTime(int hour, int minute) {
         setHour(hour);
         setMinute(minute);
+    }
+
+    public void hourAdd(int h) {
+        cTime.add(Calendar.HOUR_OF_DAY, h);
     }
     /*以下为方便其它地方调用而创建*/
 

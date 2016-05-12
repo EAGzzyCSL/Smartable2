@@ -10,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -19,12 +18,11 @@ import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.EnumExtra;
 import bit.eagzzycsl.smartable2.ExtraFiled;
+import bit.eagzzycsl.smartable2.ModifyDetailActivity;
 import bit.eagzzycsl.smartable2.R;
 import database.SQLMan;
-import entry.Entry;
 import entry.EntrySchedule;
 import my.MyDate;
-import my.MyLog;
 import my.MyMoment;
 import view.CalendricView;
 import view.CalendricViewItemClick;
@@ -70,6 +68,7 @@ public class Fragment_main_calendric extends Fragment {
         fab_add = (FloatingActionButton) myView.findViewById(R.id.fab_add);
     }
 
+    @SuppressWarnings("unchecked")
     private void myCreate() {
         adapter_view_calendric = new Adapter_view_calendric(this.getActivity(),
                 EnumCalendricViewType.Day,
@@ -84,12 +83,18 @@ public class Fragment_main_calendric extends Fragment {
                 new CalendricViewItemClick() {
                     @Override
                     public void onItemClick(View v, EntrySchedule entrySchedule) {
-                        Toast.makeText(getActivity(), "a item click", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), ModifyDetailActivity.class);
+                        intent.putExtra(EnumExtra.getName(), EnumExtra.modifyEntry);
+                        intent.putExtra(ExtraFiled.entry, entrySchedule);
+                        startActivity(intent);
                     }
 
                     @Override
-                    public void onAddClick(View v, EntrySchedule entrySchedule) {
-                        Toast.makeText(getActivity(), "a add click", Toast.LENGTH_SHORT).show();
+                    public void onAddClick(View v, MyMoment m) {
+                        Intent intent = new Intent(getActivity(), EditActivity.class);
+                        intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
+                        intent.putExtra(ExtraFiled.myMoment, m);
+                        startActivity(intent);
                     }
                 }
         );
@@ -102,7 +107,7 @@ public class Fragment_main_calendric extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditActivity.class);
-                intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithDate);
+                intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
                 intent.putExtra(ExtraFiled.myMoment, MyMoment.getNow());
                 startActivity(intent);
             }

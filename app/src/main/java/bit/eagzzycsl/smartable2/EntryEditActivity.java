@@ -3,6 +3,7 @@ package bit.eagzzycsl.smartable2;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
@@ -118,7 +119,6 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         edit_radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                // TODO Auto-generated method stub
                 if (checkedId == edit_rbtn1.getId()) {  //速记
                     selectedEntryType(EnumEntry.shortHand);
                 } else if (checkedId == edit_rbtn2.getId()) { //日程
@@ -173,8 +173,8 @@ public abstract class EntryEditActivity extends AppCompatActivity {
     protected void selectedEntryType(EnumEntry enumEntry) {
         this.enumEntry = enumEntry;
         set_layout_visible(enumEntry.getViewVisible());
-        edit_barlayout.setBackgroundColor(getResources().getColor(enumEntry.getColorId()));
-        changeStatusBarColor(getResources().getColor(enumEntry.getColorId()));
+        edit_barlayout.setBackgroundColor(ContextCompat.getColor(EntryEditActivity.this, enumEntry.getColorId()));
+        changeStatusBarColor(ContextCompat.getColor(EntryEditActivity.this, enumEntry.getColorId()));
     }
 
     protected void selectedRadio(EnumEntry enumEntry) {
@@ -203,7 +203,6 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         vTime.setText(myMoment.getTime().convertToLocalString());
     }
 
-    //TODO 填充此处方法，将旧的那些重复代码改用函数实现
     protected void setTimeStart(MyMoment myMoment) {
         this.timeStart = myMoment;
         setTimeToTextView(myMoment, textView_startDate, textView_startTime);
@@ -215,7 +214,8 @@ public abstract class EntryEditActivity extends AppCompatActivity {
     }
 
     protected void setTimeDDL(MyMoment myMoment) {
-
+        this.timeDDL = myMoment;
+        setTimeToTextView(myMoment, edit_ddl_datetime_picker, edit_ddl_datetime_picker2);
     }
 
 

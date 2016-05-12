@@ -31,17 +31,26 @@ public class ModifyDetailActivity extends EntryEditActivity {
 
     @Override
     protected void myInit() {
-        //new
-        //判断是哪一类事物的页面
         Bundle bundle = this.getIntent().getExtras();
-        entryToEdit = (Entry) bundle.getSerializable("entry");
-        enumEntry = entryToEdit == null ? null : entryToEdit.getType();
-        selectedEntryType(enumEntry);
+        EnumExtra enumExtra = (EnumExtra) bundle.getSerializable(EnumExtra.getName());
+        if (enumExtra != null) {
 
+            switch (enumExtra) {
+                case modifyEntry: {
+                    entryToEdit = (Entry) bundle.getSerializable(ExtraFiled.entry);
+                    enumEntry = entryToEdit == null ? null : entryToEdit.getType();
+                    selectedEntryType(enumEntry);
+                    show_entry_infor(entryToEdit);
+                    break;
+                }
+            }
+        } else {
+            //貌似什么也不需要做。
+        }
         linearLayout_rbtngroup.setVisibility(View.GONE);//隐藏rbtn
         linearLayout_aboveKey.setVisibility(View.GONE);//隐藏键盘上面的一条
         btn_modify_delete.setVisibility(View.VISIBLE);
-        show_entry_infor(entryToEdit);
+
     }
 
     protected void mySetView() {

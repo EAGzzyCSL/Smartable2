@@ -3,8 +3,6 @@ package bit.eagzzycsl.smartable2;
 import android.os.Bundle;
 import android.view.View;
 
-import java.util.Calendar;
-
 import my.MyLog;
 import my.MyMoment;
 
@@ -16,13 +14,13 @@ public class EditActivity extends EntryEditActivity {
         EnumExtra enumExtra = (EnumExtra) bundle.getSerializable(EnumExtra.getName());
         if (enumExtra != null) {
             switch (enumExtra) {
-                case addScheduleWithDate: {
+                case addScheduleWithMoment: {
                     selectedRadio(EnumEntry.schedule);
                     selectedEntryType(EnumEntry.schedule);
                     MyMoment myMoment = (MyMoment) bundle.getSerializable(ExtraFiled.myMoment);
                     setTimeStart(myMoment);
                     //TODO 结束时间后推动一小时，涉及到时间计算，需要在MyMoment中提供，装饰者模式引入，将所有时间操作全部放在my包中
-                    setTimeEnd(myMoment.add());
+                    setTimeEnd(myMoment == null ? null : myMoment.newSameMoment().hourAdd(1));
                     break;
                 }
                 default: {
@@ -33,10 +31,9 @@ public class EditActivity extends EntryEditActivity {
             //初始化
             edit_rbtn1.setSelected(true);
             selectedEntryType(EnumEntry.shortHand);
-            Calendar c = Calendar.getInstance();
-            timeStart = MyMoment.createFromCalendar(c);
-            timeEnd = MyMoment.createFromCalendar(c);
-            timeDDL = MyMoment.createFromCalendar(c);
+            timeStart = new MyMoment();
+            timeEnd = new MyMoment();
+            timeDDL = new MyMoment();
             setTimeEnd(timeEnd);
             setTimeDDL(timeDDL);
             setTimeStart(timeStart);

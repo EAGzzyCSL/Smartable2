@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 import bit.eagzzycsl.smartable2.R;
 import entry.EntrySchedule;
+import my.MyDate;
+import my.MyMoment;
 import my.MyUtil;
 
 
@@ -121,13 +123,16 @@ public class CalendricSimpleDayView extends ViewGroup {
         preAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                calendricViewItemClick.onAddClick(v, null);
+                //日期是view自己的日期，时间通过计算获取
+                MyMoment m = new MyMoment(myDate.getYear(), myDate.getMonth(), myDate.getDay(), addButtonHour, 0);
+                calendricViewItemClick.onAddClick(v, m);
             }
         });
         addView(preAddButton);
         //TODO 对于时间很短的事件块需要有一个处理，不能显示成一个细条，同样这时不能用块的宽窄来断定事件时间长度
     }
 
+    private int addButtonHour = 0;
 
     /*点击空白处时显示添加按钮*/
     private void showPreAddButton(float eventY) {
@@ -141,6 +146,7 @@ public class CalendricSimpleDayView extends ViewGroup {
             同样当画事件块的时候为了美观下面的条也会不属于这个事件块
              */
             int i = poor / (height1h + lineWidth);
+            addButtonHour = i;
             /*
             计算view该显示的位置
             系统在layout的时候坐标的计算是取坐标的左侧
@@ -212,5 +218,12 @@ public class CalendricSimpleDayView extends ViewGroup {
         return true;
         //TODO onTouch事件的returen值该如何设置？
         //警告：如果不return true的话会有问题，但是如果返回true了会不会对别的造成影响还不可知，默认的写法是return super.onTouchEvent(event)
+    }
+
+    //
+    private MyDate myDate;
+
+    public void setViewDate(MyDate date) {
+        this.myDate = date;
     }
 }

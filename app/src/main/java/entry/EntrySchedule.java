@@ -25,7 +25,7 @@ public class EntrySchedule extends Entry {
     public EntrySchedule(int id,String title,String annotation,MyMoment date_create, String status
             ,MyMoment date_begin, MyMoment date_end, String alert, MyMoment date_alert, String location){
         this.id=id;
-        //TODO 删除子类中的title变量和方法。
+        this.title=title;
         this.annotation=annotation;
         this.date_create=date_create;
         this.status=status;
