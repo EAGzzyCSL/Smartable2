@@ -26,6 +26,7 @@ import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntryTheseDays;
 import my.EnumMyMoment;
+import my.MyLog;
 import my.MyMoment;
 import my.MyUtil;
 
@@ -62,6 +63,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
     protected AlertDialog remindDialog;
 
     protected EnumEntry enumEntry;//枚举类型，判断是哪种类型
+    protected Entry entryToEdit;//这个界面上被操作的entry
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -218,13 +220,15 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         setTimeToTextView(myMoment, edit_ddl_datetime_picker, edit_ddl_datetime_picker2);
     }
 
-
+    //TODO 是否提醒等参数该如何处置？
     /*保存到数据库*/
     protected void saveEntryToDB(boolean update) {
-        Entry entry = null;
+        //假定update的时候entryToEdit不为空
+
+        int preId = update ? entryToEdit.getId() : 0;
         switch (enumEntry) {
             case shortHand: {//速记
-                entry = new EntryShortHand(-1,
+                entryToEdit = new EntryShortHand(
                         edit_activity_title.getText().toString(),
                         "",
                         MyMoment.getNow(),
@@ -235,8 +239,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 break;
             }
             case schedule: {    //日程
-                entry = new EntrySchedule(
-                        -1,
+                entryToEdit = new EntrySchedule(
                         edit_activity_title.getText().toString(),
                         "",
                         MyMoment.getNow(),
@@ -250,8 +253,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 break;
             }
             case theseDays: {    //这两天
-                entry = new EntryTheseDays(
-                        -1,
+                entryToEdit = new EntryTheseDays(
                         edit_activity_title.getText().toString(),
                         "",
                         MyMoment.getNow(),
@@ -260,8 +262,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 break;
             }
             case deadLine: {    // DDL
-                entry = new EntryDeadLine(
-                        -1,
+                entryToEdit = new EntryDeadLine(
                         edit_activity_title.getText().toString(),
                         "",
                         MyMoment.getNow(),
@@ -276,11 +277,17 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 break;
             }
         }
+        //判断是添加还是修改
+        if (update) {
+            entryToEdit.setId(preId);
+        }
+
+
         Toast.makeText(EntryEditActivity.this, "成功", Toast.LENGTH_SHORT).show();
         if (update) {
-            SQLMan.getInstance(EntryEditActivity.this).update(entry);
+            SQLMan.getInstance(EntryEditActivity.this).update(entryToEdit);
         } else {
-            SQLMan.getInstance(EntryEditActivity.this).create(entry);
+            SQLMan.getInstance(EntryEditActivity.this).create(entryToEdit);
         }
     }
 

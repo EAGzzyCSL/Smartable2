@@ -19,12 +19,16 @@ public class EntryTheseDays extends Entry {
     private MyMoment date_create = null;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）
 
-    public EntryTheseDays(int id,String title,String annotation,MyMoment date_create, String status){
-        this.id=id;
-        this.title=title;
-        this.annotation=annotation;
-        this.date_create=date_create;
-        this.status=status;
+    public EntryTheseDays(String title, String annotation, MyMoment date_create, String status) {
+        this.title = title;
+        this.annotation = annotation;
+        this.date_create = date_create;
+        this.status = status;
+    }
+
+    public EntryTheseDays(int id, String title, String annotation, MyMoment date_create, String status) {
+        this(title, annotation, date_create, status);
+        this.id = id;
     }
 
     public String getTitle() {
@@ -59,7 +63,7 @@ public class EntryTheseDays extends Entry {
         this.status = status;
     }
 
-    public ContentValues toContentValues(){
+    public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
         cv.put(TableFiled.TITLE, this.getTitle());
         cv.put(TableFiled.ANNOTATION, this.getAnnotation());

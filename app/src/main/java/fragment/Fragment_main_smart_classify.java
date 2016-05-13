@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ import database.SQLMan;
 import decorator.DividerItemDecoration;
 import entry.Entry;
 import layout.EdgeDrawerLayout;
+import layout.OnDrawerStateChangeListener;
 import my.MyLog;
 
 public class Fragment_main_smart_classify extends Fragment {
@@ -34,8 +36,7 @@ public class Fragment_main_smart_classify extends Fragment {
     private Adapter_recyclerView_entry adapter_smart_serialize;
     /*抽屉部分*/
     private RecyclerView smart_serilizeRecyclerView;
-    /*预置数据*/
-    private ArrayList<Entry> mDatas_smart_serilize;
+    private TextView textView_recent;
 
     public Fragment_main_smart_classify() {
         // Required empty public constructor
@@ -67,6 +68,7 @@ public class Fragment_main_smart_classify extends Fragment {
         viewPager_kind = (ViewPager) myView.findViewById(R.id.viewPager_kind);
         /*右侧侧滑出来的*/
         smart_serilizeRecyclerView = (RecyclerView) myView.findViewById(R.id.id_smart_latest);
+        textView_recent = (TextView) myView.findViewById(R.id.textView_recent);
 
     }
 
@@ -77,7 +79,17 @@ public class Fragment_main_smart_classify extends Fragment {
         smart_serilizeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         smart_serilizeRecyclerView.setAdapter(adapter_smart_serialize);
         smart_serilizeRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        edgeDrawerLayout.setOnDrawerStateChangeListener(new OnDrawerStateChangeListener() {
+            @Override
+            public void onDrawerOpen() {
+                textView_recent.setVisibility(View.GONE);
+            }
 
+            @Override
+            public void onDrawerClose() {
+                textView_recent.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     //使用sort的方法是为四种事情默认预置了一个顺序0123,如果想修改他们的顺序，修改sort即可。

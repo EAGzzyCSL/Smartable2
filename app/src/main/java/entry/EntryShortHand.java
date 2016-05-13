@@ -21,14 +21,19 @@ public class EntryShortHand extends Entry {
 
     private String isUpper;//置顶： 是（1） 否（2）
     private MyMoment date_upper;
-    public EntryShortHand(int id,String title,String annotation,MyMoment date_create, String status, String isUpper, MyMoment date_upper){
-        this.id=id;
-        this.title=title;
-        this.annotation=annotation;
-        this.date_create=date_create;
-        this.status=status;
-        this.isUpper=isUpper;
-        this.date_upper=date_upper;
+
+    public EntryShortHand(String title, String annotation, MyMoment date_create, String status, String isUpper, MyMoment date_upper) {
+        this.title = title;
+        this.annotation = annotation;
+        this.date_create = date_create;
+        this.status = status;
+        this.isUpper = isUpper;
+        this.date_upper = date_upper;
+    }
+    //
+    public EntryShortHand(int id, String title, String annotation, MyMoment date_create, String status, String isUpper, MyMoment date_upper) {
+        this(title, annotation, date_create, status, isUpper, date_upper);
+        this.id = id;
     }
 
     public String getTitle() {
@@ -87,7 +92,7 @@ public class EntryShortHand extends Entry {
         cv.put(TableFiled.STATUS, this.getStatus());
 
         cv.put(TableFiled.IS_UPPER, this.getIsUpper());
-        cv.put(TableFiled.DATE_upper, date_upper==null?null:date_upper.convertToString());
+        cv.put(TableFiled.DATE_upper, date_upper == null ? null : date_upper.convertToString());
         return cv;
     }
 }

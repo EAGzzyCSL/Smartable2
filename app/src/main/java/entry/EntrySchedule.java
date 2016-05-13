@@ -2,6 +2,7 @@ package entry;
 
 import android.content.ContentValues;
 
+import my.MyLog;
 import my.MyMoment;
 import my.TableFiled;
 
@@ -22,20 +23,25 @@ public class EntrySchedule extends Entry {
     private MyMoment date_alert = null;
     private String location = null;
 
-    public EntrySchedule(int id,String title,String annotation,MyMoment date_create, String status
-            ,MyMoment date_begin, MyMoment date_end, String alert, MyMoment date_alert, String location){
-        this.id=id;
-        this.title=title;
-        this.annotation=annotation;
-        this.date_create=date_create;
-        this.status=status;
-
-        this.date_begin=date_begin;
-        this.date_end=date_end;
-        this.alert=alert;
-        this.date_alert=date_alert;
-        this.location=location;
+    public EntrySchedule(String title, String annotation, MyMoment date_create, String status
+            , MyMoment date_begin, MyMoment date_end, String alert, MyMoment date_alert, String location) {
+        this.title = title;
+        this.annotation = annotation;
+        this.date_create = date_create;
+        this.status = status;
+        this.date_begin = date_begin;
+        this.date_end = date_end;
+        this.alert = alert;
+        this.date_alert = date_alert;
+        this.location = location;
     }
+
+    public EntrySchedule(int id, String title, String annotation, MyMoment date_create, String status
+            , MyMoment date_begin, MyMoment date_end, String alert, MyMoment date_alert, String location) {
+        this(title, annotation, date_create, status, date_begin, date_end, alert, date_alert, location);
+        this.id = id;
+    }
+
 
     public String getTitle() {
         return title;
@@ -108,6 +114,7 @@ public class EntrySchedule extends Entry {
     public void setLocation(String location) {
         this.location = location;
     }
+
     //TODO toCV方法要防止空指针异常
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
@@ -117,6 +124,7 @@ public class EntrySchedule extends Entry {
         cv.put(TableFiled.STATUS, this.getStatus());
 
         cv.put(TableFiled.DATE_begin, this.getDate_begin().convertToString());
+        MyLog.i("toCv时的时间", this.getDate_begin().convertToLocalString());
         cv.put(TableFiled.DATE_end, this.getDate_end().convertToString());
         cv.put(TableFiled.ALERT, this.getAlert());
         cv.put(TableFiled.DATE_alert, this.getDate_alert().convertToString());

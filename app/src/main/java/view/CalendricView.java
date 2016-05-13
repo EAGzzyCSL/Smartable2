@@ -12,7 +12,7 @@ import my.MyDate;
 
 /*继承自viewPager以实现日历的左右无限滚动*/
 public class CalendricView extends ViewPager {
-    private Calendar viewCalendar;//一个日历，用来表计三张视图中第一张的起始日期
+    private Calendar viewCalendar=Calendar.getInstance();//一个日历，用来表计三张视图中第一张的起始日期
     /*adapter负责提供数据，日供日历的加减，adapter的数据从item提供器获取，pager提供根据指定日期更新内容的方法*/
     private Adapter_view_calendric myAdapter;
     private Context context;
@@ -83,12 +83,10 @@ public class CalendricView extends ViewPager {
         }
     };
 
-    /*在构造方法中设置一个适配器*/
+    /*在构造方法中设置一个Listener*/
     public CalendricView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        viewCalendar = Calendar.getInstance();
-        viewCalendar.set(Calendar.DAY_OF_MONTH, 15);//15是我找了个数来测试
         /*为viewpager增加滑动监听，为了在pager滑动的时候更换内容*/
         this.addOnPageChangeListener(onPageChangeListener);
 

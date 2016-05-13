@@ -18,6 +18,7 @@ public class EdgeDrawerLayout extends ViewGroup {
     private View mainView;
     private ViewDragHelper myViewDragHelper;
     private int edgeSize = 20;//所露边边的默认值
+    private OnDrawerStateChangeListener onDrawerStateChangeListener;
 
     public EdgeDrawerLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -39,6 +40,7 @@ public class EdgeDrawerLayout extends ViewGroup {
                     return false;
                 }
             }
+
             /*边界检测，提高灵敏度，不知会不会有用*/
             @Override
             public void onEdgeDragStarted(int edgeFlags, int pointerId) {
@@ -195,6 +197,9 @@ public class EdgeDrawerLayout extends ViewGroup {
         myViewDragHelper.smoothSlideViewTo(drawerView, 0, drawerView.getTop());
         drawerOpen = true;
         invalidate();
+        if (onDrawerStateChangeListener != null) {
+            onDrawerStateChangeListener.onDrawerOpen();
+        }
     }
 
     public void closeDrawer() {
@@ -202,6 +207,9 @@ public class EdgeDrawerLayout extends ViewGroup {
         myViewDragHelper.smoothSlideViewTo(drawerView, this.getWidth() - edgeSize, drawerView.getTop());
         drawerOpen = false;
         invalidate();
+        if (onDrawerStateChangeListener != null) {
+            onDrawerStateChangeListener.onDrawerClose();
+        }
     }
 
     public boolean isDrawerOpen() {
@@ -224,6 +232,10 @@ public class EdgeDrawerLayout extends ViewGroup {
             ViewCompat.postInvalidateOnAnimation(EdgeDrawerLayout.this);
             invalidate();
         }
+    }
+
+    public void setOnDrawerStateChangeListener(OnDrawerStateChangeListener onDrawerStateChangeListener) {
+        this.onDrawerStateChangeListener = onDrawerStateChangeListener;
     }
 }
 /**

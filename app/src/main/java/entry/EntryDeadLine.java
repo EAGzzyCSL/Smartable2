@@ -26,20 +26,25 @@ public class EntryDeadLine extends Entry {
     private int todo_numbers;//想用几次完成（注意加s）
     private MyMoment date_ddl = null;
 
-    public EntryDeadLine(int id,String title,String annotation,MyMoment date_create, String status, String alert,
-                         MyMoment date_alert, String location, int todo_duration, int todo_numbers, MyMoment date_ddl){
-        this.id=id;
-        this.title=title;
-        this.annotation=annotation;
-        this.date_create=date_create;
-        this.status=status;
+    public EntryDeadLine(String title, String annotation, MyMoment date_create, String status, String alert,
+                         MyMoment date_alert, String location, int todo_duration, int todo_numbers, MyMoment date_ddl) {
+        this.title = title;
+        this.annotation = annotation;
+        this.date_create = date_create;
+        this.status = status;
 
-        this.alert=alert;
-        this.date_alert=date_alert;
-        this.location=location;
-        this.todo_duration=todo_duration;
-        this.todo_numbers=todo_numbers;
-        this.date_ddl=date_ddl;
+        this.alert = alert;
+        this.date_alert = date_alert;
+        this.location = location;
+        this.todo_duration = todo_duration;
+        this.todo_numbers = todo_numbers;
+        this.date_ddl = date_ddl;
+    }
+
+    public EntryDeadLine(int id, String title, String annotation, MyMoment date_create, String status, String alert,
+                         MyMoment date_alert, String location, int todo_duration, int todo_numbers, MyMoment date_ddl) {
+        this(title, annotation, date_create, status, alert, date_alert, location, todo_duration, todo_numbers, date_ddl);
+        this.id = id;
     }
 
     public String getLocation() {

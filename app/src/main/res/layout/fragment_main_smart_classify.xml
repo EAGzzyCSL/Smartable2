@@ -16,7 +16,6 @@
             android:id="@+id/tabLayout_kind"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             app:tabGravity="fill"
             app:tabMode="fixed" />
 
@@ -33,8 +32,16 @@
         android:layout_height="match_parent"
         android:background="#ffffff"
         android:elevation="10dp"
+        android:orientation="horizontal"
         tools:targetApi="lollipop">
 
+        <TextView
+            android:id="@+id/textView_recent"
+            android:layout_width="20dp"
+            android:textAlignment="center"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content"
+            android:text="近\n期\n事\n项" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/id_smart_latest"

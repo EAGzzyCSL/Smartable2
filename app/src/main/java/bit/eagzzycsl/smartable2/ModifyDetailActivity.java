@@ -20,7 +20,7 @@ public class ModifyDetailActivity extends EntryEditActivity {
     private LinearLayout linearLayout_aboveKey;
     private Button btn_modify_delete;
     //TODO 这个entryToEdit是否可以考虑放到父类
-    private Entry entryToEdit;
+
 
     @Override
     protected void myFindView() {
@@ -78,10 +78,8 @@ public class ModifyDetailActivity extends EntryEditActivity {
             }
             case schedule: {//日程
                 EntrySchedule schedule = (EntrySchedule) entryToEdit;
-                textView_startDate.setText(schedule.getDate_begin().getDate().convertToLocalString());
-                textView_startTime.setText(schedule.getDate_begin().getTime().convertToLocalString());
-                textView_endDate.setText(schedule.getDate_end().getDate().convertToLocalString());
-                textView_endTime.setText(schedule.getDate_end().getTime().convertToLocalString());
+                setTimeStart(schedule.getDate_begin());
+                setTimeEnd(schedule.getDate_end());
                 if (schedule.getAlert() == "0" || schedule.getAlert() == null) {
                     edit_remind_picker.setText("不提醒");
                 } else {
@@ -126,7 +124,7 @@ public class ModifyDetailActivity extends EntryEditActivity {
         switch (item.getItemId()) {
             case R.id.nav_modify_done: {
                 saveEntryToDB(true);
-                Toast.makeText(ModifyDetailActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             }
         }

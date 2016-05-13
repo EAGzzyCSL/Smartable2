@@ -18,6 +18,7 @@ public class EditActivity extends EntryEditActivity {
                     selectedRadio(EnumEntry.schedule);
                     selectedEntryType(EnumEntry.schedule);
                     MyMoment myMoment = (MyMoment) bundle.getSerializable(ExtraFiled.myMoment);
+                    MyLog.i("收到的开始时间",myMoment.convertToLocalString());
                     setTimeStart(myMoment);
                     //TODO 结束时间后推动一小时，涉及到时间计算，需要在MyMoment中提供，装饰者模式引入，将所有时间操作全部放在my包中
                     setTimeEnd(myMoment == null ? null : myMoment.newSameMoment().hourAdd(1));
@@ -54,6 +55,7 @@ public class EditActivity extends EntryEditActivity {
         edit_done_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 saveEntryToDB(false);
+                finish();
             }
         });
     }

@@ -111,15 +111,15 @@ public class MyMoment implements I_MyCalendar, Serializable {
     @Override
     public Calendar convertToCalendar() {
         Calendar c = Calendar.getInstance();
-        syncFromCalendar(c);
+        syncToCalendar(c);
         return c;
     }
 
     @Override
     public void syncToCalendar(Calendar c) {
         if (c != null) {
-            myDate.syncFromCalendar(c);
-            myTime.syncFromCalendar(c);
+            myDate.syncToCalendar(c);
+            myTime.syncToCalendar(c);
         }
     }
 
