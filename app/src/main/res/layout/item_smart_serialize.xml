@@ -8,7 +8,7 @@
     android:padding="5dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:id="@+id/ll_item_smart_serialize">
+    >
 
     <View
         android:id="@+id/view_color_indicator"

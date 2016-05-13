@@ -10,6 +10,8 @@ public interface TableFiled {
         String TheseDays="TheseDays";
         String DDL="DDL";
         String ShortHand="ShortHand";
+        String SomeDay="SomeDay";
+        String Trigger="Trigger";
     }
     //公有的
     String ID = "_id";

@@ -2,14 +2,17 @@ package fragment;
 
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 
+import bit.eagzzycsl.smartable2.EditActivity;
+import bit.eagzzycsl.smartable2.EnumExtra;
+import bit.eagzzycsl.smartable2.ExtraFiled;
 import bit.eagzzycsl.smartable2.R;
 
 public class Fragment_main_smart extends Fragment {
@@ -53,8 +56,10 @@ public class Fragment_main_smart extends Fragment {
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("fab_add", "click");
-                fragment_main_smart_classify.toggleDrawer();
+                Intent intent = new Intent(getActivity(), EditActivity.class);
+                intent.putExtra(EnumExtra.getName(), EnumExtra.addEntryWithEntryType);
+                intent.putExtra(ExtraFiled.entryEnum, fragment_main_smart_classify.getCurrentPageEntry());
+                startActivity(intent);
             }
         });
 

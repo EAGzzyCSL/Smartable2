@@ -19,6 +19,7 @@ public class ModifyDetailActivity extends EntryEditActivity {
     private LinearLayout linearLayout_rbtngroup;
     private LinearLayout linearLayout_aboveKey;
     private Button btn_modify_delete;
+    //TODO 这个entryToEdit是否可以考虑放到父类
     private Entry entryToEdit;
 
     @Override
@@ -37,13 +38,15 @@ public class ModifyDetailActivity extends EntryEditActivity {
 
             switch (enumExtra) {
                 case modifyEntry: {
-                    entryToEdit = (Entry) bundle.getSerializable(ExtraFiled.entry);
+                    entryToEdit = (Entry) bundle.getSerializable(ExtraFiled.entryToEdit);
                     enumEntry = entryToEdit == null ? null : entryToEdit.getType();
                     selectedEntryType(enumEntry);
                     show_entry_infor(entryToEdit);
                     break;
                 }
+
             }
+
         } else {
             //貌似什么也不需要做。
         }

@@ -13,19 +13,15 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-import adapter.Adapter_main_kind_recyclerView;
+import adapter.Adapter_recyclerView_entry;
 import adapter.Adapter_main_viewPager_kind;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.R;
 import database.SQLMan;
 import decorator.DividerItemDecoration;
 import entry.Entry;
-import entry.EntryDeadLine;
-import entry.EntrySchedule;
-import entry.EntryShortHand;
-import entry.EntrySomeDay;
-import entry.EntryTheseDays;
 import layout.EdgeDrawerLayout;
+import my.MyLog;
 
 public class Fragment_main_smart_classify extends Fragment {
     private View myView;
@@ -35,7 +31,7 @@ public class Fragment_main_smart_classify extends Fragment {
     private EdgeDrawerLayout edgeDrawerLayout;
     /*主界面部分*/
     private Adapter_main_viewPager_kind adapter_main_viewPager_kind;
-    private Adapter_main_kind_recyclerView adapter_smart_serialize;
+    private Adapter_recyclerView_entry adapter_smart_serialize;
     /*抽屉部分*/
     private RecyclerView smart_serilizeRecyclerView;
     /*预置数据*/
@@ -77,7 +73,6 @@ public class Fragment_main_smart_classify extends Fragment {
     private void mySetView() {
         viewPager_kind.setAdapter(adapter_main_viewPager_kind);
         tabLayout_kind.setupWithViewPager(viewPager_kind);
-        tabLayout_kind.setTabsFromPagerAdapter(adapter_main_viewPager_kind);
 //        yu-------
         smart_serilizeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         smart_serilizeRecyclerView.setAdapter(adapter_smart_serialize);
@@ -85,14 +80,17 @@ public class Fragment_main_smart_classify extends Fragment {
 
     }
 
+    //使用sort的方法是为四种事情默认预置了一个顺序0123,如果想修改他们的顺序，修改sort即可。
+
+    EnumEntry[] enumEntries = new EnumEntry[]{
+            EnumEntry.shortHand,
+            EnumEntry.deadLine,
+            EnumEntry.theseDays,
+            EnumEntry.someDay
+    };
+    int[] sort = new int[]{0, 1, 2, 3};
+
     private void myCreate() {
-        int[] sort = new int[]{0, 1, 2, 3};
-        final ArrayList<Entry> entry = new ArrayList<Entry>() {
-            {
-                this.add(new EntryTheseDays("预置-有朝一日1"));
-                this.add(new EntryTheseDays("预置-有朝一日2"));
-            }
-        };
         adapter_main_viewPager_kind = new Adapter_main_viewPager_kind(
                 new ArrayList<ArrayList<? extends Entry>>() {
                     {
@@ -100,37 +98,23 @@ public class Fragment_main_smart_classify extends Fragment {
                         this.add((SQLMan.getInstance(getActivity()).read(EnumEntry.shortHand)));
                         this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.deadLine));
                         this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.theseDays));
-                        this.add(entry);
+                        this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.someDay));
                     }
                 },
                 getActivity(),
                 getActivity().getResources().getStringArray(R.array.activity_main_smart_pager_title),
                 sort);
-        //数据初始化
-        mDatas_smart_serilize = new ArrayList<Entry>() {
-            {
-                this.add(new EntryShortHand("预置-速记1"));
-                this.add(new EntryShortHand("预置-速记2"));
-                this.add(new EntrySchedule("预置-日程1"));
-                this.add(new EntrySchedule("预置-日程2"));
-                this.add(new EntrySomeDay("预置-有朝一日1"));
-                this.add(new EntrySomeDay("预置-有朝一日2"));
-                this.add(new EntrySomeDay("预置-这两天1"));
-                this.add(new EntrySomeDay("预置-这两天2"));
-                this.add(new EntryDeadLine("预置-截止时间1"));
-                this.add(new EntryDeadLine("预置-截止时间2"));
-                this.add(new EntrySchedule("预置-日程3"));
-                this.add(new EntrySchedule("预置-日程4"));
-                this.add(new EntrySchedule("预置-日程5"));
-                this.add(new EntrySchedule("预置-日程6"));
-            }
-        };
-
-        adapter_smart_serialize = new Adapter_main_kind_recyclerView(mDatas_smart_serilize, getActivity());
+        adapter_smart_serialize = new Adapter_recyclerView_entry(SQLMan.getInstance(getActivity()).readAll(), getActivity());
 
     }
 
     public void toggleDrawer() {
         edgeDrawerLayout.toggleDrawer();
+    }
+
+    public EnumEntry getCurrentPageEntry() {
+        MyLog.i("选中下标：", tabLayout_kind.getSelectedTabPosition() + "#");
+
+        return enumEntries[sort[tabLayout_kind.getSelectedTabPosition()]];
     }
 }

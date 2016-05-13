@@ -23,6 +23,14 @@ public class EditActivity extends EntryEditActivity {
                     setTimeEnd(myMoment == null ? null : myMoment.newSameMoment().hourAdd(1));
                     break;
                 }
+                case addEntryWithEntryType: {
+                    enumEntry = (EnumEntry) bundle.getSerializable(ExtraFiled.entryEnum);
+                    if (enumEntry != null) {
+                        selectedRadio(enumEntry);
+                        selectedEntryType(enumEntry);
+                    }
+                    break;
+                }
                 default: {
                     MyLog.i("新建entry", "不属于任何一个枚举");
                 }

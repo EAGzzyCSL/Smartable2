@@ -5,5 +5,7 @@ package bit.eagzzycsl.smartable2;
  */
 public interface ExtraFiled {
     String myMoment = "myMoment";
-    String entry = "entry";
+    String entryToEdit = "entryToEdit";
+    String entryEnum = "entryEnum";
+    //TODO 无法保证名字不同的字符串真正内容也不同
 }

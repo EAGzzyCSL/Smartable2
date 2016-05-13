@@ -5,13 +5,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.SortedMap;
 
 import bit.eagzzycsl.smartable2.EnumEntry;
 import entry.Entry;
 import entry.EntryDeadLine;
 import entry.EntrySchedule;
 import entry.EntryShortHand;
+import entry.EntrySomeDay;
 import entry.EntryTheseDays;
+import my.MyLog;
 import my.MyMoment;
 import my.TableFiled;
 
@@ -56,6 +59,19 @@ public class SQLMan implements TableFiled {
         myDb.update(entry.getType().getTableName(), entry.toContentValues(), "_id = ?",
                 new String[]{String.valueOf(entry.getId())});
 
+    }
+
+    public ArrayList<Entry> readAll() {
+        ArrayList<Entry> entries = new ArrayList<>();
+        /*note中的内容不应该被读入，不过不需要担心，read会把它跳过*/
+        for (EnumEntry e : EnumEntry.values()) {
+            if (e == EnumEntry.note) {
+                continue;
+            }
+            //TODO addAll方法可能有内存和效率上的问题
+            entries.addAll(read(e));
+        }
+        return entries;
     }
 
     //尝试使用范型
@@ -131,6 +147,14 @@ public class SQLMan implements TableFiled {
                     ));
                 }
                 c.close();
+                return arr;
+            }
+            case someDay: {
+                ArrayList<EntrySomeDay> arr = new ArrayList<>();
+                return arr;
+            }
+            case trigger: {
+                ArrayList<EntrySomeDay> arr = new ArrayList<>();
                 return arr;
             }
         }

@@ -85,7 +85,7 @@ public class Fragment_main_calendric extends Fragment {
                     public void onItemClick(View v, EntrySchedule entrySchedule) {
                         Intent intent = new Intent(getActivity(), ModifyDetailActivity.class);
                         intent.putExtra(EnumExtra.getName(), EnumExtra.modifyEntry);
-                        intent.putExtra(ExtraFiled.entry, entrySchedule);
+                        intent.putExtra(ExtraFiled.entryToEdit, entrySchedule);
                         startActivity(intent);
                     }
 

@@ -46,7 +46,7 @@ public class Adapter_main_viewPager_kind extends PagerAdapter {
             r.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
             r.setItemAnimator(new DefaultItemAnimator());
             r.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
-            r.setAdapter(new Adapter_main_kind_recyclerView(entries.get(titleSort[i++]),context));
+            r.setAdapter(new Adapter_recyclerView_entry(entries.get(titleSort[i++]),context));
         }
         this.views=pages;
         this.pageTitle = pageTitle;
