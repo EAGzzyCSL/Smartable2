@@ -1,8 +1,9 @@
 package my;
 
 
-import java.text.ParseException;
 import java.util.Calendar;
+
+import bit.eagzzycsl.smartable2.EnumEntry;
 
 public class MyUtil {
     //一个工具类，提供一些静态方法供调用
@@ -21,7 +22,7 @@ public class MyUtil {
     }
 
     //传过来一个日期和时间，并给一个提醒类型，返回一个具体的提醒时间
-    public static MyMoment getAlertTime(MyMoment date, String remind_picker)  {
+    public static MyMoment getAlertTime(MyMoment date, String remind_picker) {
         Calendar c = date.convertToCalendar();
 
         switch (remind_picker) {
@@ -57,5 +58,14 @@ public class MyUtil {
         }
 
         return MyMoment.createFromCalendar(c);
+    }
+
+    public static int indexOf(EnumEntry[] es, EnumEntry e) {
+        for (int i = 0; i < es.length; i++) {
+            if (es[i] == e) {
+                return i;
+            }
+        }
+        return -1;
     }
 }

@@ -1,12 +1,12 @@
 package bit.eagzzycsl.smartable2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 
 import database.SQLMan;
@@ -19,7 +19,6 @@ public class ModifyDetailActivity extends EntryEditActivity {
     private LinearLayout linearLayout_rbtngroup;
     private LinearLayout linearLayout_aboveKey;
     private Button btn_modify_delete;
-    //TODO 这个entryToEdit是否可以考虑放到父类
 
 
     @Override
@@ -65,6 +64,11 @@ public class ModifyDetailActivity extends EntryEditActivity {
             @Override
             public void onClick(View v) {
                 SQLMan.getInstance(ModifyDetailActivity.this).delete(entryToEdit);
+                Intent intent = new Intent();
+                intent.putExtra(EnumExtra.getName(), EnumExtra.entryRemoved);
+                intent.putExtra(ExtraFiled.entryResult, entryToEdit);
+                setResult(IntentCode.result_fromEntryEditToMain, intent);
+                finish();
             }
         });
     }
@@ -78,8 +82,10 @@ public class ModifyDetailActivity extends EntryEditActivity {
             }
             case schedule: {//日程
                 EntrySchedule schedule = (EntrySchedule) entryToEdit;
+
                 setTimeStart(schedule.getDate_begin());
                 setTimeEnd(schedule.getDate_end());
+                //TODO 重构提醒，重复次数等的设置view
                 if (schedule.getAlert() == "0" || schedule.getAlert() == null) {
                     edit_remind_picker.setText("不提醒");
                 } else {
@@ -93,8 +99,7 @@ public class ModifyDetailActivity extends EntryEditActivity {
             }
             case deadLine: {// DDL
                 EntryDeadLine deadLine = (EntryDeadLine) entryToEdit;
-                edit_ddl_datetime_picker.setText(deadLine.getDate_ddl().getDate().convertToLocalString());
-                edit_ddl_datetime_picker2.setText(deadLine.getDate_ddl().getTime().convertToLocalString());
+                setTimeDDL(deadLine.getDate_ddl());
                 if (deadLine.getAlert() == "0") {
                     edit_remind_picker.setText("不提醒");
                 } else {
@@ -124,6 +129,10 @@ public class ModifyDetailActivity extends EntryEditActivity {
         switch (item.getItemId()) {
             case R.id.nav_modify_done: {
                 saveEntryToDB(true);
+                Intent intent = new Intent();
+                intent.putExtra(EnumExtra.getName(), EnumExtra.entryModified);
+                intent.putExtra(ExtraFiled.entryResult, entryToEdit);
+                setResult(IntentCode.result_fromEntryEditToMain, intent);
                 finish();
                 break;
             }

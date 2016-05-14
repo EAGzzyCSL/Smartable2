@@ -139,5 +139,11 @@ public class MainActivity extends AppCompatActivity
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        fragment_main_smart.onActivityResult(requestCode, resultCode, data);
+    }
 }
 /*两个默认，一个默认显示日历浏览还是智能浏览，一个默认在智能浏览下显示序列化还是分类*/

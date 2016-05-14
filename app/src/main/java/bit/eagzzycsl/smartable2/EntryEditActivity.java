@@ -217,6 +217,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
 
     protected void setTimeDDL(MyMoment myMoment) {
         this.timeDDL = myMoment;
+        MyLog.i("在setTimeDDl的时候",myMoment==null?"a null":myMoment.convertToLocalString());
         setTimeToTextView(myMoment, edit_ddl_datetime_picker, edit_ddl_datetime_picker2);
     }
 

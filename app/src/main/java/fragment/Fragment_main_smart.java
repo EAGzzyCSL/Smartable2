@@ -13,7 +13,10 @@ import android.view.ViewGroup;
 import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.EnumExtra;
 import bit.eagzzycsl.smartable2.ExtraFiled;
+import bit.eagzzycsl.smartable2.IntentCode;
 import bit.eagzzycsl.smartable2.R;
+import entry.Entry;
+import my.MyLog;
 
 public class Fragment_main_smart extends Fragment {
     private View myView;
@@ -59,7 +62,7 @@ public class Fragment_main_smart extends Fragment {
                 Intent intent = new Intent(getActivity(), EditActivity.class);
                 intent.putExtra(EnumExtra.getName(), EnumExtra.addEntryWithEntryType);
                 intent.putExtra(ExtraFiled.entryEnum, fragment_main_smart_classify.getCurrentPageEntry());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
             }
         });
 
@@ -80,5 +83,14 @@ public class Fragment_main_smart extends Fragment {
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IntentCode.request_fromMainToEntryEdit
+                && resultCode == IntentCode.result_fromEntryEditToMain) {
+            EnumExtra enumExtra = (EnumExtra) data.getSerializableExtra(EnumExtra.getName());
+            Entry entry = (Entry) data.getSerializableExtra(ExtraFiled.entryResult);
+            fragment_main_smart_classify.updateEntryListInView(enumExtra,entry);
 
+        }
+    }
 }

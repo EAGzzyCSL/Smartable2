@@ -93,4 +93,11 @@ public enum EnumEntry {
     public String getTableName() {
         return this.tableName;
     }
+
+    public static EnumEntry[] fourEnumEntries = new EnumEntry[]{
+            EnumEntry.shortHand,
+            EnumEntry.deadLine,
+            EnumEntry.theseDays,
+            EnumEntry.someDay
+    };
 }

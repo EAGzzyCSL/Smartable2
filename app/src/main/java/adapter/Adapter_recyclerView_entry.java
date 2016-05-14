@@ -1,5 +1,6 @@
 package adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import bit.eagzzycsl.smartable2.EnumExtra;
 import bit.eagzzycsl.smartable2.ExtraFiled;
+import bit.eagzzycsl.smartable2.IntentCode;
 import bit.eagzzycsl.smartable2.ModifyDetailActivity;
 import bit.eagzzycsl.smartable2.R;
 import entry.Entry;
@@ -30,12 +32,13 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(context).
-                inflate(R.layout.item_smart_serialize, parent, false));//yu------改样式  adapter_main_recycler_kind
+                inflate(R.layout.item_smart_serialize, parent, false));
+        //yu------改样式  adapter_main_recycler_kind
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setContent(entries.get(position), position);
+        holder.setContent(entries.get(position));
     }
 
     @Override
@@ -53,15 +56,15 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
             view_color_indicator = itemView.findViewById(R.id.view_color_indicator);
         }
 
-        public void setContent(final Entry entry, final int position) {
+        public void setContent(final Entry entry) {
             textView_name.setText(entry.getTitle());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ModifyDetailActivity.class);
                     intent.putExtra(EnumExtra.getName(), EnumExtra.modifyEntry);
-                    intent.putExtra(ExtraFiled.entryToEdit, entries.get(position));
-                    context.startActivity(intent);
+                    intent.putExtra(ExtraFiled.entryToEdit, entry);
+                    ((Activity) context).startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
                 }
             });
             view_color_indicator.setBackgroundColor(
@@ -71,4 +74,34 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public void insertEntry(Entry entry) {
+        ((ArrayList<Entry>) entries).add(entry);
+        this.notifyItemInserted(entries.size());
+        //TODO 泛型下的添加该如何做？
+    }
+
+    @SuppressWarnings("unchecked")
+    public void updateEntry(Entry entry) {
+        int i = getIndexInEntries(entry);
+        ((ArrayList<Entry>) entries).set(i, entry);
+        this.notifyItemChanged(i);
+
+    }
+
+    public void deleteEntry(Entry entry) {
+        int i = getIndexInEntries(entry);
+        entries.remove(i);
+        this.notifyItemRemoved(i);
+
+    }
+
+    private int getIndexInEntries(Entry entry) {
+        for (int i = 0; i < entries.size(); i++) {
+            if (entries.get(i).getId() == entry.getId()) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }

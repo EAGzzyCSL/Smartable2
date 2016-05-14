@@ -1,5 +1,6 @@
 package bit.eagzzycsl.smartable2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -18,7 +19,6 @@ public class EditActivity extends EntryEditActivity {
                     selectedRadio(EnumEntry.schedule);
                     selectedEntryType(EnumEntry.schedule);
                     MyMoment myMoment = (MyMoment) bundle.getSerializable(ExtraFiled.myMoment);
-                    MyLog.i("收到的开始时间",myMoment.convertToLocalString());
                     setTimeStart(myMoment);
                     //TODO 结束时间后推动一小时，涉及到时间计算，需要在MyMoment中提供，装饰者模式引入，将所有时间操作全部放在my包中
                     setTimeEnd(myMoment == null ? null : myMoment.newSameMoment().hourAdd(1));
@@ -27,6 +27,10 @@ public class EditActivity extends EntryEditActivity {
                 case addEntryWithEntryType: {
                     enumEntry = (EnumEntry) bundle.getSerializable(ExtraFiled.entryEnum);
                     if (enumEntry != null) {
+                        //TODO it is strange that this three set must before selected
+                        setTimeStart(new MyMoment());
+                        setTimeEnd(new MyMoment());
+                        setTimeDDL(new MyMoment());
                         selectedRadio(enumEntry);
                         selectedEntryType(enumEntry);
                     }
@@ -40,12 +44,9 @@ public class EditActivity extends EntryEditActivity {
             //初始化
             edit_rbtn1.setSelected(true);
             selectedEntryType(EnumEntry.shortHand);
-            timeStart = new MyMoment();
-            timeEnd = new MyMoment();
-            timeDDL = new MyMoment();
-            setTimeEnd(timeEnd);
-            setTimeDDL(timeDDL);
-            setTimeStart(timeStart);
+            setTimeStart(new MyMoment());
+            setTimeEnd(new MyMoment());
+            setTimeDDL(new MyMoment());
         }
     }
 
@@ -55,6 +56,10 @@ public class EditActivity extends EntryEditActivity {
         edit_done_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 saveEntryToDB(false);
+                Intent intent = new Intent();
+                intent.putExtra(EnumExtra.getName(), EnumExtra.entryAdded);
+                intent.putExtra(ExtraFiled.entryResult, entryToEdit);
+                setResult(IntentCode.result_fromEntryEditToMain, intent);
                 finish();
             }
         });

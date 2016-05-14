@@ -1,6 +1,7 @@
 package fragment;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import adapter.Adapter_recyclerView_entry;
 import adapter.Adapter_main_viewPager_kind;
 import bit.eagzzycsl.smartable2.EnumEntry;
+import bit.eagzzycsl.smartable2.EnumExtra;
 import bit.eagzzycsl.smartable2.R;
 import database.SQLMan;
 import decorator.DividerItemDecoration;
@@ -94,12 +96,7 @@ public class Fragment_main_smart_classify extends Fragment {
 
     //使用sort的方法是为四种事情默认预置了一个顺序0123,如果想修改他们的顺序，修改sort即可。
 
-    EnumEntry[] enumEntries = new EnumEntry[]{
-            EnumEntry.shortHand,
-            EnumEntry.deadLine,
-            EnumEntry.theseDays,
-            EnumEntry.someDay
-    };
+
     int[] sort = new int[]{0, 1, 2, 3};
 
     private void myCreate() {
@@ -120,6 +117,27 @@ public class Fragment_main_smart_classify extends Fragment {
 
     }
 
+    public void updateEntryListInView(EnumExtra enumExtra, Entry entry) {
+        switch (enumExtra) {
+            case entryAdded: {
+                adapter_smart_serialize.insertEntry(entry);
+                adapter_main_viewPager_kind.insertEntry(entry);
+                break;
+            }
+            case entryModified: {
+                adapter_smart_serialize.updateEntry(entry);
+                adapter_main_viewPager_kind.updateEntry(entry);
+                break;
+            }
+            case entryRemoved: {
+                adapter_smart_serialize.deleteEntry(entry);
+                adapter_main_viewPager_kind.deleteEntry(entry);
+                break;
+            }
+        }
+    }
+
+
     public void toggleDrawer() {
         edgeDrawerLayout.toggleDrawer();
     }
@@ -127,6 +145,6 @@ public class Fragment_main_smart_classify extends Fragment {
     public EnumEntry getCurrentPageEntry() {
         MyLog.i("选中下标：", tabLayout_kind.getSelectedTabPosition() + "#");
 
-        return enumEntries[sort[tabLayout_kind.getSelectedTabPosition()]];
+        return EnumEntry.fourEnumEntries[sort[tabLayout_kind.getSelectedTabPosition()]];
     }
 }
