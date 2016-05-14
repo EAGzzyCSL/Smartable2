@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import entry.EntrySchedule;
+import my.MyDate;
 import view.CalendricCombineDayView;
 import view.CalendricPagerView;
 import view.CalendricViewItemClick;
@@ -89,8 +90,8 @@ public class Adapter_view_calendric extends PagerAdapter {
     }
 
     /*从内容提供器提供内容供视图调用*/
-    public ArrayList<EntrySchedule> getScheduleFromItemProvider() {
-        return itemProvider.getItems(0);
+    public ArrayList<EntrySchedule> getScheduleFromItemProvider(MyDate date) {
+        return itemProvider.getItems(date);
     }
 
     /*供视图调用传递点击事件操作到视图*/

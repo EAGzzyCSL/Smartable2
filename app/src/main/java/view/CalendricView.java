@@ -5,14 +5,14 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
-import java.util.Calendar;
 
 import adapter.Adapter_view_calendric;
 import my.MyDate;
+import my.MyMoment;
 
 /*继承自viewPager以实现日历的左右无限滚动*/
 public class CalendricView extends ViewPager {
-    private Calendar viewCalendar=Calendar.getInstance();//一个日历，用来表计三张视图中第一张的起始日期
+    private MyMoment myMoment = new MyMoment();//用来表计三张视图中第一张的起始日期
     /*adapter负责提供数据，日供日历的加减，adapter的数据从item提供器获取，pager提供根据指定日期更新内容的方法*/
     private Adapter_view_calendric myAdapter;
     private Context context;
@@ -40,13 +40,13 @@ public class CalendricView extends ViewPager {
             if (position == 0) {
                 haveScrolled = true;
                 scrolledIndex = 0;
-                viewCalendar.add(Calendar.DAY_OF_MONTH, -1 * myAdapter.getEnumViewType().getDiv());
+                myMoment.dayAdd(-1 * myAdapter.getEnumViewType().getDiv());
                 /*calendar还有一个roll方法也可以增加日期，但是roll的年月日不会同步，即31号加到1号时月不会加1*/
             }
             if (position == 2) {
                 scrolledIndex = 2;
                 haveScrolled = true;
-                viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
+                myMoment.dayAdd(myAdapter.getEnumViewType().getDiv());
             }
         }
 
@@ -94,9 +94,7 @@ public class CalendricView extends ViewPager {
 
     /*设置首日，不管对于月日周，凭借首日都可以知道日历视图需要滚动到那个时期，因此该函数用于设定日历视图跳转到某个时候*/
     public void setFirstDay(MyDate date) {
-        viewCalendar.set(Calendar.YEAR, date.getYear());
-        viewCalendar.set(Calendar.MONTH, date.getMonth());
-        viewCalendar.set(Calendar.DAY_OF_MONTH, date.getDay());
+        myMoment.setDate(date.getYear(), date.getMonth(), date.getDay());
         pagerUpdate();
     }
 
@@ -106,22 +104,26 @@ public class CalendricView extends ViewPager {
         //日历的加减早在pager滚动的时候就完成了，这里只需要负责日历增加产生新的时间传一下再把日历reset了就好
 
         /*page_a*/
-        myAdapter.getPage_a().transData(MyDate.createFromCalendar(viewCalendar),
-                myAdapter.getScheduleFromItemProvider(),
+        MyMoment moment_a = myMoment.newSameMoment();
+        myAdapter.getPage_a().transData(moment_a.getDate(),
+                myAdapter.getScheduleFromItemProvider(moment_a.getDate()),
                 myAdapter.getCalendricViewItemClick());
-        viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
+        myMoment.dayAdd(myAdapter.getEnumViewType().getDiv());
         /*page_b*/
-        myAdapter.getPage_b().transData(MyDate.createFromCalendar(viewCalendar),
-                myAdapter.getScheduleFromItemProvider(),
+        MyMoment moment_b = myMoment.newSameMoment();
+        myAdapter.getPage_b().transData(moment_b.getDate(),
+                myAdapter.getScheduleFromItemProvider(moment_b.getDate()),
                 myAdapter.getCalendricViewItemClick());
-        viewCalendar.add(Calendar.DAY_OF_MONTH, myAdapter.getEnumViewType().getDiv());
+        myMoment.dayAdd(myAdapter.getEnumViewType().getDiv());
+
         /*page_c*/
-        myAdapter.getPage_c().transData(MyDate.createFromCalendar(viewCalendar),
-                myAdapter.getScheduleFromItemProvider(),
+        MyMoment moment_c = myMoment.newSameMoment();
+        myAdapter.getPage_c().transData(moment_c.getDate(),
+                myAdapter.getScheduleFromItemProvider(moment_c.getDate()),
                 myAdapter.getCalendricViewItemClick()
         );
         /*reset calendar and notify data change*/
-        viewCalendar.add(Calendar.DAY_OF_MONTH, -2 * myAdapter.getEnumViewType().getDiv());
+        myMoment.dayAdd(-2 * myAdapter.getEnumViewType().getDiv());
         myAdapter.notifyDataSetChanged();
     }
 

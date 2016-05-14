@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.SortedMap;
 
 import bit.eagzzycsl.smartable2.EnumEntry;
 import entry.Entry;
@@ -14,6 +13,7 @@ import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntrySomeDay;
 import entry.EntryTheseDays;
+import my.MyDate;
 import my.MyLog;
 import my.MyMoment;
 import my.TableFiled;
@@ -74,9 +74,15 @@ public class SQLMan implements TableFiled {
         return entries;
     }
 
-    //尝试使用范型
-    public ArrayList<? extends Entry> read(EnumEntry enumEntry) {
-        Cursor c = myDb.rawQuery("select * from " + enumEntry.getTableName(), null);
+    public ArrayList<? extends Entry> read(EnumEntry enumEntry, MyDate myDate) {
+        //有日期情况下的读取，这么写还真是有点难看明白
+        Cursor c = myDb.rawQuery(
+                "select * from " + enumEntry.getTableName() +
+                        (myDate == null ? "" : " where date(date_begin)= date( ? )"),
+                myDate == null ? null : new String[]{
+                        myDate.convertToString()
+                });
+
         switch (enumEntry) {
             case schedule: {
                 ArrayList<EntrySchedule> arr = new ArrayList<>();
@@ -85,13 +91,13 @@ public class SQLMan implements TableFiled {
                             c.getInt(c.getColumnIndex(TableFiled.ID)),
                             c.getString(c.getColumnIndex(TableFiled.TITLE)),
                             c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
                             c.getString(c.getColumnIndex(TableFiled.STATUS)),
 
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_begin))),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_end))),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_begin))),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_end))),
                             c.getString(c.getColumnIndex(TableFiled.ALERT)),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_alert))),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_alert))),
                             c.getString(c.getColumnIndex(TableFiled.LOCATION))
                     ));
                 }
@@ -105,7 +111,7 @@ public class SQLMan implements TableFiled {
                             c.getInt(c.getColumnIndex(TableFiled.ID)),
                             c.getString(c.getColumnIndex(TableFiled.TITLE)),
                             c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
                             c.getString(c.getColumnIndex(TableFiled.STATUS))
                     ));
                 }
@@ -119,15 +125,15 @@ public class SQLMan implements TableFiled {
                             c.getInt(c.getColumnIndex(TableFiled.ID)),
                             c.getString(c.getColumnIndex(TableFiled.TITLE)),
                             c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
                             c.getString(c.getColumnIndex(TableFiled.STATUS)),
 
                             c.getString(c.getColumnIndex(TableFiled.ALERT)),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_alert))),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_alert))),
                             c.getString(c.getColumnIndex(TableFiled.LOCATION)),
                             c.getInt(c.getColumnIndex(TableFiled.TODO_DURATION)),
                             c.getInt(c.getColumnIndex(TableFiled.TODO_NUMBERS)),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_ddl)))
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_ddl)))
                     ));
                 }
                 c.close();
@@ -140,10 +146,10 @@ public class SQLMan implements TableFiled {
                             c.getInt(c.getColumnIndex(TableFiled.ID)),
                             c.getString(c.getColumnIndex(TableFiled.TITLE)),
                             c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
                             c.getString(c.getColumnIndex(TableFiled.STATUS)),
                             c.getString(c.getColumnIndex(TableFiled.IS_UPPER)),
-                            MyMoment.createFromString(c.getString(c.getColumnIndex(TableFiled.DATE_upper)))
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_upper)))
                     ));
                 }
                 c.close();
@@ -159,6 +165,13 @@ public class SQLMan implements TableFiled {
             }
         }
         return null;
+    }
+
+    //尝试使用范型
+    public ArrayList<? extends Entry> read(EnumEntry enumEntry) {
+        return read(enumEntry, null);
+//        Cursor c = myDb.rawQuery("select * from " + enumEntry.getTableName(), null);
+
     }
     //TODO 提供一个读取数据库中全部内容的方法供宦算法用
 }

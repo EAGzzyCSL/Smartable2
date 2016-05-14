@@ -13,5 +13,4 @@ public interface CalendricPagerView {
     int myGetScroll();
 
     void mySetScroll(int y);
-
 }

@@ -2,8 +2,8 @@ package my;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Objects;
 
+//TODO 如果使用return this可以实现连续调用
 public class MyMoment implements I_MyCalendar, Serializable {
     private MyDate myDate;
     private MyTime myTime;
@@ -15,22 +15,13 @@ public class MyMoment implements I_MyCalendar, Serializable {
         this.myTime = new MyTime(cM);
     }
 
-    public MyMoment newSameMoment() {
-        /*创建一个新的moment并为它设置时间，如果需要的话写一个从MyMoment创建对象的构造方法*/
-        MyMoment m = new MyMoment();
-        m.setDate(this.getYear(), this.getMonth(), this.getDay());
-        m.setTime(this.getHour(), this.getMinute());
-        return m;
-    }
-
-    public MyMoment hourAdd(int h) {
-        myTime.hourAdd(h);
-        return this;
-    }
-
-
-    public static MyMoment getNow() {
-        return MyMoment.createFromCalendar(Calendar.getInstance());
+    public MyMoment(String s) {
+        this();
+        if (s != null) {
+            String[] ss = s.split(" ");
+            setDate(ss[0]);
+            setTime(ss[1]);
+        }
     }
 
     public MyMoment(int year, int month, int day, int hour, int minute) {
@@ -39,19 +30,43 @@ public class MyMoment implements I_MyCalendar, Serializable {
         setTime(hour, minute);
     }
 
-    public void setTime(int hour, int minute) {
-        myTime.setTime(hour, minute);
-    }
-
-    public MyMoment(MyDate myDate, MyTime myTime) {
-        this();
-        setDate(myDate.getYear(), myDate.getMonth(), myDate.getDay());
-        setTime(myTime.getHour(), myTime.getMinute());
+    public void setDate(String s) {
+        myDate.setDate(s);
     }
 
     public void setDate(int year, int month, int day) {
         myDate.setDate(year, month, day);
     }
+
+    public void setTime(String s) {
+        myTime.setTime(s);
+    }
+
+    public void setTime(int hour, int minute) {
+        myTime.setTime(hour, minute);
+    }
+
+    public MyMoment newSameMoment() {
+        /*创建一个新的moment并为它设置时间，如果需要的话写一个从MyMoment创建对象的构造方法*/
+        MyMoment m = new MyMoment();
+        m.setDate(this.getYear(), this.getMonth(), this.getDay());
+        m.setTime(this.getHour(), this.getMinute());
+        return m;
+    }
+
+    public void dayAdd(int d) {
+        myDate.dayAdd(d);
+    }
+
+    public MyMoment hourAdd(int h) {
+        myTime.hourAdd(h);
+        return this;
+    }
+
+    public void minuteAdd(int m) {
+        myTime.minuteAdd(m);
+    }
+
 
     public int getYear() {
         return myDate.getYear();
@@ -74,22 +89,24 @@ public class MyMoment implements I_MyCalendar, Serializable {
         return myTime.getMinute();
     }
 
-    public static MyMoment createFromCalendar(Calendar c) {
-        if (c != null) {
-            return new MyMoment(MyDate.createFromCalendar(c), MyTime.createFromCalendar(c));
-        } else {
-            return null;
-        }
+
+    public MyDate getDate() {
+        return this.myDate;
     }
 
-    @Override
-    public void syncFromCalendar(Calendar c) {
-        if (c != null) {
-            myDate.syncFromCalendar(c);
-            myTime.syncFromCalendar(c);
-        }
+    public MyTime getTime() {
+        return this.myTime;
     }
 
+    public void setDay(int d) {
+        myDate.setDay(d);
+    }
+
+    public void setHour(int h) {
+        myTime.setHour(h);
+    }
+
+    /*转换*/
     @Override
     public String convertToString() {
         if (myDate != null && myTime != null) {
@@ -108,53 +125,21 @@ public class MyMoment implements I_MyCalendar, Serializable {
         }
     }
 
-    @Override
-    public Calendar convertToCalendar() {
-        Calendar c = Calendar.getInstance();
-        syncToCalendar(c);
-        return c;
-    }
-
-    @Override
-    public void syncToCalendar(Calendar c) {
-        if (c != null) {
-            myDate.syncToCalendar(c);
-            myTime.syncToCalendar(c);
-        }
-    }
-
-    public static MyMoment createFromString(String s) {
-        if (s != null) {
-            String[] ss = s.split(" ");
-            return new MyMoment(MyDate.createFromString(ss[0]), MyTime.createFromString(ss[1]));
-        } else {
-            return null;
-        }
-    }
 
     public int compareToNow() {
         return this.compareToNow(Calendar.getInstance());
     }
 
     public int compareToNow(Calendar c) {
-        return this.convertToCalendar().compareTo(c);
+        return cM.compareTo(c);
     }
 
     public int computeDiff(Calendar c) {
         //实现方法不是很好但是比宦的要好
-        return (int) (c.getTimeInMillis() - this.convertToCalendar().getTimeInMillis() / 1000);
+        return (int) ((c.getTimeInMillis() - cM.getTimeInMillis()) / 1000);
     }
 
     public int computeDiffWithNow() {
         return computeDiff(Calendar.getInstance());
     }
-
-    public MyDate getDate() {
-        return this.myDate;
-    }
-
-    public MyTime getTime() {
-        return this.myTime;
-    }
-
 }

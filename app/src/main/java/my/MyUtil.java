@@ -1,8 +1,6 @@
 package my;
 
 
-import java.util.Calendar;
-
 import bit.eagzzycsl.smartable2.EnumEntry;
 
 public class MyUtil {
@@ -23,32 +21,31 @@ public class MyUtil {
 
     //传过来一个日期和时间，并给一个提醒类型，返回一个具体的提醒时间
     public static MyMoment getAlertTime(MyMoment date, String remind_picker) {
-        Calendar c = date.convertToCalendar();
-
+        MyMoment m = date.newSameMoment();
         switch (remind_picker) {
             case "30min": {
-                c.add(Calendar.MINUTE, -30);
+                m.minuteAdd(-30);
                 break;
             }
             case "1h": {
-                c.add(Calendar.HOUR_OF_DAY, -1);
+                m.hourAdd(-1);
                 break;
             }
             case "3h": {
-                c.add(Calendar.HOUR_OF_DAY, -3);
+                m.hourAdd(-3);
                 break;
             }
             case "5min": {
-                c.add(Calendar.MINUTE, -5);
+                m.minuteAdd(-5);
                 break;
             }
             case "9:00 in the morning": {
-                c.set(Calendar.HOUR_OF_DAY, 9);
+                m.setHour(9);
                 break;
             }
             case "22:00 last day": {
-                c.add(Calendar.DAY_OF_MONTH, -1);
-                c.set(Calendar.HOUR_OF_DAY, 22);
+                m.dayAdd(-1);
+                m.setHour(22);
                 break;
             }
             default: {
@@ -56,8 +53,7 @@ public class MyUtil {
                 break;
             }
         }
-
-        return MyMoment.createFromCalendar(c);
+        return m;
     }
 
     public static int indexOf(EnumEntry[] es, EnumEntry e) {

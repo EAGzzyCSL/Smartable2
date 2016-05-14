@@ -232,7 +232,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 entryToEdit = new EntryShortHand(
                         edit_activity_title.getText().toString(),
                         "",
-                        MyMoment.getNow(),
+                        new MyMoment(),
                         "1",
                         null,
                         null
@@ -243,7 +243,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 entryToEdit = new EntrySchedule(
                         edit_activity_title.getText().toString(),
                         "",
-                        MyMoment.getNow(),
+                        new MyMoment(),
                         "",
                         timeStart,
                         timeEnd,
@@ -257,7 +257,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 entryToEdit = new EntryTheseDays(
                         edit_activity_title.getText().toString(),
                         "",
-                        MyMoment.getNow(),
+                        new MyMoment(),
                         "1"
                 );
                 break;
@@ -266,7 +266,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 entryToEdit = new EntryDeadLine(
                         edit_activity_title.getText().toString(),
                         "",
-                        MyMoment.getNow(),
+                        new MyMoment(),
                         "1",
                         edit_remind_picker.getText().toString().equals("不提醒") ? "0" : "1",
                         MyUtil.getAlertTime(timeDDL, edit_remind_picker.getText().toString()),

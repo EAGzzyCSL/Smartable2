@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import adapter.Adapter_view_calendric;
 import bit.eagzzycsl.smartable2.EditActivity;
@@ -76,9 +75,9 @@ public class Fragment_main_calendric extends Fragment {
                 EnumCalendricViewType.Day,
                 new CalendricViewItemProvider() {
                     @Override
-                    public ArrayList<EntrySchedule> readFromDatabase(int i) {
-
-                        return (ArrayList<EntrySchedule>) SQLMan.getInstance(getActivity()).read(EnumEntry.schedule);
+                    public ArrayList<EntrySchedule> readFromDatabase(MyDate myDate) {
+//                        return new ArrayList<EntrySchedule>();
+                        return (ArrayList<EntrySchedule>) SQLMan.getInstance(getActivity()).read(EnumEntry.schedule, myDate);
 
                     }
                 },
@@ -107,15 +106,16 @@ public class Fragment_main_calendric extends Fragment {
 
     private void mySetView() {
         calendricView_day.setAdapter(adapter_view_calendric);
-        //TODO 对于日视图，前一天为当天时间再减1才能保证后今天在中间。
-        calendricView_day.setFirstDay(MyDate.createFromCalendar(Calendar.getInstance()));
+        MyDate myDate = new MyDate();
+        myDate.dayAdd(adapter_view_calendric.getEnumViewType().getDiv() * -1);
+        calendricView_day.setFirstDay(myDate);
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditActivity.class);
                 intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
                 //TODO pager当天的日期和今天的时间
-                intent.putExtra(ExtraFiled.myMoment, MyMoment.getNow());
+                intent.putExtra(ExtraFiled.myMoment, new MyMoment());
                 startActivity(intent);
             }
         });

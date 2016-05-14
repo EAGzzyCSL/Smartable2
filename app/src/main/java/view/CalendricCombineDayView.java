@@ -31,13 +31,15 @@ public class CalendricCombineDayView extends FrameLayout implements CalendricPag
 
     @Override
     public void transData(MyDate date, ArrayList<EntrySchedule> schedules, CalendricViewItemClick calendricViewItemClick) {
+
         calendricSimpleDayView.setEntrySchedule(schedules);
         calendricSimpleDayView.setCalendricViewItemClick(calendricViewItemClick);
         calendricSimpleDayView.setViewDate(date);
         //临时创建一个MyMoment对象来传给日历那边
         //TODO 重构view这块的日历使用。
-        textView_showDay.setText(date.getDay() + "");
+        textView_showDay.setText(String.valueOf(date.getDay()));
     }
+
 
     @Override
     public int myGetScroll() {
