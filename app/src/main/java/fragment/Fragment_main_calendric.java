@@ -18,9 +18,11 @@ import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.EnumExtra;
 import bit.eagzzycsl.smartable2.ExtraFiled;
+import bit.eagzzycsl.smartable2.IntentCode;
 import bit.eagzzycsl.smartable2.ModifyDetailActivity;
 import bit.eagzzycsl.smartable2.R;
 import database.SQLMan;
+import entry.Entry;
 import entry.EntrySchedule;
 import my.MyDate;
 import my.MyLog;
@@ -87,18 +89,17 @@ public class Fragment_main_calendric extends Fragment {
                         Intent intent = new Intent(getActivity(), ModifyDetailActivity.class);
                         intent.putExtra(EnumExtra.getName(), EnumExtra.modifyEntry);
                         intent.putExtra(ExtraFiled.entryToEdit, entrySchedule);
-                        startActivity(intent);
+                        getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
                     }
 
                     @Override
                     public void onAddClick(View v, MyMoment m) {
                         Intent intent = new Intent(getActivity(), EditActivity.class);
                         intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
-                        MyLog.i("点击时的时间", m.convertToLocalString());
                         //pager当天的日期和时间
 
                         intent.putExtra(ExtraFiled.myMoment, m);
-                        startActivity(intent);
+                        getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
                     }
                 }
         );
@@ -116,10 +117,24 @@ public class Fragment_main_calendric extends Fragment {
                 intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
                 //TODO pager当天的日期和今天的时间
                 intent.putExtra(ExtraFiled.myMoment, new MyMoment());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
             }
         });
     }
 
+    public void updateItemInUI() {
+        calendricView_day.updateItem();
+    }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == IntentCode.request_fromMainToEntryEdit
+                && resultCode == IntentCode.result_fromEntryEditToMain) {
+            Entry entry = (Entry) data.getSerializableExtra(ExtraFiled.entryResult);
+            /*只处理日程*/
+            if (entry.getType() == EnumEntry.schedule) {
+                calendricView_day.updateItem();
+            }
+        }
+    }
 }

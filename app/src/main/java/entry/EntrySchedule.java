@@ -124,7 +124,6 @@ public class EntrySchedule extends Entry {
         cv.put(TableFiled.STATUS, this.getStatus());
 
         cv.put(TableFiled.DATE_begin, this.getDate_begin().convertToString());
-        MyLog.i("toCv时的时间", this.getDate_begin().convertToLocalString());
         cv.put(TableFiled.DATE_end, this.getDate_end().convertToString());
         cv.put(TableFiled.ALERT, this.getAlert());
         cv.put(TableFiled.DATE_alert, this.getDate_alert().convertToString());

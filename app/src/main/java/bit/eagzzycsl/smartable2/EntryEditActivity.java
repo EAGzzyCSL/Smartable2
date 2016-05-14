@@ -217,7 +217,6 @@ public abstract class EntryEditActivity extends AppCompatActivity {
 
     protected void setTimeDDL(MyMoment myMoment) {
         this.timeDDL = myMoment;
-        MyLog.i("在setTimeDDl的时候",myMoment==null?"a null":myMoment.convertToLocalString());
         setTimeToTextView(myMoment, edit_ddl_datetime_picker, edit_ddl_datetime_picker2);
     }
 
@@ -282,9 +281,6 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         if (update) {
             entryToEdit.setId(preId);
         }
-
-
-        Toast.makeText(EntryEditActivity.this, "成功", Toast.LENGTH_SHORT).show();
         if (update) {
             SQLMan.getInstance(EntryEditActivity.this).update(entryToEdit);
         } else {

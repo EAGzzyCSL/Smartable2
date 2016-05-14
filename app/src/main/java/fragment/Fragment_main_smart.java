@@ -10,13 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import java.util.ArrayList;
+
 import bit.eagzzycsl.smartable2.EditActivity;
+import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.EnumExtra;
 import bit.eagzzycsl.smartable2.ExtraFiled;
 import bit.eagzzycsl.smartable2.IntentCode;
 import bit.eagzzycsl.smartable2.R;
 import entry.Entry;
 import my.MyLog;
+import my.MyUtil;
 
 public class Fragment_main_smart extends Fragment {
     private View myView;
@@ -89,8 +93,10 @@ public class Fragment_main_smart extends Fragment {
                 && resultCode == IntentCode.result_fromEntryEditToMain) {
             EnumExtra enumExtra = (EnumExtra) data.getSerializableExtra(EnumExtra.getName());
             Entry entry = (Entry) data.getSerializableExtra(ExtraFiled.entryResult);
-            fragment_main_smart_classify.updateEntryListInView(enumExtra,entry);
-
+            /*只受理在范围内的四种事情，至于序列化和近期后面再说*/
+            if (MyUtil.indexOf(EnumEntry.fourEnumEntries, entry.getType()) != -1) {
+                fragment_main_smart_classify.updateEntryListInView(enumExtra, entry);
+            }
         }
     }
 }

@@ -143,7 +143,6 @@ public class Fragment_main_smart_classify extends Fragment {
     }
 
     public EnumEntry getCurrentPageEntry() {
-        MyLog.i("选中下标：", tabLayout_kind.getSelectedTabPosition() + "#");
 
         return EnumEntry.fourEnumEntries[sort[tabLayout_kind.getSelectedTabPosition()]];
     }

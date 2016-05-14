@@ -134,4 +134,7 @@ public class CalendricView extends ViewPager {
         this.myAdapter = (Adapter_view_calendric) adapter;
         setCurrentItem(1, false);
     }
+    public void updateItem(){
+        pagerUpdate();
+    }
 }
