@@ -36,6 +36,10 @@
         <activity
             android:name=".ModifyDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SettingsActivity"
+
+            />
     </application>
 
 </manifest>

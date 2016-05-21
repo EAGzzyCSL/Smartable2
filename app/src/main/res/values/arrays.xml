@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="update_check_frequency_title">
+        <item>每次启动时检查</item>
+        <item>每天首次启动时检查</item>
+        <item>每周首次启动时检查</item>
+        <item>每月首次启动时检查</item>
+    </string-array>
+    <string-array name="update_check_frequency_value">
+        <item>0</item>
+        <item>1</item>
+        <item>7</item>
+        <item>30</item>
+    </string-array>
+</resources>
