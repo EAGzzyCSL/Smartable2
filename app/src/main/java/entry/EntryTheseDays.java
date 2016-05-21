@@ -13,8 +13,6 @@ public class EntryTheseDays extends Entry {
         super(name);
     }
 
-
-    private String title = null;
     private String annotation = null;
     private MyMoment date_create = null;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）

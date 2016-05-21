@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:key="myMessage"
+        android:summary="个人信息详情"
+        android:title="个人信息详情">
+        <EditTextPreference
+            android:key="accountPortrait"
+            android:title="头像 " />
+
+        <EditTextPreference
+            android:key="accountEmail"
+            android:summary="test@gmail.com"
+            android:title="注册邮箱" />
+
+        <EditTextPreference
+            android:key="accountNickname"
+            android:title="昵称" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="login"
+        android:summary="安全"
+        android:title="安全">
+
+        <EditTextPreference
+            android:key="password"
+            android:title="修改登陆密码" />
+
+        <EditTextPreference
+            android:key="logout"
+            android:title="注销登陆" />s
+    </PreferenceCategory>
+
+</PreferenceScreen>

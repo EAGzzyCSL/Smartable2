@@ -135,6 +135,10 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this, NoteBookActivity.class));
                 break;
             }
+            case R.id.nav_about_setting: {
+                startActivity(new Intent(this, SettingsActivity.class));
+                break;
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

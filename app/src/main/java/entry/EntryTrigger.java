@@ -2,91 +2,43 @@ package entry;
 
 import android.content.ContentValues;
 
-import bit.eagzzycsl.smartable2.EnumEntry;
 import my.MyMoment;
+import my.TableFiled;
 
 /**
  * Created by EAGzzyCSL on 2016/2/11.
  */
 public class EntryTrigger extends Entry {
-    //TODO triger中的代码还未修改
+
     public EntryTrigger(String name) {
         super(name);
     }
-    private String date_begin = null;
-    public void setDate_begin(String date_begin) {
-        this.date_begin = date_begin;
-    }
-    public MyMoment getDate_begin() {
-        return null;
-    }
-    @Override
-    public ContentValues toContentValues() {
-        return null;
-    }
-
-    private String title;
-    private String annotation;
+    private String annotation = null;
+    private MyMoment date_create = null;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）
 
-    private Integer create_year;
-    private Integer create_month;
-    private Integer create_day;
-    private Integer create_hour;
-    private Integer create_minute;
+    private MyMoment date_begin = null;
+    private String alert = null;//不提醒(0) 提醒(1)
+    private MyMoment date_alert = null;
+    private String location = null;
 
-    private Integer alert_year;
-    private Integer alert_month;
-    private Integer alert_day;
-    private Integer alert_hour;
-    private Integer alert_minute;
-
-    private Integer start_year;
-    private Integer start_month;
-    private Integer start_day;
-    private Integer start_hour;
-    private Integer start_minute;
-
-    public Integer getAlert_year() {
-        return alert_year;
+    public EntryTrigger(String title, String annotation, MyMoment date_create, String status
+            , MyMoment date_begin, String alert, MyMoment date_alert, String location) {
+        this.title = title;
+        this.annotation = annotation;
+        this.date_create = date_create;
+        this.status = status;
+        this.date_begin = date_begin;
+        this.alert = alert;
+        this.date_alert = date_alert;
+        this.location = location;
     }
 
-    public void setAlert_year(Integer alert_year) {
-        this.alert_year = alert_year;
+    public EntryTrigger(int id, String title, String annotation, MyMoment date_create, String status
+            , MyMoment date_begin, String alert, MyMoment date_alert, String location) {
+        this(title, annotation, date_create, status, date_begin, alert, date_alert, location);
+        this.id = id;
     }
-
-    public Integer getAlert_month() {
-        return alert_month;
-    }
-
-    public void setAlert_month(Integer alert_month) {
-        this.alert_month = alert_month;
-    }
-
-    public Integer getAlert_day() {
-        return alert_day;
-    }
-
-    public void setAlert_day(Integer alert_day) {
-        this.alert_day = alert_day;
-    }
-
-    public Integer getAlert_hour() {
-        return alert_hour;
-    }
-
-    public void setAlert_hour(Integer alert_hour) {
-        this.alert_hour = alert_hour;
-    }
-
-    public Integer getAlert_minute() {
-        return alert_minute;
-    }
-
-    public void setAlert_minute(Integer alert_minute) {
-        this.alert_minute = alert_minute;
-    }
-
 
     public String getTitle() {
         return title;
@@ -104,6 +56,14 @@ public class EntryTrigger extends Entry {
         this.annotation = annotation;
     }
 
+    public MyMoment getDate_create() {
+        return date_create;
+    }
+
+    public void setDate_create(MyMoment date_create) {
+        this.date_create = date_create;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -112,83 +72,50 @@ public class EntryTrigger extends Entry {
         this.status = status;
     }
 
-    public Integer getCreate_year() {
-        return create_year;
+    public MyMoment getDate_begin() {
+        return date_begin;
     }
 
-    public void setCreate_year(Integer create_year) {
-        this.create_year = create_year;
+    public void setDate_begin(MyMoment date_begin) {
+        this.date_begin = date_begin;
     }
 
-    public Integer getCreate_month() {
-        return create_month;
+    public String getAlert() {
+        return alert;
     }
 
-    public void setCreate_month(Integer create_month) {
-        this.create_month = create_month;
+    public void setAlert(String alert) {
+        this.alert = alert;
     }
 
-    public Integer getCreate_day() {
-        return create_day;
+    public MyMoment getDate_alert() {
+        return date_alert;
     }
 
-    public void setCreate_day(Integer create_day) {
-        this.create_day = create_day;
+    public void setDate_alert(MyMoment date_alert) {
+        this.date_alert = date_alert;
     }
 
-    public Integer getCreate_hour() {
-        return create_hour;
+    public String getLocation() {
+        return location;
     }
 
-    public void setCreate_hour(Integer create_hour) {
-        this.create_hour = create_hour;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
-    public Integer getCreate_minute() {
-        return create_minute;
-    }
+    //TODO toCV方法要防止空指针异常
+    public ContentValues toContentValues() {
+        ContentValues cv = new ContentValues();
+        cv.put(TableFiled.TITLE, this.getTitle());
+        cv.put(TableFiled.ANNOTATION, this.getAnnotation());
+        cv.put(TableFiled.DATE_CREATE, this.getDate_create().convertToString());
+        cv.put(TableFiled.STATUS, this.getStatus());
 
-    public void setCreate_minute(Integer create_minute) {
-        this.create_minute = create_minute;
-    }
-
-    public Integer getStart_year() {
-        return start_year;
-    }
-
-    public void setStart_year(Integer start_year) {
-        this.start_year = start_year;
-    }
-
-    public Integer getStart_month() {
-        return start_month;
-    }
-
-    public void setStart_month(Integer start_month) {
-        this.start_month = start_month;
-    }
-
-    public Integer getStart_day() {
-        return start_day;
-    }
-
-    public void setStart_day(Integer start_day) {
-        this.start_day = start_day;
-    }
-
-    public Integer getStart_hour() {
-        return start_hour;
-    }
-
-    public void setStart_hour(Integer start_hour) {
-        this.start_hour = start_hour;
-    }
-
-    public Integer getStart_minute() {
-        return start_minute;
-    }
-
-    public void setStart_minute(Integer start_minute) {
-        this.start_minute = start_minute;
+        cv.put(TableFiled.DATE_begin, this.getDate_begin().convertToString());
+        cv.put(TableFiled.ALERT, this.getAlert());
+        cv.put(TableFiled.DATE_alert, this.getDate_alert().convertToString());
+        cv.put(TableFiled.LOCATION, this.getLocation());
+        return cv;
     }
 }
