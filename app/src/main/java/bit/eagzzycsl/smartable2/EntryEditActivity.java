@@ -306,7 +306,9 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                         update ? edit_activity_title.getText().toString() : et_someday.getText().toString(),
                         "",
                         new MyMoment(),
-                        "1"
+                        "1",
+                        "",
+                        new MyMoment()
                 );
             }
         }

@@ -387,11 +387,6 @@
                 android:onClick="onClick"
                 android:text="有朝一日" />"
 
-            <View
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:background="@color/divider"/>
-
             <Button
                 android:id="@+id/edit_schedule_or_trigger_btn"
                 android:layout_width="wrap_content"

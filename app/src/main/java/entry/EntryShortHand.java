@@ -13,8 +13,6 @@ public class EntryShortHand extends Entry {
         super(name);
     }
 
-
-    private String title;
     private String annotation;
     private MyMoment date_create;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）

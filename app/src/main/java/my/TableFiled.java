@@ -49,8 +49,10 @@ public interface TableFiled {
     //ing...
 
     //7.1 笔记本 - Notebook
-    //注意：删除笔记本的时候，系统自动先将齐下笔记标记为删除，然后再将笔记本标记为删除
+    //注意：删除笔记本的时候，系统自动先将其下笔记标记为删除，然后再将笔记本标记为删除
+    //删除的笔记会被放进“最近删除-笔记本”，这个笔记本是系统自带的
 
     //7.2 笔记 - NoteChild
     //注意将_id的外键设为Notebook的_id
+    String NOTEBOOKID= "notebookId";
 }

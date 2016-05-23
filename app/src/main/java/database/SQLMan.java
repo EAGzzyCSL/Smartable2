@@ -163,7 +163,9 @@ public class SQLMan implements TableFiled {
                             c.getString(c.getColumnIndex(TableFiled.TITLE)),
                             c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
                             new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
-                            c.getString(c.getColumnIndex(TableFiled.STATUS))
+                            c.getString(c.getColumnIndex(TableFiled.STATUS)),
+                            c.getString(c.getColumnIndex(TableFiled.ALERT)),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_alert)))
                     ));
                 }
                 return arr;

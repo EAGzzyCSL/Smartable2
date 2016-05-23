@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="account_setting"
+        android:title="账号设置">
+        <intent android:action="bit.eagzzycsl.smartable2.accountSettingActivity"
+            android:targetPackage="bit.eagzzycsl.smartable2"
+            android:targetClass="bit.eagzzycsl.smartable2.accountSettingActivity"/>
+    </Preference>
+
+    <PreferenceCategory android:title="app更新">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="auto_update_app"
+            android:summary="app将会自动检查更新"
+            android:title="自动更新app" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="auto_update_app"
+            android:key="auto_update_app_onlyWifi"
+            android:summary="只会在wifi下自动更新数据"
+            android:title="仅wifi下自动更新" />
+        <ListPreference
+            android:entries="@array/update_check_frequency_title"
+            android:entryValues="@array/update_check_frequency_value"
+            android:key="auto_update_app_frequency"
+            android:summary="设置自动更新的检查频率"
+            android:title="更新检查频率" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="app更新">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="auto_update_restaurant"
+            android:summary="商家信息将会自动更新"
+            android:title="自动更新商家信息" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:dependency="auto_update_restaurant"
+            android:key="auto_update_restaurant_onlyWifi"
+            android:summary="只会在wifi下自动更新商家信息"
+            android:title="仅wifi下自动更新" />
+        <ListPreference
+            android:entries="@array/update_check_frequency_title"
+            android:entryValues="@array/update_check_frequency_value"
+            android:key="auto_update_restaurant_frequency"
+            android:summary="设置自动更新的检查频率"
+            android:title="更新检查频率" />
+    </PreferenceCategory>
+</PreferenceScreen>
