@@ -232,7 +232,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                         "",
                         new MyMoment(),
                         "1",
-                        null,
+                        "1",
                         null
                 );
                 break;

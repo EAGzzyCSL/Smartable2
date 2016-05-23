@@ -17,6 +17,7 @@ import java.util.ArrayList;
 
 import adapter.Adapter_recyclerView_entry;
 import adapter.Adapter_main_viewPager_kind;
+import algorithm.Recently;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.EnumExtra;
 import bit.eagzzycsl.smartable2.R;
@@ -113,7 +114,10 @@ public class Fragment_main_smart_classify extends Fragment {
                 getActivity(),
                 getActivity().getResources().getStringArray(R.array.activity_main_smart_pager_title),
                 sort);
-        adapter_smart_serialize = new Adapter_recyclerView_entry(SQLMan.getInstance(getActivity()).readAll(), getActivity());
+        adapter_smart_serialize = new Adapter_recyclerView_entry(
+                Recently.sort(SQLMan.getInstance(getActivity()).readAll())
+                , getActivity()
+        );
 
     }
 
