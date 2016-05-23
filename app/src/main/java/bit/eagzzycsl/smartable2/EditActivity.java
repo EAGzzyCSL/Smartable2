@@ -3,6 +3,7 @@ package bit.eagzzycsl.smartable2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import my.MyLog;
 import my.MyMoment;
@@ -55,12 +56,17 @@ public class EditActivity extends EntryEditActivity {
         super.mySetView();
         edit_done_btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                saveEntryToDB(false);
-                Intent intent = new Intent();
-                intent.putExtra(EnumExtra.getName(), EnumExtra.entryAdded);
-                intent.putExtra(ExtraFiled.entryResult, entryToEdit);
-                setResult(IntentCode.result_fromEntryEditToMain, intent);
-                finish();
+                if(edit_activity_title.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "标题未填写任何东西", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    saveEntryToDB(false);
+                    Intent intent = new Intent();
+                    intent.putExtra(EnumExtra.getName(), EnumExtra.entryAdded);
+                    intent.putExtra(ExtraFiled.entryResult, entryToEdit);
+                    setResult(IntentCode.result_fromEntryEditToMain, intent);
+                    finish();
+                }
             }
         });
     }

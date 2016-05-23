@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import database.SQLMan;
@@ -128,13 +129,18 @@ public class ModifyDetailActivity extends EntryEditActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_modify_done: {
-                saveEntryToDB(true);
-                Intent intent = new Intent();
-                intent.putExtra(EnumExtra.getName(), EnumExtra.entryModified);
-                intent.putExtra(ExtraFiled.entryResult, entryToEdit);
-                setResult(IntentCode.result_fromEntryEditToMain, intent);
-                finish();
-                break;
+                if(edit_activity_title.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(), "标题未填写任何东西", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    saveEntryToDB(true);
+                    Intent intent = new Intent();
+                    intent.putExtra(EnumExtra.getName(), EnumExtra.entryModified);
+                    intent.putExtra(ExtraFiled.entryResult, entryToEdit);
+                    setResult(IntentCode.result_fromEntryEditToMain, intent);
+                    finish();
+                    break;
+                }
             }
         }
         return super.onOptionsItemSelected(item);

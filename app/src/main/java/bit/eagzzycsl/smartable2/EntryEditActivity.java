@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import database.SQLMan;
 import entry.Entry;
@@ -26,7 +25,6 @@ import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntryTheseDays;
 import my.EnumMyMoment;
-import my.MyLog;
 import my.MyMoment;
 import my.MyUtil;
 
@@ -226,6 +224,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         //假定update的时候entryToEdit不为空
 
         int preId = update ? entryToEdit.getId() : 0;
+
         switch (enumEntry) {
             case shortHand: {//速记
                 entryToEdit = new EntryShortHand(
