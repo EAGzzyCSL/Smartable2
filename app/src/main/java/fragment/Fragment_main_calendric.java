@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import adapter.Adapter_view_calendric;
+import algorithm.Recently;
 import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.EnumExtra;
@@ -120,6 +121,7 @@ public class Fragment_main_calendric extends Fragment {
                 getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
             }
         });
+
     }
 
     public void updateItemInUI() {

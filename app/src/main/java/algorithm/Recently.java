@@ -56,6 +56,7 @@ public class Recently {
         EntryShortHand f;
         f = new EntryShortHand("哈哈");
         f.setDate_create(new MyMoment(2016, 5, 1, 0, 0));
+        f.setIsUpper("1");
         in.add(f);
 
         return in;
@@ -103,7 +104,7 @@ public class Recently {
 
     private static double getShorthand(EntryShortHand a) {
         int w = -a.getDate_create().computeDiffWithNow();
-        if (a.getIsUpper() == "1") {
+        if (a.getIsUpper().equals("1")) {
             return shor * upper / w;
         }
         return shor / w;
@@ -266,7 +267,7 @@ public class Recently {
             Entry c = note.get(i);
             if (c instanceof EntryShortHand) {
                 EntryShortHand a = (EntryShortHand) c;
-                if (a.getIsUpper() == "1") {
+                if (a.getIsUpper().equals("1")) {
                     x++;
                     ans.add(a);
                     if (x + tot == 12) break;
@@ -316,7 +317,7 @@ public class Recently {
                     Entry c = note.get(i);
                     if (c instanceof EntryShortHand) {
                         EntryShortHand a = (EntryShortHand) c;
-                        if (a.getIsUpper() == "1") continue;
+                        if (a.getIsUpper().equals("1")) continue;
                         ans.add(a);
                         k++;
                         f = 1;
