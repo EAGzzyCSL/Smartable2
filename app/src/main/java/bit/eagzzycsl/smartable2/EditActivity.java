@@ -1,15 +1,27 @@
 package bit.eagzzycsl.smartable2;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 
 import my.MyLog;
 import my.MyMoment;
 
 public class EditActivity extends EntryEditActivity {
 
+
     @Override
+    protected void myFindView(){
+        super.myFindView();
+
+
+    }
     protected void myInit() {
         Bundle bundle = this.getIntent().getExtras();
         EnumExtra enumExtra = (EnumExtra) bundle.getSerializable(EnumExtra.getName());
@@ -53,7 +65,7 @@ public class EditActivity extends EntryEditActivity {
     @Override
     protected void mySetView() {
         super.mySetView();
-        edit_done_btn.setOnClickListener(new View.OnClickListener() {
+        edit_done_btn.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 saveEntryToDB(false);
                 Intent intent = new Intent();
@@ -63,5 +75,59 @@ public class EditActivity extends EntryEditActivity {
                 finish();
             }
         });
+
+    }
+
+
+
+    public void onClick(View v){
+        switch (v.getId()){
+            case R.id.edit_someday_btn:
+                edit_rbtn5.setChecked(true);
+                dailog_someday();
+                break;
+            case R.id.edit_note_btn:
+                startActivity(new Intent(this, NoteBookActivity.class));//TODO:这里,按返回为什么跳转回日视图的界面?
+                break;
+            default:
+                break;
+        }
+    }
+    private void dailog_someday(){
+        et_someday = new EditText(this);
+
+        dialog_someday = new AlertDialog.Builder(this).setTitle("有朝一日")
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setView(et_someday).setPositiveButton("保存",onDialogbtnlickListener(1))
+                .setNegativeButton("取消", onDialogbtnlickListener(0)).show();
+    }
+
+    private DialogInterface.OnClickListener onDialogbtnlickListener(int isSave){
+        switch (isSave){
+            case 1://保存
+                return new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveEntryToDB(false);
+                        Intent intent = new Intent();
+                        intent.putExtra(EnumExtra.getName(), EnumExtra.entryAdded);
+                        intent.putExtra(ExtraFiled.entryResult, entryToEdit);
+                        setResult(IntentCode.result_fromEntryEditToMain, intent);
+                        finish();
+                    }
+                };
+            case 0://取消
+                return new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        edit_rbtn1.setChecked(true);
+                    }
+                };
+
+
+        }
+        return null;
     }
 }

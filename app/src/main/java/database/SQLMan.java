@@ -157,6 +157,15 @@ public class SQLMan implements TableFiled {
             }
             case someDay: {
                 ArrayList<EntrySomeDay> arr = new ArrayList<>();
+                while (c.moveToNext()){
+                    arr.add(new EntrySomeDay(
+                            c.getInt(c.getColumnIndex(TableFiled.ID)),
+                            c.getString(c.getColumnIndex(TableFiled.TITLE)),
+                            c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
+                            c.getString(c.getColumnIndex(TableFiled.STATUS))
+                    ));
+                }
                 return arr;
             }
             case trigger: {

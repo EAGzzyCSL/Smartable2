@@ -43,8 +43,14 @@ public enum EnumEntry {
             R.color.colorMyOrange
     ),
     someDay(5,
-            TableFiled.TableName.SomeDay,
-            null,
+            TableFiled.TableName.SomeDay,//lily-对有朝一日的可见性进行了修改
+            new int[]{
+                    View.GONE,
+                    View.GONE,
+                    View.GONE,
+                    View.GONE,
+                    View.GONE
+            },
             R.color.colorMyRed),
     theseDays(6,
             TableFiled.TableName.TheseDays,

@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import entry.Entry;
 import entry.EntryDeadLine;
 import entry.EntrySchedule;
 import entry.EntryShortHand;
+import entry.EntrySomeDay;
 import entry.EntryTheseDays;
 import my.EnumMyMoment;
 import my.MyLog;
@@ -38,6 +40,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
     protected AppCompatRadioButton edit_rbtn2;
     protected AppCompatRadioButton edit_rbtn3;
     protected AppCompatRadioButton edit_rbtn4;
+    protected AppCompatRadioButton edit_rbtn5;
     protected AppCompatTextView edit_ddl_datetime_picker;
     protected AppCompatTextView edit_ddl_datetime_picker2;
     protected Button edit_remind_picker;
@@ -65,6 +68,12 @@ public abstract class EntryEditActivity extends AppCompatActivity {
     protected EnumEntry enumEntry;//枚举类型，判断是哪种类型
     protected Entry entryToEdit;//这个界面上被操作的entry
 
+    protected Button btn_edit_schedule_or_trigger;//日程/触发切换按钮
+    protected Button btn_edit_note;//笔记
+    protected Button btn_edit_someday;//有朝一日
+    protected android.app.AlertDialog dialog_someday;
+    protected EditText et_someday;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +96,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         edit_rbtn2 = (AppCompatRadioButton) findViewById(R.id.edit_rbtn2);
         edit_rbtn3 = (AppCompatRadioButton) findViewById(R.id.edit_rbtn3);
         edit_rbtn4 = (AppCompatRadioButton) findViewById(R.id.edit_rbtn4);
+        edit_rbtn5 = (AppCompatRadioButton) findViewById(R.id.edit_rbtn5);
         edit_ddl_datetime_picker = (AppCompatTextView) findViewById(R.id.edit_ddl_datetime_picker);
         edit_ddl_datetime_picker2 = (AppCompatTextView) findViewById(R.id.edit_ddl_datetime_picker2);
         edit_remind_picker = (Button) findViewById(R.id.edit_remind_picker);
@@ -104,7 +114,9 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         textView_endDate = (AppCompatTextView) findViewById(R.id.textView_endDate);
         textView_startTime = (AppCompatTextView) findViewById(R.id.textView_startTime);
         textView_endTime = (AppCompatTextView) findViewById(R.id.textView_endTime);
-
+        btn_edit_note = (Button)findViewById(R.id.edit_note_btn);
+        btn_edit_someday = (Button)findViewById(R.id.edit_someday_btn);
+        btn_edit_schedule_or_trigger = (Button)findViewById(R.id.edit_schedule_or_trigger_btn);
     }
 
     protected void changeStatusBarColor(int color) {
@@ -129,6 +141,15 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                     selectedEntryType(EnumEntry.theseDays);
                 } else if (checkedId == edit_rbtn4.getId()) { //DDL
                     selectedEntryType(EnumEntry.deadLine);
+                } else if (checkedId == edit_rbtn5.getId()) { //有朝一日
+                    selectedEntryType(EnumEntry.someDay);
+                }
+
+                //是否显示"日程/触"发按钮
+                if(checkedId != edit_rbtn2.getId()){
+                    btn_edit_schedule_or_trigger.setVisibility(View.INVISIBLE);
+                }else{
+                    btn_edit_schedule_or_trigger.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -195,6 +216,10 @@ public abstract class EntryEditActivity extends AppCompatActivity {
             }
             case deadLine: {
                 edit_rbtn4.setChecked(true);
+                break;
+            }
+            case someDay:{
+                edit_rbtn5.setChecked(true);
                 break;
             }
         }
@@ -275,6 +300,14 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                         timeDDL
                 );
                 break;
+            }
+            case someDay: {//有朝一日
+                entryToEdit = new EntrySomeDay(
+                        update ? edit_activity_title.getText().toString() : et_someday.getText().toString(),
+                        "",
+                        new MyMoment(),
+                        "1"
+                );
             }
         }
         //判断是添加还是修改
