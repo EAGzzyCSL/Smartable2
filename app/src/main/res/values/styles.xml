@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -7,8 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@drawable/divider_bg</item>
-        <item name="android:datePickerDialogTheme">@style/MyDatePickerDialogYellowTheme</item>
-        <item name="android:timePickerDialogTheme">@style/MyTimePickerDialogYellowTheme</item>
+        <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">@style/MyDatePickerDialogYellowTheme</item>
+        <item name="android:timePickerDialogTheme" tools:targetApi="lollipop">@style/MyTimePickerDialogYellowTheme</item>
 
         <!--<item name="android:datePickerDialogTheme">@style/MyDatePickerDialogBlueTheme</item>-->
         <!--<item name="android:timePickerDialogTheme">@style/MyTimePickerDialogBlueTheme</item>-->
@@ -31,32 +31,32 @@
 
 
     <!--yellow date/time picker dialog-->
-    <style name="MyDatePickerDialogYellowTheme" parent="android:Theme.Material.Light.Dialog">
+    <style name="MyDatePickerDialogYellowTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
         <item name="android:datePickerStyle">@style/MyDatePickerYellowStyle</item>
     </style>
-    <style name="MyDatePickerYellowStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+    <style name="MyDatePickerYellowStyle" parent="@android:style/Widget.Material.Light.DatePicker" tools:targetApi="lollipop">
         <item name="android:headerBackground">@color/colorMyYellow</item>
     </style>
 
-    <style name="MyTimePickerDialogYellowTheme" parent="android:Theme.Material.Light.Dialog">
+    <style name="MyTimePickerDialogYellowTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
         <item name="android:timePickerStyle">@style/MyTimePickerYellowStyle</item>
     </style>
-    <style name="MyTimePickerYellowStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+    <style name="MyTimePickerYellowStyle" parent="@android:style/Widget.Material.Light.TimePicker" tools:targetApi="lollipop">
         <item name="android:headerBackground">@color/colorMyYellow</item>
     </style>
 
     <!--blue date/time picker dialog-->
-    <style name="MyDatePickerDialogBlueTheme" parent="android:Theme.Material.Light.Dialog">
+    <style name="MyDatePickerDialogBlueTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
         <item name="android:datePickerStyle">@style/MyDatePickerBlueStyle</item>
     </style>
-    <style name="MyDatePickerBlueStyle" parent="@android:style/Widget.Material.Light.DatePicker">
+    <style name="MyDatePickerBlueStyle" parent="@android:style/Widget.Material.Light.DatePicker" tools:targetApi="lollipop">
         <item name="android:headerBackground">@color/colorMyBlue</item>
     </style>
 
-    <style name="MyTimePickerDialogBlueTheme" parent="android:Theme.Material.Light.Dialog">
+    <style name="MyTimePickerDialogBlueTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
         <item name="android:timePickerStyle">@style/MyTimePickerBlueStyle</item>
     </style>
-    <style name="MyTimePickerBlueStyle" parent="@android:style/Widget.Material.Light.TimePicker">
+    <style name="MyTimePickerBlueStyle" parent="@android:style/Widget.Material.Light.TimePicker" tools:targetApi="lollipop">
         <item name="android:headerBackground">@color/colorMyBlue</item>
     </style>
 

@@ -18,10 +18,10 @@ public class EntrySomeDay extends Entry {
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）
 
     private String alert = null;//不提醒(0) 提醒(1)
-    private MyMoment date_alert = null;
+    private MyMoment date_alert;
 
     public EntrySomeDay(String title, String annotation, MyMoment date_create, String status, String alert,
-                         MyMoment date_alert) {
+                        MyMoment date_alert) {
         this.title = title;
         this.annotation = annotation;
         this.date_create = date_create;
@@ -32,7 +32,7 @@ public class EntrySomeDay extends Entry {
     }
 
     public EntrySomeDay(int id, String title, String annotation, MyMoment date_create, String status, String alert,
-                         MyMoment date_alert) {
+                        MyMoment date_alert) {
         this(title, annotation, date_create, status, alert, date_alert);
         this.id = id;
     }
