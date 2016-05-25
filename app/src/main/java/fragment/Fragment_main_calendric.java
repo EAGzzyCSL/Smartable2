@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import adapter.Adapter_view_calendric;
-import algorithm.Recently;
 import bit.eagzzycsl.smartable2.EditActivity;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.EnumExtra;
@@ -26,8 +25,8 @@ import database.SQLMan;
 import entry.Entry;
 import entry.EntrySchedule;
 import my.MyDate;
-import my.MyLog;
 import my.MyMoment;
+import my.MyUtil;
 import view.CalendricView;
 import view.CalendricViewItemClick;
 import view.CalendricViewItemProvider;
@@ -117,7 +116,7 @@ public class Fragment_main_calendric extends Fragment {
                 Intent intent = new Intent(getActivity(), EditActivity.class);
                 intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
                 //TODO pager当天的日期和今天的时间
-                intent.putExtra(ExtraFiled.myMoment, new MyMoment());
+                intent.putExtra(ExtraFiled.myMoment, MyUtil.SuitableTime(new MyMoment()));
                 getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
             }
         });

@@ -106,6 +106,10 @@ public class MyMoment implements I_MyCalendar, Serializable {
         myTime.setHour(h);
     }
 
+    public void setMinute(int m){
+        myTime.setMinute(m);
+    }
+
     /*转换*/
     @Override
     public String convertToString() {
