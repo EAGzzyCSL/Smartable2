@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import my.MyLog;
 import my.MyMoment;
+import my.MyUtil;
 
 public class EditActivity extends EntryEditActivity {
 
@@ -21,6 +22,7 @@ public class EditActivity extends EntryEditActivity {
                     selectedEntryType(EnumEntry.schedule);
                     MyMoment myMoment = (MyMoment) bundle.getSerializable(ExtraFiled.myMoment);
                     setTimeStart(myMoment);
+                    setTimeDDL(MyUtil.SuitableTime(new MyMoment()));
                     //TODO 结束时间后推动一小时，涉及到时间计算，需要在MyMoment中提供，装饰者模式引入，将所有时间操作全部放在my包中
                     setTimeEnd(myMoment == null ? null : myMoment.newSameMoment().hourAdd(1));
                     break;
@@ -29,9 +31,9 @@ public class EditActivity extends EntryEditActivity {
                     enumEntry = (EnumEntry) bundle.getSerializable(ExtraFiled.entryEnum);
                     if (enumEntry != null) {
                         //TODO it is strange that this three set must before selected
-                        setTimeStart(new MyMoment());
-                        setTimeEnd(new MyMoment());
-                        setTimeDDL(new MyMoment());
+                        setTimeStart(MyUtil.SuitableTime(new MyMoment()));
+                        setTimeEnd(MyUtil.SuitableTime((new MyMoment()).hourAdd(1)));
+                        setTimeDDL(MyUtil.SuitableTime(new MyMoment()));
                         selectedRadio(enumEntry);
                         selectedEntryType(enumEntry);
                     }
