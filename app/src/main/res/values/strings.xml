@@ -26,9 +26,10 @@
     <string name="title_activity_edit">EditActivity</string>
     <string-array name="activity_main_smart_pager_title">
         <item>速记</item>
-        <item>ddl</item>
-        <item>这两天</item>
         <item>日程</item>
+        <item>这两天</item>
+        <item>ddl</item>
+
     </string-array>
 
     <string name="entry_note">笔记</string>

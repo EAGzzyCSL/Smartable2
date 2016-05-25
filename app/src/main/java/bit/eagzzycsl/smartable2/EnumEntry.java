@@ -104,6 +104,6 @@ public enum EnumEntry {
             EnumEntry.shortHand,
             EnumEntry.deadLine,
             EnumEntry.theseDays,
-            EnumEntry.someDay
+            EnumEntry.schedule
     };
 }
