@@ -107,7 +107,7 @@ public class Fragment_main_smart_classify extends Fragment {
                         this.add((SQLMan.getInstance(getActivity()).read(EnumEntry.shortHand)));
                         this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.deadLine));
                         this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.theseDays));
-                        this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.someDay));
+                        this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.schedule));
                     }
                 },
                 getActivity(),

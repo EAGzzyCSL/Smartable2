@@ -9,6 +9,7 @@
     <color name="primary_light">#C8E6C9</color>
     <color name="primary_text">#212121</color>
     <color name="secondary_text">#727272</color>
+    <color name="third_text">#999999</color>
 
 
     <!--view-->
@@ -35,6 +36,7 @@
     <color name="colorMyLine">@color/colorMyActivityBg</color>
     <color name="colorMyActivityBg">#eeeeee</color>
     <color name="colorMyTransparent">#00000000</color>
+    <color name="colorMyBlack">#000000</color>
 
     <color name="colorMyLineEditText">#55FFFFFF</color>
 </resources>
