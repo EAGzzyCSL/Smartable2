@@ -102,8 +102,8 @@ public enum EnumEntry {
 
     public static EnumEntry[] fourEnumEntries = new EnumEntry[]{
             EnumEntry.shortHand,
-            EnumEntry.deadLine,
+            EnumEntry.schedule,
             EnumEntry.theseDays,
-            EnumEntry.schedule
+            EnumEntry.deadLine,
     };
 }

@@ -1,7 +1,6 @@
 package fragment;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -15,8 +14,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import adapter.Adapter_recyclerView_entry;
 import adapter.Adapter_main_viewPager_kind;
+import adapter.Adapter_recyclerView_entry;
 import algorithm.Recently;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.EnumExtra;
@@ -26,7 +25,6 @@ import decorator.DividerItemDecoration;
 import entry.Entry;
 import layout.EdgeDrawerLayout;
 import layout.OnDrawerStateChangeListener;
-import my.MyLog;
 
 public class Fragment_main_smart_classify extends Fragment {
     private View myView;
@@ -97,18 +95,21 @@ public class Fragment_main_smart_classify extends Fragment {
 
     //使用sort的方法是为四种事情默认预置了一个顺序0123,如果想修改他们的顺序，修改sort即可。
 
-
     int[] sort = new int[]{0, 1, 2, 3};
-
+    EnumEntry[] enumTemp=new EnumEntry[]{
+        EnumEntry.shortHand,
+        EnumEntry.schedule,
+        EnumEntry.theseDays,
+        EnumEntry.deadLine,
+    };
     private void myCreate() {
         adapter_main_viewPager_kind = new Adapter_main_viewPager_kind(
                 new ArrayList<ArrayList<? extends Entry>>() {
                     {
-
-                        this.add((SQLMan.getInstance(getActivity()).read(EnumEntry.shortHand)));
-                        this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.deadLine));
-                        this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.theseDays));
-                        this.add(SQLMan.getInstance(getActivity()).read(EnumEntry.schedule));
+                        this.add((SQLMan.getInstance(getActivity()).read(enumTemp[sort[0]])));
+                        this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[1]]));
+                        this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[2]]));
+                        this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[3]]));
                     }
                 },
                 getActivity(),
