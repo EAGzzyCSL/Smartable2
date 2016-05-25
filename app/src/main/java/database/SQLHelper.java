@@ -87,7 +87,9 @@ public class SQLHelper extends SQLiteOpenHelper implements TableFiled{
                         +TableFiled.TITLE +" string,"
                         +TableFiled.ANNOTATION +" string,"
                         +TableFiled.STATUS +" string,"
-                        +TableFiled.DATE_CREATE + " string"
+                        +TableFiled.DATE_CREATE + " string,"
+                        +TableFiled.ALERT + " string,"
+                        +TableFiled.DATE_alert +" string"
                         + ");"
         );
         //7.1 笔记本 - Notebook

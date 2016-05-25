@@ -117,6 +117,15 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:text="@string/entry_deadLine" />
+
+                            <android.support.v7.widget.AppCompatRadioButton
+                                android:id="@+id/edit_rbtn5"
+                                android:visibility="gone"
+                                style="@style/RadioButtonStyles_blue"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:text="@string/entry_someDay" />
                         </RadioGroup>
                     </LinearLayout>
 
@@ -361,19 +370,12 @@
             android:id="@+id/linearlayout_aboveKey">
 
             <Button
-                android:id="@+id/edit_to_schedule_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorMyTransparent"
-                android:drawableLeft="@drawable/ic_schedule_black_48dp"
-                android:text="日程" />
-
-            <Button
                 android:id="@+id/edit_note_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorMyTransparent"
                 android:drawableLeft="@drawable/ic_schedule_black_48dp"
+                android:onClick="onClick"
                 android:text="笔记" />
 
             <Button
@@ -382,7 +384,16 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorMyTransparent"
                 android:drawableLeft="@drawable/ic_someday_black_48dp"
+                android:onClick="onClick"
                 android:text="有朝一日" />"
+
+            <Button
+                android:id="@+id/edit_schedule_or_trigger_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorMyTransparent"
+                android:drawableLeft="@drawable/ic_shift_black_36dp"
+                android:text="触发" />
 
             <Button
                 android:id="@+id/edit_done_btn"

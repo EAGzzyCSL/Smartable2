@@ -146,4 +146,15 @@ public class MyMoment implements I_MyCalendar, Serializable {
     public int computeDiffWithNow() {
         return computeDiff(Calendar.getInstance());
     }
+
+    public boolean isToday(){
+        MyMoment today_moment = new MyMoment();
+        if (this.getYear() == today_moment.getYear()
+            && this.getMonth() == today_moment.getMonth()
+            && this.getDay() == today_moment.getDay() ){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }
