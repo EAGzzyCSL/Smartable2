@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import adapter.Adapter_recyclerView_entry;
 import adapter.Adapter_main_viewPager_kind;
+import adapter.Adapter_recyclerView_entry;
 import algorithm.Recently;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import bit.eagzzycsl.smartable2.EnumExtra;
@@ -96,6 +96,7 @@ public class Fragment_main_smart_classify extends Fragment {
     //使用sort的方法是为四种事情默认预置了一个顺序0123,如果想修改他们的顺序，修改sort即可。
 
     int[] sort = new int[]{0, 1, 2, 3};
+    EnumEntry[] enumTemp=new EnumEntry[]{
         EnumEntry.shortHand,
         EnumEntry.schedule,
         EnumEntry.theseDays,
@@ -105,6 +106,10 @@ public class Fragment_main_smart_classify extends Fragment {
         adapter_main_viewPager_kind = new Adapter_main_viewPager_kind(
                 new ArrayList<ArrayList<? extends Entry>>() {
                     {
+                        this.add((SQLMan.getInstance(getActivity()).read(enumTemp[sort[0]])));
+                        this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[1]]));
+                        this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[2]]));
+                        this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[3]]));
                     }
                 },
                 getActivity(),
