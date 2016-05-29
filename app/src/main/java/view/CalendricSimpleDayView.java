@@ -16,8 +16,8 @@ import java.util.ArrayList;
 
 import bit.eagzzycsl.smartable2.R;
 import entry.EntrySchedule;
-import my.MyDate;
 import my.MyMoment;
+import my.MyTime;
 import my.MyUtil;
 
 
@@ -79,7 +79,7 @@ public class CalendricSimpleDayView extends ViewGroup {
         //TODO 如何measuer它的大小
         AppCompatButton b = new AppCompatButton(getContext());
         b.setBackgroundResource(R.drawable.bkg_view_calendric_day_item_preview);
-        b.setGravity(Gravity.LEFT);
+        b.setGravity(Gravity.START);
         b.setTextColor(Color.BLACK);
         b.setText(schedule.getTitle());
         b.setOnClickListener(new OnClickListener() {
@@ -119,12 +119,12 @@ public class CalendricSimpleDayView extends ViewGroup {
         preAddButton.setBackgroundResource(R.drawable.bkg_view_calendric_day_item_add);
         preAddButton.setText("+");
         preAddButton.setTextColor(Color.BLACK);
-        preAddButton.setGravity(Gravity.LEFT);
+        preAddButton.setGravity(Gravity.START);
         preAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 //日期是view自己的日期，时间通过计算获取
-                MyMoment m = new MyMoment(myDate.getYear(), myDate.getMonth(), myDate.getDay(), addButtonHour, 0);
+                MyMoment m = new MyMoment(myMoment.getYear(), myMoment.getMonth(), myMoment.getDay(), addButtonHour, 0);
                 calendricViewItemClick.onAddClick(v, m);
             }
         });
@@ -186,7 +186,7 @@ public class CalendricSimpleDayView extends ViewGroup {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0, lineY = 0; i <= 24; i++) {
+        for (int i = 0, lineY; i <= 24; i++) {
             /*画线条左侧的时间*/
             canvas.drawText(String.format("%02d", i) + ":00", textPadLeft, textStart + (height1h + lineWidth) * i, paint);
             lineY = lineStart + (height1h + lineWidth) * i;
@@ -195,11 +195,11 @@ public class CalendricSimpleDayView extends ViewGroup {
             canvas.drawLine(lineLeft, lineY, lineRight, lineY, paint);
         }
         /*画一条指示当前时间的线*/
-//        Calendar calendar = Calendar.getInstance();
-//        indicateLineY = topBlank + lineWidth + calendar.get(Calendar.HOUR_OF_DAY) * (height1h + lineWidth) + calendar.get(Calendar.MINUTE) * hpm;
-//        paint.setColor(Color.rgb(30, 144, 255));
-//        canvas.drawLine(lineLeft, indicateLineY, lineRight, indicateLineY, paint);
-//        paint.setColor(Color.rgb(169, 169, 169));
+
+        indicateLineY = topBlank + lineWidth + myMoment.getHour() * (height1h + lineWidth) + myMoment.getMinute() * hpm;
+        paint.setColor(Color.rgb(30, 144, 255));
+        canvas.drawLine(lineLeft, indicateLineY, lineRight, indicateLineY, paint);
+        paint.setColor(Color.rgb(169, 169, 169));
     }
 
 
@@ -221,9 +221,21 @@ public class CalendricSimpleDayView extends ViewGroup {
     }
 
     //
-    private MyDate myDate;
+    private MyMoment myMoment;
 
-    public void setViewDate(MyDate date) {
-        this.myDate = date;
+    public void setViewDate(MyMoment myMoment) {
+        this.myMoment = myMoment;
+    }
+
+    //可能需要作为一个接口
+    public int getScrollYCurrentToCenter(int fatherHeight, MyTime myTime) {
+        int cTH = (myTime.getHour() + 1) * (height1h + lineWidth) + myTime.getMinute() * hpm;
+        if (cTH < fatherHeight) {
+            return 0;
+        } else if (cTH < myHeight - fatherHeight) {
+            return cTH - fatherHeight / 2;
+        } else {
+            return myHeight - fatherHeight;
+        }
     }
 }

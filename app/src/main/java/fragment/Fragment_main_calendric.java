@@ -110,6 +110,12 @@ public class Fragment_main_calendric extends Fragment {
         MyDate myDate = new MyDate();
         myDate.dayAdd(adapter_view_calendric.getEnumViewType().getDiv() * -1);
         calendricView_day.setFirstDay(myDate);
+        calendricView_day.post(new Runnable() {
+            @Override
+            public void run() {
+                calendricView_day.scrollToCurrentTime();
+            }
+        });
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,9 +129,6 @@ public class Fragment_main_calendric extends Fragment {
 
     }
 
-    public void updateItemInUI() {
-        calendricView_day.updateItem();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -50,12 +50,29 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
         return entries.size();
     }
 
+    class EntryOnClick implements View.OnClickListener {
+        private Entry entry;
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(context, ModifyDetailActivity.class);
+            intent.putExtra(EnumExtra.getName(), EnumExtra.modifyEntry);
+            intent.putExtra(ExtraFiled.entryToEdit, entry);
+            ((Activity) context).startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
+        }
+
+        public void setEntry(Entry entry) {
+            this.entry = entry;
+        }
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView textView_name;
         private View view_color_indicator;
         private TextView item_tv_alert;
         private TextView item_tv_start;
         private TextView item_tv_end;
+        private EntryOnClick onClickListener;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -64,20 +81,13 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
             item_tv_alert = (TextView) itemView.findViewById(R.id.item_tv_alert);
             item_tv_start = (TextView) itemView.findViewById(R.id.item_tv_start);
             item_tv_end = (TextView) itemView.findViewById(R.id.item_tv_end);
-
+            onClickListener = new EntryOnClick();
+            itemView.setOnClickListener(onClickListener);
         }
 
         public void setContent(final Entry entry) {
             textView_name.setText(entry.getTitle());
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ModifyDetailActivity.class);
-                    intent.putExtra(EnumExtra.getName(), EnumExtra.modifyEntry);
-                    intent.putExtra(ExtraFiled.entryToEdit, entry);
-                    ((Activity) context).startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
-                }
-            });
+            onClickListener.setEntry(entry);
             view_color_indicator.setBackgroundColor(
                     ContextCompat.getColor(context,
                             entry.getType().getColorId())
@@ -85,14 +95,14 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
             setItemtv(entry);
         }
 
-        private void setItemtv(Entry entry){
-            switch (entry.getType()){
+        private void setItemtv(Entry entry) {
+            switch (entry.getType()) {
                 case shortHand: {
                     break;
                 }
                 case schedule: {
                     EntrySchedule concretEntry = (EntrySchedule) entry;
-                    settvTime(item_tv_start,concretEntry.getDate_begin());
+                    settvTime(item_tv_start, concretEntry.getDate_begin());
 //                    settvTime(item_tv_end,concretEntry.getDate_end());
                     break;
                 }
@@ -101,30 +111,29 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
                 }
                 case deadLine: {
                     EntryDeadLine concretEntry = (EntryDeadLine) entry;
-                    settvTime(item_tv_end,concretEntry.getDate_ddl());
+                    settvTime(item_tv_end, concretEntry.getDate_ddl());
                     break;
                 }
-                case someDay:{
+                case someDay: {
                     EntrySomeDay concretEntry = (EntrySomeDay) entry;
-                    if(concretEntry.getAlert() != null){
-                        settvTime(item_tv_alert,concretEntry.getDate_alert());
+                    if (concretEntry.getAlert() != null) {
+                        settvTime(item_tv_alert, concretEntry.getDate_alert());
                     }
                     break;
                 }
             }
         }
+
         private void settvTime(TextView tvtime, MyMoment myMoment) {
             tvtime.setVisibility(View.VISIBLE);
-            if( myMoment.isToday() ){//今天
-                tvtime.setText("TODAY " + String.format("%02d:%02d",myMoment.getHour(),myMoment.getMinute()));
-            }
-            else{
-                tvtime.setText(myMoment.getMonth() + "/" +myMoment.getDay() + " "
-                        + String.format("%02d:%02d",myMoment.getHour(),myMoment.getMinute()));
+            if (myMoment.isToday()) {//今天
+                tvtime.setText("TODAY " + String.format("%02d:%02d", myMoment.getHour(), myMoment.getMinute()));
+            } else {
+                tvtime.setText(myMoment.getMonth() + "/" + myMoment.getDay() + " "
+                        + String.format("%02d:%02d", myMoment.getHour(), myMoment.getMinute()));
             }
         }
     }
-
 
 
     @SuppressWarnings("unchecked")

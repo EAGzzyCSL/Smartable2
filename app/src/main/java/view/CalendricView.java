@@ -95,6 +95,7 @@ public class CalendricView extends ViewPager {
     /*设置首日，不管对于月日周，凭借首日都可以知道日历视图需要滚动到那个时期，因此该函数用于设定日历视图跳转到某个时候*/
     public void setFirstDay(MyDate date) {
         myMoment.setDate(date.getYear(), date.getMonth(), date.getDay());
+        myAdapter.getPage_b().mySetScroll(300);
         pagerUpdate();
     }
 
@@ -105,20 +106,20 @@ public class CalendricView extends ViewPager {
 
         /*page_a*/
         MyMoment moment_a = myMoment.newSameMoment();
-        myAdapter.getPage_a().transData(moment_a.getDate(),
+        myAdapter.getPage_a().transData(moment_a,
                 myAdapter.getScheduleFromItemProvider(moment_a.getDate()),
                 myAdapter.getCalendricViewItemClick());
         myMoment.dayAdd(myAdapter.getEnumViewType().getDiv());
         /*page_b*/
         MyMoment moment_b = myMoment.newSameMoment();
-        myAdapter.getPage_b().transData(moment_b.getDate(),
+        myAdapter.getPage_b().transData(moment_b,
                 myAdapter.getScheduleFromItemProvider(moment_b.getDate()),
                 myAdapter.getCalendricViewItemClick());
         myMoment.dayAdd(myAdapter.getEnumViewType().getDiv());
 
         /*page_c*/
         MyMoment moment_c = myMoment.newSameMoment();
-        myAdapter.getPage_c().transData(moment_c.getDate(),
+        myAdapter.getPage_c().transData(moment_c,
                 myAdapter.getScheduleFromItemProvider(moment_c.getDate()),
                 myAdapter.getCalendricViewItemClick()
         );
@@ -134,7 +135,12 @@ public class CalendricView extends ViewPager {
         this.myAdapter = (Adapter_view_calendric) adapter;
         setCurrentItem(1, false);
     }
-    public void updateItem(){
+
+    public void updateItem() {
         pagerUpdate();
+    }
+
+    public void scrollToCurrentTime() {
+        myAdapter.getPage_b().scrollToCurrentTime(myMoment.getTime());
     }
 }

@@ -12,7 +12,8 @@ import java.util.ArrayList;
 
 import bit.eagzzycsl.smartable2.R;
 import entry.EntrySchedule;
-import my.MyDate;
+import my.MyMoment;
+import my.MyTime;
 
 /*在最简单的日视图的基础上的嵌套，以提供滚动和左上角角标，同时也是为了降低单页视图的复杂度*/
 public class CalendricCombineDayView extends FrameLayout implements CalendricPagerView {
@@ -30,14 +31,15 @@ public class CalendricCombineDayView extends FrameLayout implements CalendricPag
 
 
     @Override
-    public void transData(MyDate date, ArrayList<EntrySchedule> schedules, CalendricViewItemClick calendricViewItemClick) {
+    public void transData(MyMoment myMoment, ArrayList<EntrySchedule> schedules, CalendricViewItemClick calendricViewItemClick) {
 
         calendricSimpleDayView.setEntrySchedule(schedules);
         calendricSimpleDayView.setCalendricViewItemClick(calendricViewItemClick);
-        calendricSimpleDayView.setViewDate(date);
+        calendricSimpleDayView.setViewDate(myMoment);
         //临时创建一个MyMoment对象来传给日历那边
         //TODO 重构view这块的日历使用。
-        textView_showDay.setText(String.valueOf(date.getDay()));
+
+        textView_showDay.setText(String.valueOf(myMoment.getDay()));
     }
 
 
@@ -49,5 +51,10 @@ public class CalendricCombineDayView extends FrameLayout implements CalendricPag
     @Override
     public void mySetScroll(int y) {
         scrollView.setScrollY(y);
+    }
+
+    @Override
+    public void scrollToCurrentTime(MyTime myTime) {
+        scrollView.setScrollY(calendricSimpleDayView.getScrollYCurrentToCenter(this.getHeight(),myTime));
     }
 }
