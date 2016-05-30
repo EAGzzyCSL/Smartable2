@@ -40,12 +40,7 @@
     <string name="entry_shortHand">速记</string>
     <string name="entry_schedule">日程</string>
 
-    <string-array name="menu_calendric_switch">
-        <item>年</item>
-        <item>月</item>
-        <item>日</item>
-        <item>周</item>
-    </string-array>
+
 
     <string name="title_remind_time">提醒时间</string>
     <string name="btn_time_30min">30 min</string>

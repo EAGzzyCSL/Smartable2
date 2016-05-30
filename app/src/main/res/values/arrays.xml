@@ -12,4 +12,10 @@
         <item>7</item>
         <item>30</item>
     </string-array>
+    <string-array name="menu_calendric_switch">
+        <item>月</item>
+        <item>周</item>
+        <item>三天</item>
+        <item>日</item>
+    </string-array>
 </resources>

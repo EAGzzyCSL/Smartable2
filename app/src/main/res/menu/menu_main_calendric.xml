@@ -6,8 +6,9 @@
         android:id="@+id/action_spinner_switch"
         android:icon="@drawable/ic_main_nav_calendric"
         android:title="switch"
-        android:actionLayout="@layout/menu_calendric_switch"
-        app:showAsAction="always" />
+        app:actionViewClass="android.widget.Spinner"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

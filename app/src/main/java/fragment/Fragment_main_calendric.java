@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 
@@ -37,8 +38,12 @@ public class Fragment_main_calendric extends Fragment {
 
     private View myView;
     private CalendricView calendricView_day;
-    private Adapter_view_calendric adapter_view_calendric;
+    private CalendricView calendricView_week;
+    private Adapter_view_calendric adapter_view_calendric_day;
+    private Adapter_view_calendric adapter_view_calendric_week;
+    private FrameLayout frameLayout_cal;
     private FloatingActionButton fab_add;
+    private CalendricView preCalView;
 
     public Fragment_main_calendric() {
         // Required empty public constructor
@@ -68,17 +73,18 @@ public class Fragment_main_calendric extends Fragment {
 
     public void myFindView() {
         calendricView_day = (CalendricView) myView.findViewById(R.id.calendricView_day);
+        calendricView_week = (CalendricView) myView.findViewById(R.id.calendricView_week);
+        frameLayout_cal = (FrameLayout) myView.findViewById(R.id.frameLayout_cal);
         fab_add = (FloatingActionButton) myView.findViewById(R.id.fab_add);
     }
 
     @SuppressWarnings("unchecked")
     private void myCreate() {
-        adapter_view_calendric = new Adapter_view_calendric(this.getActivity(),
+        adapter_view_calendric_day = new Adapter_view_calendric(this.getActivity(),
                 EnumCalendricViewType.Day,
                 new CalendricViewItemProvider() {
                     @Override
                     public ArrayList<EntrySchedule> readFromDatabase(MyDate myDate) {
-//                        return new ArrayList<EntrySchedule>();
                         return (ArrayList<EntrySchedule>) SQLMan.getInstance(getActivity()).read(EnumEntry.schedule, myDate);
 
                     }
@@ -97,7 +103,6 @@ public class Fragment_main_calendric extends Fragment {
                         Intent intent = new Intent(getActivity(), EditActivity.class);
                         intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
                         //pager当天的日期和时间
-
                         intent.putExtra(ExtraFiled.myMoment, m);
                         getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
                     }
@@ -106,9 +111,9 @@ public class Fragment_main_calendric extends Fragment {
     }
 
     private void mySetView() {
-        calendricView_day.setAdapter(adapter_view_calendric);
+        calendricView_day.setAdapter(adapter_view_calendric_day);
         MyDate myDate = new MyDate();
-        myDate.dayAdd(adapter_view_calendric.getEnumViewType().getDiv() * -1);
+        myDate.dayAdd(adapter_view_calendric_day.getEnumViewType().getDiv() * -1);
         calendricView_day.setFirstDay(myDate);
         calendricView_day.post(new Runnable() {
             @Override
@@ -138,6 +143,30 @@ public class Fragment_main_calendric extends Fragment {
             /*只处理日程*/
             if (entry.getType() == EnumEntry.schedule) {
                 calendricView_day.updateItem();
+            }
+        }
+    }
+
+    public void showCal(EnumCalendricViewType enumCalendricViewType) {
+        if (preCalView != null) {
+            preCalView.setVisibility(View.GONE);
+        }
+        switch (enumCalendricViewType) {
+            case Month: {
+                break;
+            }
+            case Week: {
+                calendricView_week.setVisibility(View.VISIBLE);
+                preCalView = calendricView_week;
+                break;
+            }
+            case ThreeDay: {
+                break;
+            }
+            case Day: {
+                calendricView_day.setVisibility(View.VISIBLE);
+                preCalView = calendricView_day;
+                break;
             }
         }
     }

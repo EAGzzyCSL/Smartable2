@@ -2,19 +2,26 @@ package bit.eagzzycsl.smartable2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import fragment.Fragment_main_calendric;
 import fragment.Fragment_main_smart;
+import view.EnumCalendricViewType;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,6 +32,8 @@ public class MainActivity extends AppCompatActivity
     private FrameLayout frameLayout_glance;
     private Toolbar toolbar;
     private NavigationView navigationView;
+    private AdapterView.OnItemSelectedListener spinner_onSelected;
+    private ArrayAdapter<String> spinnerArrayAdapter;
 
     @Override
 
@@ -49,6 +58,19 @@ public class MainActivity extends AppCompatActivity
     private void myCreate() {
         setSupportActionBar(toolbar);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        spinner_onSelected = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                fragment_main_calendric.showCal(EnumCalendricViewType.getEnum(position));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        };
+        spinnerArrayAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_spinner_item, getResources().getStringArray(
+                R.array.menu_calendric_switch));
     }
 
     private void mySetView() {
@@ -83,12 +105,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
+        //TODO 菜单的切换会不会造成性能问题
         if (fragment_main_calendric.isHidden()) {
             getMenuInflater().inflate(R.menu.menu_main_smart, menu);
-
-
         } else {
             getMenuInflater().inflate(R.menu.menu_main_calendric, menu);
+            MenuItem item = menu.findItem(R.id.action_spinner_switch);
+            Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
+            spinner.setAdapter(spinnerArrayAdapter);
+            spinner.setOnItemSelectedListener(spinner_onSelected);
         }
         return super.onCreateOptionsMenu(menu);
     }

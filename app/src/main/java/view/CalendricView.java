@@ -90,6 +90,7 @@ public class CalendricView extends ViewPager {
         /*为viewpager增加滑动监听，为了在pager滑动的时候更换内容*/
         this.addOnPageChangeListener(onPageChangeListener);
 
+
     }
 
     /*设置首日，不管对于月日周，凭借首日都可以知道日历视图需要滚动到那个时期，因此该函数用于设定日历视图跳转到某个时候*/

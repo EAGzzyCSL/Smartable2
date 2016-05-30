@@ -5,14 +5,22 @@
     android:layout_height="match_parent">
 
     <FrameLayout
+        android:id="@+id/frameLayout_cal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <view.CalendricView
+            android:id="@+id/calendricView_week"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <view.CalendricView
             android:id="@+id/calendricView_day"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
+
+
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
