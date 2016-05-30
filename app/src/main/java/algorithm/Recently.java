@@ -336,7 +336,7 @@ public class Recently {
 
     public static ArrayList<Entry> sort(ArrayList<Entry> in) {
         ArrayList<Entry> ans = exec(in);
-        printResult(ans);
+//        printResult(ans);
         return ans;
     }
 
@@ -350,3 +350,4 @@ public class Recently {
         }
     }
 }
+//TODO 将输出换为log方式，函数间的逻辑

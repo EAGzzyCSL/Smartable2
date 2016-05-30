@@ -68,6 +68,7 @@ public class Fragment_main_calendric extends Fragment {
         myFindView();
         myCreate();
         mySetView();
+        preCalView = calendricView_day;
         return myView;
     }
 

@@ -3,14 +3,12 @@ package view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
@@ -21,14 +19,11 @@ import my.MyTime;
 import my.MyUtil;
 
 
-public class CalendricSimpleDayView extends ViewGroup {
-    /*从dp转化为像素乘的值*/
-    private final float destiny = getContext().getResources().getDisplayMetrics().density;
+public class CalendricSimpleDayView extends CalendricSimpleView {
     /*绘制线条等需要的参数*/
     private int lineWidth = 1;//线宽，如果线宽是奇数的话字大小宜为奇数，反之偶数
     private int textSize = MyUtil.dpToPxInCode(destiny, 15);//文本大小，文本就是指左边的显示时间的那一个，也叫文本
     private final int topBlank = MyUtil.dpToPxInCode(destiny, 60);//顶部会空一小部分,为了美观
-    private int height1h = MyUtil.dpToPxInCode(destiny, 60);//一个条的高度，不包括上下的线
     private int lineStart = topBlank + 1;//线的起始高度，即顶部空开始的下一行
     private int textStart = topBlank + lineWidth + (textSize - lineWidth) / 2;//文字的起始高度，注意文字的绘制是从左下角开始而不是左上角
     private int textPadLeft = MyUtil.dpToPxInCode(destiny, 10);//文本和文本左边的空隙
@@ -37,20 +32,14 @@ public class CalendricSimpleDayView extends ViewGroup {
     private int lineRight;//值为myWidth - linePadLeft,但在此处定义无效，因为myWidth还没有赋值。
     private int hpm = height1h / 60;//表示每分钟表示的高度
     private int indicateLineY;//表示当前时间的指示线的纵坐标
-    /*最终经过计算后得到的view的大小*/
-    private int myWidth;
-    private int myHeight;
-    /*view自由发挥的大小，即没有限定view大小的时候view的大小，比如wrapContent的时候*/
-    private final int defaultWidth = MyUtil.dpToPxInCode(destiny, 240);
-    private final int defaultHeight = 27 * height1h;//一天24小时，上下各自空白一些按27算
+
     /*日程*/
     private ArrayList<EntrySchedule> schedules;
     /*添加按钮*/
     private AppCompatButton preAddButton;
     /*点击事件*/
     private CalendricViewItemClick calendricViewItemClick;
-    /*画线条和时间的画笔*/
-    Paint paint = new Paint();
+
 
     /*构造方法*/
     public CalendricSimpleDayView(Context context, AttributeSet attrs) {
@@ -163,16 +152,6 @@ public class CalendricSimpleDayView extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
-        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
-        /*如果给定了大小的话就用给定的大小，否则用自己默认的大小*/
-        myWidth = (widthMode == MeasureSpec.EXACTLY) ? sizeWidth
-                : defaultWidth;
-        myHeight = (heightMode == MeasureSpec.EXACTLY) ? sizeHeight
-                : defaultHeight;
-        setMeasuredDimension(myWidth, myHeight);
         /*在measure时计算lineRight*/
         lineRight = myWidth - linePadLeft;//
     }
@@ -227,7 +206,8 @@ public class CalendricSimpleDayView extends ViewGroup {
         this.myMoment = myMoment;
     }
 
-    //可能需要作为一个接口
+
+    @Override
     public int getScrollYCurrentToCenter(int fatherHeight, MyTime myTime) {
         int cTH = (myTime.getHour() + 1) * (height1h + lineWidth) + myTime.getMinute() * hpm;
         if (cTH < fatherHeight) {

@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity
             Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
             spinner.setAdapter(spinnerArrayAdapter);
             spinner.setOnItemSelectedListener(spinner_onSelected);
+            spinner.setSelection(3);
         }
         return super.onCreateOptionsMenu(menu);
     }
