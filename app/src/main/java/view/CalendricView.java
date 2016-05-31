@@ -96,7 +96,6 @@ public class CalendricView extends ViewPager {
     /*设置首日，不管对于月日周，凭借首日都可以知道日历视图需要滚动到那个时期，因此该函数用于设定日历视图跳转到某个时候*/
     public void setFirstDay(MyDate date) {
         myMoment.setDate(date.getYear(), date.getMonth(), date.getDay());
-        myAdapter.getPage_b().mySetScroll(300);
         pagerUpdate();
     }
 

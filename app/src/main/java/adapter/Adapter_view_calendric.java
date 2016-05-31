@@ -12,7 +12,8 @@ import java.util.LinkedList;
 import entry.EntrySchedule;
 import my.MyDate;
 import view.CalendricCombineDayView;
-import view.CalendricPagerView;
+import view.CalendricCombineWeekView;
+import view.CalendricPageView;
 import view.CalendricViewItemClick;
 import view.CalendricViewItemProvider;
 import view.EnumCalendricViewType;
@@ -25,9 +26,9 @@ public class Adapter_view_calendric extends PagerAdapter {
     private LinkedList<View> pagers;
     private Context context;
     /*三个页面分别命名为abc*/
-    private CalendricPagerView page_a;
-    private CalendricPagerView page_b;
-    private CalendricPagerView page_c;
+    private CalendricPageView page_a;
+    private CalendricPageView page_b;
+    private CalendricPageView page_c;
     /*数据的提供器，用来提供在日历上显示的日程*/
     private CalendricViewItemProvider itemProvider;
     /*当日历上内容被点击的时候执行的事件*/
@@ -61,13 +62,22 @@ public class Adapter_view_calendric extends PagerAdapter {
                 break;
             }
             case Week: {
+                CalendricCombineWeekView a = new CalendricCombineWeekView(context, null);
+                pagers.add(a);
+                CalendricCombineWeekView b = new CalendricCombineWeekView(context, null);
+                pagers.add(b);
+                CalendricCombineWeekView c = new CalendricCombineWeekView(context, null);
+                pagers.add(c);
+                this.page_a = a;
+                this.page_b = b;
+                this.page_c = c;
                 break;
             }
             case Month: {
                 break;
             }
         }
-        //TODO 布局参数的问题
+        //TODO CombineView的布局参数问题
 
     }
 
@@ -77,15 +87,15 @@ public class Adapter_view_calendric extends PagerAdapter {
     }
 
     /*获取三个页面*/
-    public CalendricPagerView getPage_a() {
+    public CalendricPageView getPage_a() {
         return this.page_a;
     }
 
-    public CalendricPagerView getPage_b() {
+    public CalendricPageView getPage_b() {
         return this.page_b;
     }
 
-    public CalendricPagerView getPage_c() {
+    public CalendricPageView getPage_c() {
         return this.page_c;
     }
 

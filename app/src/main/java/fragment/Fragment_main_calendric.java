@@ -44,6 +44,8 @@ public class Fragment_main_calendric extends Fragment {
     private FrameLayout frameLayout_cal;
     private FloatingActionButton fab_add;
     private CalendricView preCalView;
+    private CalendricViewItemClick calendricViewItemClick;
+    private View.OnClickListener fab_onclick;
 
     public Fragment_main_calendric() {
         // Required empty public constructor
@@ -81,6 +83,23 @@ public class Fragment_main_calendric extends Fragment {
 
     @SuppressWarnings("unchecked")
     private void myCreate() {
+        calendricViewItemClick = new CalendricViewItemClick() {
+            @Override
+            public void onItemClick(View v, EntrySchedule entrySchedule) {
+                Intent intent = new Intent(getActivity(), ModifyDetailActivity.class);
+                intent.putExtra(EnumExtra.getName(), EnumExtra.modifyEntry);
+                intent.putExtra(ExtraFiled.entryToEdit, entrySchedule);
+                getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
+            }
+
+            @Override
+            public void onAddClick(View v, MyMoment m) {
+                Intent intent = new Intent(getActivity(), EditActivity.class);
+                intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
+                intent.putExtra(ExtraFiled.myMoment, m);
+                getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
+            }
+        };
         adapter_view_calendric_day = new Adapter_view_calendric(this.getActivity(),
                 EnumCalendricViewType.Day,
                 new CalendricViewItemProvider() {
@@ -89,40 +108,21 @@ public class Fragment_main_calendric extends Fragment {
                         return (ArrayList<EntrySchedule>) SQLMan.getInstance(getActivity()).read(EnumEntry.schedule, myDate);
 
                     }
-                },
-                new CalendricViewItemClick() {
-                    @Override
-                    public void onItemClick(View v, EntrySchedule entrySchedule) {
-                        Intent intent = new Intent(getActivity(), ModifyDetailActivity.class);
-                        intent.putExtra(EnumExtra.getName(), EnumExtra.modifyEntry);
-                        intent.putExtra(ExtraFiled.entryToEdit, entrySchedule);
-                        getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
-                    }
+                }, calendricViewItemClick
 
-                    @Override
-                    public void onAddClick(View v, MyMoment m) {
-                        Intent intent = new Intent(getActivity(), EditActivity.class);
-                        intent.putExtra(EnumExtra.getName(), EnumExtra.addScheduleWithMoment);
-                        //pager当天的日期和时间
-                        intent.putExtra(ExtraFiled.myMoment, m);
-                        getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
-                    }
-                }
         );
-    }
+        adapter_view_calendric_week = new Adapter_view_calendric(this.getActivity(),
+                EnumCalendricViewType.Week,
+                new CalendricViewItemProvider() {
+                    @Override
+                    public ArrayList<EntrySchedule> readFromDatabase(MyDate myDate) {
+                        //先使用不带日期的read代替
+                        return (ArrayList<EntrySchedule>) SQLMan.getInstance(getActivity()).read(EnumEntry.schedule);
 
-    private void mySetView() {
-        calendricView_day.setAdapter(adapter_view_calendric_day);
-        MyDate myDate = new MyDate();
-        myDate.dayAdd(adapter_view_calendric_day.getEnumViewType().getDiv() * -1);
-        calendricView_day.setFirstDay(myDate);
-        calendricView_day.post(new Runnable() {
-            @Override
-            public void run() {
-                calendricView_day.scrollToCurrentTime();
-            }
-        });
-        fab_add.setOnClickListener(new View.OnClickListener() {
+                    }
+                }, calendricViewItemClick
+        );
+        fab_onclick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), EditActivity.class);
@@ -131,7 +131,29 @@ public class Fragment_main_calendric extends Fragment {
                 intent.putExtra(ExtraFiled.myMoment, MyUtil.SuitableTime(new MyMoment()));
                 getActivity().startActivityForResult(intent, IntentCode.request_fromMainToEntryEdit);
             }
+        };
+    }
+
+    private void mySetView() {
+        calendricView_day.setAdapter(adapter_view_calendric_day);
+        /*这里的date仅用来做数据传递*/
+        MyDate myDate = new MyDate();
+        myDate.dayAdd(adapter_view_calendric_day.getEnumViewType().getDiv() * -1);
+        calendricView_day.setFirstDay(myDate);
+        //TODO 此处使用post太麻烦
+        calendricView_day.post(new Runnable() {
+            @Override
+            public void run() {
+                calendricView_day.scrollToCurrentTime();
+            }
         });
+        calendricView_week.setAdapter(adapter_view_calendric_week);
+        myDate = new MyDate();
+        myDate.dayAdd(adapter_view_calendric_week.getEnumViewType().getDiv() * -1);
+        calendricView_week.setFirstDay(myDate);
+        //TODO 几种视图模式的日历需要关联起来，这样才可以实现从日视图跳转到周视图时是当天所在的周
+        fab_add.setOnClickListener(fab_onclick);
+
 
     }
 

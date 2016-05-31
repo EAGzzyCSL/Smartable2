@@ -13,20 +13,23 @@ import entry.EntrySchedule;
 import my.MyMoment;
 import my.MyTime;
 
-/*所有的单页日历视图均实现该接口*/
-public abstract class CalendricPagerView<T extends CalendricSimpleView> extends FrameLayout {
+public abstract class CalendricPageView<T extends CalendricSimpleView> extends FrameLayout {
+    /*嵌套在simple外面使其能够滚动*/
     protected ScrollView scrollView;
     protected CalendricSimpleView simpleView;
 
-    public CalendricPagerView(Context context, AttributeSet attrs) {
+    @SuppressWarnings("unchecked")
+
+    public CalendricPageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(context).inflate(getLayoutId(), this);
         scrollView = (ScrollView) findViewById(R.id.view_calendric_scrollView);
+
         simpleView = (T) findViewById(R.id.view_calendricSimpleView);
 
     }
 
-
+    /*将日程的数据传动到page中*/
     protected void transData(MyMoment myMoment,
                              ArrayList<EntrySchedule> schedules,
                              CalendricViewItemClick calendricViewItemClick) {
@@ -35,17 +38,21 @@ public abstract class CalendricPagerView<T extends CalendricSimpleView> extends 
         simpleView.setViewDate(myMoment);
     }
 
+    /*获取当前scrollView的垂直滚动*/
     public int myGetScroll() {
         return scrollView.getScrollY();
     }
 
+    /*设置当前scrollView的垂直滚动*/
     public void mySetScroll(int y) {
         scrollView.setScrollY(y);
     }
 
+    /*将scrollView滚动到当前时间*/
     public void scrollToCurrentTime(MyTime myTime) {
         scrollView.setScrollY(simpleView.getScrollYCurrentToCenter(this.getHeight(), myTime));
     }
 
+    /*获取布局id*/
     public abstract int getLayoutId();
 }
