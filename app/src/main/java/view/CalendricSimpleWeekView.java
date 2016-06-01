@@ -7,45 +7,54 @@ import android.util.Log;
 
 import entry.EntrySchedule;
 import my.MyTime;
-import my.MyUtil;
 
 
 public class CalendricSimpleWeekView extends CalendricSimpleView {
-    private int heightOf2H;
-    private int topHead = MyUtil.dpToPxInCode(destiny, 30);
-    private int widthOf1Day;
-    private int textLeftPad = MyUtil.dpToPxInCode(destiny, 5);
-    private int textTopPad = MyUtil.dpToPxInCode(destiny, 10);
-    private int hpm;
+    private int widthOf1d;
+    private int widthOf1dWithLine;
+
+
+    @Override
+    protected int letTopPad() {
+        return toPx(30);
+    }
+
+    @Override
+    protected int letBottomPad() {
+        return toPx(0);
+    }
+
+    @Override
+    protected int letLeftText() {
+        return toPx(60);
+    }
+
+    @Override
+    protected int letRightPad() {
+        return 0;
+    }
 
     public CalendricSimpleWeekView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
     }
 
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        widthOf1Day = (myWidth - 7 * lineWidth) / 8;
-        heightOf2H = (myHeight - topHead - 13 * lineWidth) / 13;
-        hpm = heightOf2H / 120;
+        widthOf1d = (grid_right - grid_left) / 7;
+        widthOf1dWithLine = widthOf1d + lineSize;
     }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 1; i <= 7; i++) {
-            int vx = (widthOf1Day + 1) * i;
-            canvas.drawLine(vx, 0, vx, myHeight, paint);
-            canvas.drawText(MyUtil.weekEtoC(i), vx + (widthOf1Day - 2 * textSize) / 2, +textTopPad + textSize, paint);
+        for (int i = 0; i < 7; i++) {
+            int verLineX = grid_left + (widthOf1d + 1) * i;
+            canvas.drawLine(verLineX, 0, verLineX, myHeight, paint);
         }
-        for (int i = 0; i <= 12; i++) {
-            int hy = (topHead + lineWidth) + (heightOf2H + lineWidth) * i;
-            canvas.drawLine(widthOf1Day, hy, myWidth, hy, paint);
-            canvas.drawText(String.format("%02d", i * 2) + ":00", textLeftPad, hy + (textSize - lineWidth) / 2, paint);
-        }
-
     }
 
     @Override
@@ -56,26 +65,28 @@ public class CalendricSimpleWeekView extends CalendricSimpleView {
 
     @Override
     protected void calcEntryLayoutPos(EntrySchedule entrySchedule) {
-        int bt = topHead + lineWidth +
-                entrySchedule.getDate_begin().getHour() * (heightOf2H / 2 + lineWidth)
-                + entrySchedule.getDate_begin().getMinute() * hpm;
-        int bm = topHead + lineWidth +
-                entrySchedule.getDate_end().getHour() * (heightOf2H / 2 + lineWidth)
-                + entrySchedule.getDate_end().getMinute() * hpm;
-        int tmp = widthOf1Day + lineWidth;
+        int t = grid_top + lineSize +
+                entrySchedule.getDate_begin().getHour() * heightOf1hWithLine
+                + entrySchedule.getDate_begin().getMinute() * heightOf1m;
+        int b = grid_top + lineSize +
+                entrySchedule.getDate_end().getHour() * heightOf1hWithLine
+                + entrySchedule.getDate_end().getMinute() * heightOf1m;
 //                int bl = tmp * schedules.get(i).getWeek() + 1;
 //                int br = tmp * (schedules.get(i).getWeek() + 1);
         //为了方便假设都是周三
-        int bl = tmp * 3 + 1;
-        int br = tmp * (3 + 1);
-        Log.i("事件位置", bl + "," + bt + "," + br + "," + bm);
-        calEntryLayoutPos.setValue(bl, bt, br, bm);
+        int l = grid_left + widthOf1dWithLine * 3;
+        int r = grid_left + widthOf1dWithLine * 4;
+        calEntryLayoutPos.setValue(l, t, r, b);
     }
 
     @Override
-    protected boolean calcPreAddLayoutPos(float eventX, float eventY) {
-        //TODO 计算被添加按钮的显示位置
-        return false;
+    protected void calcPreAddLayoutPos(int x, int y) {
+        calEntryLayoutPos.setValue(
+                grid_left + x / widthOf1dWithLine * widthOf1dWithLine,
+                grid_top + y / heightOf1hWithLine * heightOf1hWithLine,
+                grid_left + (x / widthOf1dWithLine + 1) * widthOf1dWithLine,
+                grid_top + (y / heightOf1hWithLine + 1) * heightOf1hWithLine
+        );
     }
 
 }

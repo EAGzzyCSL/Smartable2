@@ -15,4 +15,100 @@
             android:layout_height="wrap_content" />
 
     </ScrollView>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#eee"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView_month"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary" />
+
+        <LinearLayout
+            style="@style/cal_week_liner_ver"
+
+            android:background="#ff0000">
+
+            <TextView
+                style="@style/cal_week_top_label"
+                android:text="@string/week_mon" />
+
+            <TextView
+                android:id="@+id/cal_week_top_day_1"
+                style="@style/cal_week_top_label" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/cal_week_liner_ver">
+
+            <TextView
+                style="@style/cal_week_top_label"
+                android:text="@string/week_tue" />
+
+            <TextView
+                android:id="@+id/cal_week_top_day_2"
+                style="@style/cal_week_top_label" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/cal_week_liner_ver">
+
+            <TextView
+                style="@style/cal_week_top_label"
+                android:text="@string/week_wed" />
+
+            <TextView
+                android:id="@+id/cal_week_top_day_3"
+                style="@style/cal_week_top_label" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/cal_week_liner_ver">
+
+            <TextView
+                style="@style/cal_week_top_label"
+                android:text="@string/week_thu" />
+
+            <TextView
+                android:id="@+id/cal_week_top_day_4"
+                style="@style/cal_week_top_label" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/cal_week_liner_ver">
+
+            <TextView
+                style="@style/cal_week_top_label"
+                android:text="@string/week_fri" />
+
+            <TextView
+                android:id="@+id/cal_week_top_day_5"
+                style="@style/cal_week_top_label" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/cal_week_liner_ver">
+
+            <TextView
+                style="@style/cal_week_top_label"
+                android:text="@string/week_sat" />
+
+            <TextView
+                android:id="@+id/cal_week_top_day_6"
+                style="@style/cal_week_top_label" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/cal_week_liner_ver">
+
+            <TextView
+                style="@style/cal_week_top_label"
+                android:text="@string/week_sun" />
+
+            <TextView
+                android:id="@+id/cal_week_top_day_7"
+                style="@style/cal_week_top_label" />
+        </LinearLayout>
+    </LinearLayout>
+
+
 </FrameLayout>

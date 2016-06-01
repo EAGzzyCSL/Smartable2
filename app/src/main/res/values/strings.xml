@@ -41,7 +41,6 @@
     <string name="entry_schedule">日程</string>
 
 
-
     <string name="title_remind_time">提醒时间</string>
     <string name="btn_time_30min">30 min</string>
     <string name="btn_time_1h">1 hour</string>
@@ -88,8 +87,13 @@
 
     <string name="pref_title_system_sync_settings">系统同步设置</string>
 
-
-
+    <string name="week_mon">一</string>
+    <string name="week_tue">二</string>
+    <string name="week_wed">三</string>
+    <string name="week_thu">四</string>
+    <string name="week_fri">五</string>
+    <string name="week_sat">六</string>
+    <string name="week_sun">日</string>
 
 
 </resources>

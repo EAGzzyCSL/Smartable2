@@ -1,9 +1,9 @@
 package view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -23,25 +23,41 @@ import my.MyUtil;
 public abstract class CalendricSimpleView extends ViewGroup {
     /*从dp转化为像素乘的值*/
     protected final float destiny = getContext().getResources().getDisplayMetrics().density;
-    protected int height1h = MyUtil.dpToPxInCode(destiny, 60);//一个条的高度，不包括上下的线
+    //TODO 是不是该使用float表示绘制的量
+    /*绘制需要的基本量*/
+    /*一个小时的高度*/
+    protected int heightOf1h = MyUtil.dpToPxInCode(destiny, 60);
+    /*一分钟的高度*/
+    protected int heightOf1m = heightOf1h / 60;//表示每分钟表示的高度
+    /*画笔的线条宽度*/
+    protected int lineSize = 1;
+    /*画笔的文本大小*/
+    protected int textSize = MyUtil.dpToPxInCode(destiny, 15);
+    /*处于对强迫症的照顾，文本大小和线宽的奇偶应该不同*/
+    /*计算得到的量*/
+    /*线的起始高度*/
+    protected int lineFirst = letTopPad() + lineSize;
+    /*文字的起始高度，注意文字的绘制是从左下角开始而不是左上角*/
+    protected int textFirst = letTopPad() + lineSize + (textSize - lineSize) / 2;
+    /*带线条的小时高度，方便计算使用*/
+    protected int heightOf1hWithLine = heightOf1h + lineSize;
     /*最终经过计算后得到的view的大小*/
-    protected int myWidth;
-    protected int myHeight;
-    /*view自由发挥的大小，即没有限定view大小的时候view的大小，比如wrapContent的时候*/
+    protected int myWidth, myHeight;
+    /*view在wrapContent的时候的大小，实际情况是view也只允许warpContent，matchParent的情况并为处理*/
     private final int defaultWidth = MyUtil.dpToPxInCode(destiny, 240);
-    private final int defaultHeight = 27 * height1h;//一天24小时，上下各自空白一些按27算
+    private final int defaultHeight = 24 * heightOf1h + 25 * lineSize + letTopPad() + letBottomPad();
+    /*日历的网格部分的边界*/
+    protected int grid_left, grid_top, grid_right, grid_bottom;
     /*画线条和时间的画笔*/
     protected Paint paint = new Paint();
-    /*点击事件*/
+    /*点击事件的侦听*/
     protected CalendricViewItemClick calendricViewItemClick;
     /*日程*/
     protected ArrayList<EntrySchedule> schedules;
-    protected int lineWidth = 1;//线宽，如果线宽是奇数的话字大小宜为奇数，反之偶数
-    protected int textSize = MyUtil.dpToPxInCode(destiny, 15);//文本大小，文本就是指左边的显示时间的那一个，也叫文本
+    /*存放日程的label的定位信息*/
     protected CalEntryLayoutPos calEntryLayoutPos = new CalEntryLayoutPos();
     protected int addButtonHour = 0;
     protected MyMoment myMoment;
-
     /*添加按钮*/
     protected AppCompatButton preAddButton;
 
@@ -49,9 +65,9 @@ public abstract class CalendricSimpleView extends ViewGroup {
         super(context, attrs);
         /*完成画笔创建设置等初始化工作*/
         this.setBackgroundColor(Color.rgb(255, 255, 255));
-        paint.setStrokeWidth(lineWidth);
+        paint.setStrokeWidth(lineSize);
         paint.setTextSize(textSize);
-        paint.setTypeface(Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL));
+        paint.setAntiAlias(true);//抗锯齿
         preAddButton = new AppCompatButton(getContext());
         preAddButton.setBackgroundResource(R.drawable.bkg_view_calendric_day_item_add);
         preAddButton.setText("+");
@@ -66,8 +82,13 @@ public abstract class CalendricSimpleView extends ViewGroup {
             }
         });
         //TODO 是否用xml来创建view？
-
     }
+
+    /*将px转化为dp*/
+    protected int toPx(int dp) {
+        return MyUtil.dpToPxInCode(destiny, dp);
+    }
+
 
     /*设置条目点击事件*/
     public void setCalendricViewItemClick(CalendricViewItemClick calendricViewItemClick) {
@@ -85,10 +106,11 @@ public abstract class CalendricSimpleView extends ViewGroup {
         this.myMoment = myMoment;
     }
 
-    /*创建一个新的条目按钮*/
-    protected AppCompatButton createNewEntryButton(final EntrySchedule schedule) {
+    /*创建一个新的条目标签*/
+    protected View createNewEntryLabel(final EntrySchedule schedule) {
         //TODO 设置其大小的measure
         AppCompatButton b = new AppCompatButton(getContext());
+//        TextView b = new TextView(getContext());可以使用textView
         b.setBackgroundResource(R.drawable.bkg_view_calendric_day_item_preview);
         b.setGravity(Gravity.START);
         b.setTextColor(Color.BLACK);
@@ -109,10 +131,10 @@ public abstract class CalendricSimpleView extends ViewGroup {
         if (schedules != null) {
             for (EntrySchedule entrySchedule : schedules) {
                                 /*增加一个新的条目*/
-                AppCompatButton button = createNewEntryButton(entrySchedule);
-                addView(button);
+                View vEntry = createNewEntryLabel(entrySchedule);
+                addView(vEntry);
                 calcEntryLayoutPos(entrySchedule);
-                button.layout(calEntryLayoutPos.getLeft(),
+                vEntry.layout(calEntryLayoutPos.getLeft(),
                         calEntryLayoutPos.getTop(),
                         calEntryLayoutPos.getRight(),
                         calEntryLayoutPos.getBottom());
@@ -123,18 +145,6 @@ public abstract class CalendricSimpleView extends ViewGroup {
     }
 
 
-    /*根据触摸的位置来决定是否显示一个添加按钮*/
-    protected void showPreAddButton(float eventX, float eventY) {
-        if (calcPreAddLayoutPos(eventX, eventY)) {
-            preAddButton.layout(calEntryLayoutPos.getLeft(),
-                    calEntryLayoutPos.getTop(),
-                    calEntryLayoutPos.getRight(),
-                    calEntryLayoutPos.getBottom());
-
-        }
-
-    }
-
     /*覆写onTouch事件来实现触摸添加一个添加按钮*/
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -142,9 +152,23 @@ public abstract class CalendricSimpleView extends ViewGroup {
             case MotionEvent.ACTION_DOWN:
                 break;
             case MotionEvent.ACTION_UP:
+                /*根据触摸的时间差来模拟点击*/
                 if (event.getEventTime() - event.getDownTime() < 200) {
-                    //因为单击事件不能获取点击的位置所以用touch事件，根据手指按下和起来的时间的差值是否小于200ms来判断是不是一次点击
-                    showPreAddButton(event.getX(), event.getY());
+                    int x = (int) event.getX();
+                    int y = (int) event.getY();
+                    /*判断是否在日历的网格部分*/
+                    if (MyUtil.inRange(grid_left, x, grid_right)
+                            && MyUtil.inRange(grid_top, y, grid_bottom)
+                            ) {
+                            /*根据触摸的位置来决定是否显示一个添加按钮*/
+                        calcPreAddLayoutPos(x - grid_left, y - grid_top);
+                        preAddButton.layout(calEntryLayoutPos.getLeft(),
+                                calEntryLayoutPos.getTop(),
+                                calEntryLayoutPos.getRight(),
+                                calEntryLayoutPos.getBottom()
+                        );
+
+                    }
                 }
                 break;
         }
@@ -169,6 +193,30 @@ public abstract class CalendricSimpleView extends ViewGroup {
         myHeight = (heightMode == MeasureSpec.EXACTLY) ? sizeHeight
                 : defaultHeight;
         setMeasuredDimension(myWidth, myHeight);
+        /*计算网格部分边界*/
+
+        grid_left = letLeftText();
+        grid_top = letTopPad();
+        grid_right = myWidth - letRightPad();
+        grid_bottom = myHeight - letBottomPad();
+
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        int horLineY = lineFirst, horLineRight = myWidth - letRightPad();
+        int leftTimeY = textFirst;
+        int textLeftPad = (letLeftText() - 3 * textSize) / 2;
+        //TODO 文字大小与文字宽度的问题
+        for (int i = 0; i <= 24; i++) {
+            canvas.drawLine(grid_left, horLineY, horLineRight, horLineY, paint);
+            canvas.drawText(String.format("%02d:00", i), textLeftPad,
+                    leftTimeY,
+                    paint);
+            horLineY += heightOf1hWithLine;
+            leftTimeY += heightOf1hWithLine;
+        }
     }
 
     //TODO 事件的显示大小要有一个最小值，否则持续时间很短的事件会变成细条
@@ -176,38 +224,18 @@ public abstract class CalendricSimpleView extends ViewGroup {
     protected abstract void calcEntryLayoutPos(EntrySchedule entrySchedule);
 
     /*计算添加按钮该被摆放的位置*/
-    protected abstract boolean calcPreAddLayoutPos(float eventX, float eventY);
+    protected abstract void calcPreAddLayoutPos(int x, int y);
 
     /*计算若要将当前时间显示在屏幕中心的滚动量*/
     protected abstract int getScrollYCurrentToCenter(int fatherHeight, MyTime myTime);
+
+    /*为了美观等因素，顶部和下部会有一些留空*/
+    protected abstract int letTopPad();
+
+    protected abstract int letBottomPad();
+
+    protected abstract int letLeftText();
+
+    protected abstract int letRightPad();
 }
 
-class CalEntryLayoutPos {
-    private int left;
-    private int top;
-    private int right;
-    private int bottom;
-
-    public void setValue(int left, int top, int right, int bottom) {
-        this.left = left;
-        this.top = top;
-        this.right = right;
-        this.bottom = bottom;
-    }
-
-    public int getLeft() {
-        return left;
-    }
-
-    public int getTop() {
-        return top;
-    }
-
-    public int getRight() {
-        return right;
-    }
-
-    public int getBottom() {
-        return bottom;
-    }
-}

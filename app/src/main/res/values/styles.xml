@@ -7,8 +7,12 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:listDivider">@drawable/divider_bg</item>
-        <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">@style/MyDatePickerDialogYellowTheme</item>
-        <item name="android:timePickerDialogTheme" tools:targetApi="lollipop">@style/MyTimePickerDialogYellowTheme</item>
+        <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">
+            @style/MyDatePickerDialogYellowTheme
+        </item>
+        <item name="android:timePickerDialogTheme" tools:targetApi="lollipop">
+            @style/MyTimePickerDialogYellowTheme
+        </item>
 
         <!--<item name="android:datePickerDialogTheme">@style/MyDatePickerDialogBlueTheme</item>-->
         <!--<item name="android:timePickerDialogTheme">@style/MyTimePickerDialogBlueTheme</item>-->
@@ -34,6 +38,7 @@
     <style name="MyDatePickerDialogYellowTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
         <item name="android:datePickerStyle">@style/MyDatePickerYellowStyle</item>
     </style>
+
     <style name="MyDatePickerYellowStyle" parent="@android:style/Widget.Material.Light.DatePicker" tools:targetApi="lollipop">
         <item name="android:headerBackground">@color/colorMyYellow</item>
     </style>
@@ -41,6 +46,7 @@
     <style name="MyTimePickerDialogYellowTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
         <item name="android:timePickerStyle">@style/MyTimePickerYellowStyle</item>
     </style>
+
     <style name="MyTimePickerYellowStyle" parent="@android:style/Widget.Material.Light.TimePicker" tools:targetApi="lollipop">
         <item name="android:headerBackground">@color/colorMyYellow</item>
     </style>
@@ -49,6 +55,7 @@
     <style name="MyDatePickerDialogBlueTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
         <item name="android:datePickerStyle">@style/MyDatePickerBlueStyle</item>
     </style>
+
     <style name="MyDatePickerBlueStyle" parent="@android:style/Widget.Material.Light.DatePicker" tools:targetApi="lollipop">
         <item name="android:headerBackground">@color/colorMyBlue</item>
     </style>
@@ -56,6 +63,7 @@
     <style name="MyTimePickerDialogBlueTheme" parent="android:Theme.Material.Light.Dialog" tools:targetApi="lollipop">
         <item name="android:timePickerStyle">@style/MyTimePickerBlueStyle</item>
     </style>
+
     <style name="MyTimePickerBlueStyle" parent="@android:style/Widget.Material.Light.TimePicker" tools:targetApi="lollipop">
         <item name="android:headerBackground">@color/colorMyBlue</item>
     </style>
@@ -64,13 +72,36 @@
     <style name="RadioButtonStyles_ora">
         <item name="android:button">@drawable/ic_radiobtn_ora_selector</item>
     </style>
+
     <style name="RadioButtonStyles_purple">
         <item name="android:button">@drawable/ic_radiobtn_purple_selector</item>
     </style>
+
     <style name="RadioButtonStyles_blue">
         <item name="android:button">@drawable/ic_radiobtn_blue_selector</item>
     </style>
+
     <style name="RadioButtonStyles_yellow">
         <item name="android:button">@drawable/ic_radiobtn_yellow_selector</item>
+    </style>
+    <!--周视图的上部-->
+    <style name="cal_week_liner_ver">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+
+    </style>
+
+    <style name="cal_week_top_label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="cal_week_top_label_day" parent="@style/cal_week_top_label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 </resources>

@@ -64,27 +64,53 @@ public class MyUtil {
         }
         return -1;
     }
+
     /*传过来一个时间MyMoment_A，返回一个时间Mymoment_B：0.5~1个小时后的某个整/半点 */
-    public static MyMoment SuitableTime(MyMoment myMoment_A){
+    public static MyMoment SuitableTime(MyMoment myMoment_A) {
         //首先将时间加为0.5~1个小时后的某个整/半点
         //10:01 ~ 10:30 => 11:00
         //10:31 ~ 10:59 => 11:30
         //11:00 => 11:30
         //注意小时大于24的情况（我们是在时间父类解决的）
-        myMoment_A=myMoment_A.newSameMoment();
+        myMoment_A = myMoment_A.newSameMoment();
 
         //把小时 * 2 + 分钟%30
 
-        if(myMoment_A.getMinute() >= 1 && myMoment_A.getMinute() <= 30){
+        if (myMoment_A.getMinute() >= 1 && myMoment_A.getMinute() <= 30) {
 //            myTime.setHour(myTime.getHour() + 1 >= 24 ? myTime.getHour() + 1 - 24 : myTime.getHour() + 1);
             myMoment_A.hourAdd(1);
             myMoment_A.setMinute(0);
-        }else if(myMoment_A.getMinute() >= 31 && myMoment_A.getMinute() <= 59){
+        } else if (myMoment_A.getMinute() >= 31 && myMoment_A.getMinute() <= 59) {
             myMoment_A.hourAdd(1);
             myMoment_A.setMinute(30);
-        }else{
+        } else {
             myMoment_A.setMinute(30);
         }
         return myMoment_A;
+    }
+
+    private static String[] monthInChinese = new String[]{
+            null,
+            "一月",
+            "二月",
+            "三月",
+            "四月",
+            "五月",
+            "六月",
+            "七月",
+            "八月",
+            "九月",
+            "十月",
+            "十一月",
+            "十二月",
+    };
+
+    public static String getMonthInChinese(int month) {
+        //TODO android自身提供的本地化方法
+        return monthInChinese[month];
+    }
+
+    public static boolean inRange(int a, int v, int b) {
+        return a <= v && v <= b;
     }
 }

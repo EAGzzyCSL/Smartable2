@@ -112,9 +112,9 @@ public abstract class EntryEditActivity extends AppCompatActivity {
         textView_endDate = (AppCompatTextView) findViewById(R.id.textView_endDate);
         textView_startTime = (AppCompatTextView) findViewById(R.id.textView_startTime);
         textView_endTime = (AppCompatTextView) findViewById(R.id.textView_endTime);
-        btn_edit_note = (Button)findViewById(R.id.edit_note_btn);
-        btn_edit_someday = (Button)findViewById(R.id.edit_someday_btn);
-        btn_edit_schedule_or_trigger = (Button)findViewById(R.id.edit_schedule_or_trigger_btn);
+        btn_edit_note = (Button) findViewById(R.id.edit_note_btn);
+        btn_edit_someday = (Button) findViewById(R.id.edit_someday_btn);
+        btn_edit_schedule_or_trigger = (Button) findViewById(R.id.edit_schedule_or_trigger_btn);
     }
 
     protected void changeStatusBarColor(int color) {
@@ -144,9 +144,9 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 }
 
                 //是否显示"日程/触"发按钮
-                if(checkedId != edit_rbtn2.getId()){
+                if (checkedId != edit_rbtn2.getId()) {
                     btn_edit_schedule_or_trigger.setVisibility(View.INVISIBLE);
-                }else{
+                } else {
                     btn_edit_schedule_or_trigger.setVisibility(View.VISIBLE);
                 }
             }
@@ -172,7 +172,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 return new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new MyDatePickerDialog(EntryEditActivity.this, (AppCompatTextView) v, myMoment)
+                        (new MyDatePickerDialog(EntryEditActivity.this, (AppCompatTextView) v, myMoment))
                                 .show();
                     }
                 };
@@ -216,7 +216,7 @@ public abstract class EntryEditActivity extends AppCompatActivity {
                 edit_rbtn4.setChecked(true);
                 break;
             }
-            case someDay:{
+            case someDay: {
                 edit_rbtn5.setChecked(true);
                 break;
             }

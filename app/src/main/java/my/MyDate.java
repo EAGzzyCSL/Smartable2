@@ -31,7 +31,7 @@ public class MyDate implements I_MyCalendar, Serializable {
     }
 
     public int getMonth() {
-        return cDate.get(Calendar.MONTH);
+        return cDate.get(Calendar.MONTH) + 1;
     }
 
     public int getDay() {
@@ -43,7 +43,7 @@ public class MyDate implements I_MyCalendar, Serializable {
     }
 
     public void setMonth(int month) {
-        cDate.set(Calendar.MONTH, month);
+        cDate.set(Calendar.MONTH, month - 1);
     }
 
     public void setDay(int day) {
@@ -74,7 +74,8 @@ public class MyDate implements I_MyCalendar, Serializable {
     public String convertToLocalString() {
         return String.format("%d年%d月%d日", getYear(), getMonth(), getDay());
     }
-    public void dayAdd(int day){
-        cDate.add(Calendar.DAY_OF_MONTH,day);
+
+    public void dayAdd(int day) {
+        cDate.add(Calendar.DAY_OF_MONTH, day);
     }
 }
