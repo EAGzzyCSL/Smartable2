@@ -1,6 +1,7 @@
 package bit.eagzzycsl.smartable2;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
     private AdapterView.OnItemSelectedListener spinner_onSelected;
     private ArrayAdapter<String> spinnerArrayAdapter;
+    private Spinner action_spinner_switch;
 
     @Override
 
@@ -53,6 +55,7 @@ public class MainActivity extends AppCompatActivity
         fragment_main_smart = (Fragment_main_smart) getFragmentManager().findFragmentById(R.id.fragment_main_smart);
         fragment_main_calendric = (Fragment_main_calendric) getFragmentManager().findFragmentById(R.id.fragment_main_calendric);
         navigationView = (NavigationView) findViewById(R.id.nav_main);
+        action_spinner_switch = (Spinner) findViewById(R.id.action_spinner_switch);
     }
 
     private void myCreate() {
@@ -90,6 +93,9 @@ public class MainActivity extends AppCompatActivity
 
 
         navigationView.setNavigationItemSelectedListener(this);
+        action_spinner_switch.setAdapter(spinnerArrayAdapter);
+        action_spinner_switch.setOnItemSelectedListener(spinner_onSelected);
+        action_spinner_switch.setSelection(3);
     }
 
     @Override
@@ -110,11 +116,11 @@ public class MainActivity extends AppCompatActivity
             getMenuInflater().inflate(R.menu.menu_main_smart, menu);
         } else {
             getMenuInflater().inflate(R.menu.menu_main_calendric, menu);
-            MenuItem item = menu.findItem(R.id.action_spinner_switch);
-            Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
-            spinner.setAdapter(spinnerArrayAdapter);
-            spinner.setOnItemSelectedListener(spinner_onSelected);
-            spinner.setSelection(3);
+//            MenuItem item = menu.findItem(R.id.action_spinner_switch);
+//            Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
+//            spinner.setAdapter(spinnerArrayAdapter);
+//            spinner.setOnItemSelectedListener(spinner_onSelected);
+//            spinner.setSelection(3);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -148,12 +154,15 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_glance_smart: {
                 getFragmentManager().beginTransaction().hide(fragment_main_calendric)
                         .show(fragment_main_smart).commit();
+                action_spinner_switch.setVisibility(View.INVISIBLE);
                 invalidateOptionsMenu();
                 break;
             }
             case R.id.nav_glance_calendric: {
                 getFragmentManager().beginTransaction().hide(fragment_main_smart)
                         .show(fragment_main_calendric).commit();
+                action_spinner_switch.setVisibility(View.VISIBLE);
+
                 invalidateOptionsMenu();
                 break;
             }

@@ -11,10 +11,6 @@ import my.MyUtil;
 
 
 public class CalendricSimpleDayView extends CalendricSimpleView {
-    /*绘制线条等需要的参数*/
-    private int textPadLeft = MyUtil.dpToPxInCode(destiny, 10);//文本和文本左边的空隙
-    private int linePadLeft = MyUtil.dpToPxInCode(destiny, 5);//文本和文本右边的空隙
-    private int lineLeft = textPadLeft + 3 * textSize + linePadLeft;//线的左端（加入了文字占去的地）
     private int indicateLineY;//表示当前时间的指示线的纵坐标
 
     //TODO 减少draw的计算量
@@ -44,10 +40,10 @@ public class CalendricSimpleDayView extends CalendricSimpleView {
 
     @Override
     protected void calcEntryLayoutPos(EntrySchedule entrySchedule) {
-         /*根据时间计算位置
+        /* 根据时间计算位置
          * 不使用时间差值的原因是第一时间差值的计算可能会麻烦
          * 第二如果用时间差的话如果有跨过一条小时线的话小时线宽度不会计算在内
-                 */
+         */
         int t = grid_top +
                 entrySchedule.getDate_begin().getHour() * heightOf1hWithLine +
                 entrySchedule.getDate_begin().getMinute() * heightOf1m;
@@ -67,6 +63,8 @@ public class CalendricSimpleDayView extends CalendricSimpleView {
                 grid_right,
                 grid_top + (y / heightOf1hWithLine + 1) * heightOf1hWithLine
         );
+        addButtonHour = y / heightOf1hWithLine;
+
     }
 
 
@@ -81,9 +79,9 @@ public class CalendricSimpleDayView extends CalendricSimpleView {
         super.onDraw(canvas);
         /*画一条指示当前时间的线*/
 
-        indicateLineY = letTopPad() + lineSize + myMoment.getHour() * (heightOf1h + lineSize) + myMoment.getMinute() * heightOf1m;
+        indicateLineY = grid_top + myMoment.getHour() * heightOf1hWithLine + myMoment.getMinute() * heightOf1m;
         paint.setColor(Color.rgb(30, 144, 255));
-        canvas.drawLine(lineLeft, indicateLineY, grid_left, indicateLineY, paint);
+        canvas.drawLine(grid_left, indicateLineY, grid_left, indicateLineY, paint);
         paint.setColor(Color.rgb(169, 169, 169));
     }
 

@@ -39,4 +39,5 @@
     <color name="colorMyBlack">#000000</color>
 
     <color name="colorMyLineEditText">#55FFFFFF</color>
+    <color name="cal_yellow">#fbe251</color>
 </resources>

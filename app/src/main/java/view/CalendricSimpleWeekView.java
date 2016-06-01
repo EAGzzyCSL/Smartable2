@@ -3,7 +3,6 @@ package view;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import entry.EntrySchedule;
 import my.MyTime;
@@ -16,7 +15,7 @@ public class CalendricSimpleWeekView extends CalendricSimpleView {
 
     @Override
     protected int letTopPad() {
-        return toPx(30);
+        return toPx(60);
     }
 
     @Override
@@ -26,7 +25,7 @@ public class CalendricSimpleWeekView extends CalendricSimpleView {
 
     @Override
     protected int letLeftText() {
-        return toPx(60);
+        return toPx(40);
     }
 
     @Override

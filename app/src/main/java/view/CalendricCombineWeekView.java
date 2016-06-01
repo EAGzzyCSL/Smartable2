@@ -1,6 +1,7 @@
 package view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -46,7 +47,10 @@ public class CalendricCombineWeekView extends CalendricPageView<CalendricSimpleW
         textView_month.setText(MyUtil.getMonthInChinese(myMoment.getMonth()));
         for (TextView textView : top_day) {
             textView.setText(String.format("%02d", myMoment.getDay()));
-//            textView.setBackgroundResource(R.drawable.circle);
+            if (myMoment.isToday()) {
+                textView.setBackgroundResource(R.drawable.circle);
+                textView.setTextColor(Color.rgb(255, 255, 255));
+            }
             myMoment.dayAdd(1);
         }
         myMoment.dayAdd(1 - EnumCalendricViewType.Week.getDiv());

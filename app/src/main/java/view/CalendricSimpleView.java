@@ -4,12 +4,14 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -26,28 +28,29 @@ public abstract class CalendricSimpleView extends ViewGroup {
     //TODO 是不是该使用float表示绘制的量
     /*绘制需要的基本量*/
     /*一个小时的高度*/
-    protected int heightOf1h = MyUtil.dpToPxInCode(destiny, 60);
+    protected final int heightOf1h = MyUtil.dpToPxInCode(destiny, 60);
     /*一分钟的高度*/
-    protected int heightOf1m = heightOf1h / 60;//表示每分钟表示的高度
+    protected final int heightOf1m = heightOf1h / 60;//表示每分钟表示的高度
     /*画笔的线条宽度*/
-    protected int lineSize = 1;
+    protected final int lineSize = 1;
     /*画笔的文本大小*/
-    protected int textSize = MyUtil.dpToPxInCode(destiny, 15);
+    protected final int textSize = MyUtil.dpToPxInCode(destiny, 13);
     /*处于对强迫症的照顾，文本大小和线宽的奇偶应该不同*/
+    /*日历的网格部分的边界,top和left无需measure即可获得，right和bottom需要measure才可以*/
+    protected int grid_left = letLeftText(), grid_top = letTopPad(), grid_right, grid_bottom;
     /*计算得到的量*/
     /*线的起始高度*/
-    protected int lineFirst = letTopPad() + lineSize;
+    protected int lineFirst = grid_top + lineSize;
     /*文字的起始高度，注意文字的绘制是从左下角开始而不是左上角*/
-    protected int textFirst = letTopPad() + lineSize + (textSize - lineSize) / 2;
+    protected int textFirst = grid_top + lineSize + (textSize - lineSize) / 2;
     /*带线条的小时高度，方便计算使用*/
     protected int heightOf1hWithLine = heightOf1h + lineSize;
     /*最终经过计算后得到的view的大小*/
     protected int myWidth, myHeight;
     /*view在wrapContent的时候的大小，实际情况是view也只允许warpContent，matchParent的情况并为处理*/
     private final int defaultWidth = MyUtil.dpToPxInCode(destiny, 240);
-    private final int defaultHeight = 24 * heightOf1h + 25 * lineSize + letTopPad() + letBottomPad();
-    /*日历的网格部分的边界*/
-    protected int grid_left, grid_top, grid_right, grid_bottom;
+    private final int defaultHeight = 24 * heightOf1h + 25 * lineSize + grid_top + letBottomPad();
+
     /*画线条和时间的画笔*/
     protected Paint paint = new Paint();
     /*点击事件的侦听*/
@@ -68,8 +71,9 @@ public abstract class CalendricSimpleView extends ViewGroup {
         paint.setStrokeWidth(lineSize);
         paint.setTextSize(textSize);
         paint.setAntiAlias(true);//抗锯齿
+        paint.setColor(ContextCompat.getColor(getContext(), R.color.divider));
         preAddButton = new AppCompatButton(getContext());
-        preAddButton.setBackgroundResource(R.drawable.bkg_view_calendric_day_item_add);
+        preAddButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.view_calendric_day_item_add_bkg));
         preAddButton.setText("+");
         preAddButton.setTextColor(Color.BLACK);
         preAddButton.setGravity(Gravity.START);
@@ -77,7 +81,8 @@ public abstract class CalendricSimpleView extends ViewGroup {
             @Override
             public void onClick(View v) {
                 //日期是view自己的日期，时间通过计算获取
-                MyMoment m = new MyMoment(myMoment.getYear(), myMoment.getMonth(), myMoment.getDay(), addButtonHour, 0);
+                MyMoment m = new MyMoment(myMoment.getYear(), myMoment.getMonth(),
+                        myMoment.getDay(), addButtonHour, 0);
                 calendricViewItemClick.onAddClick(v, m);
             }
         });
@@ -109,9 +114,9 @@ public abstract class CalendricSimpleView extends ViewGroup {
     /*创建一个新的条目标签*/
     protected View createNewEntryLabel(final EntrySchedule schedule) {
         //TODO 设置其大小的measure
-        AppCompatButton b = new AppCompatButton(getContext());
-//        TextView b = new TextView(getContext());可以使用textView
-        b.setBackgroundResource(R.drawable.bkg_view_calendric_day_item_preview);
+//        AppCompatButton b = new AppCompatButton(getContext());
+        TextView b = new TextView(getContext());//可以使用textView
+        b.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.cal_yellow));
         b.setGravity(Gravity.START);
         b.setTextColor(Color.BLACK);
         b.setText(schedule.getTitle());
@@ -193,10 +198,7 @@ public abstract class CalendricSimpleView extends ViewGroup {
         myHeight = (heightMode == MeasureSpec.EXACTLY) ? sizeHeight
                 : defaultHeight;
         setMeasuredDimension(myWidth, myHeight);
-        /*计算网格部分边界*/
-
-        grid_left = letLeftText();
-        grid_top = letTopPad();
+        /*只有在myWidth和myHeight的值确定后才可以计算网格部分边界*/
         grid_right = myWidth - letRightPad();
         grid_bottom = myHeight - letBottomPad();
 
@@ -207,7 +209,7 @@ public abstract class CalendricSimpleView extends ViewGroup {
         super.onDraw(canvas);
         int horLineY = lineFirst, horLineRight = myWidth - letRightPad();
         int leftTimeY = textFirst;
-        int textLeftPad = (letLeftText() - 3 * textSize) / 2;
+        int textLeftPad = (grid_left - (int) (2.5 * textSize)) / 2;
         //TODO 文字大小与文字宽度的问题
         for (int i = 0; i <= 24; i++) {
             canvas.drawLine(grid_left, horLineY, horLineRight, horLineY, paint);

@@ -9,6 +9,7 @@
         android:id="@+id/view_calendric_scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <view.CalendricSimpleDayView
             android:id="@+id/view_calendricSimpleView"
             android:layout_width="match_parent"
@@ -17,9 +18,27 @@
 
     </ScrollView>
 
-    <TextView
-        android:id="@+id/view_calendric_day_textView_showDay"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:text="today" />
+        android:background="#fff"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/view_calendric_day_textView_showMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            tools:text="6月" />
+
+        <TextView
+            android:id="@+id/view_calendric_day_textView_showDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="1" />
+    </LinearLayout>
+
+
 </FrameLayout>

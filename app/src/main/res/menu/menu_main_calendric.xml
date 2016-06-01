@@ -2,13 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:alex="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/action_spinner_switch"
-        android:icon="@drawable/ic_main_nav_calendric"
-        android:title="switch"
-        app:actionViewClass="android.widget.Spinner"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:showAsAction="ifRoom" />
+    <!--<item-->
+        <!--android:id="@+id/action_spinner_switch"-->
+        <!--android:icon="@drawable/ic_main_nav_calendric"-->
+        <!--android:title="switch"-->
+        <!--app:actionViewClass="android.widget.Spinner"-->
+        <!--style="@android:style/Widget.Material.Light.Spinner"-->
+        <!--app:popupTheme="@style/AppTheme.PopupOverlay"-->
+        <!--app:showAsAction="ifRoom"-->
+        <!--alex:targetApi="lollipop" />-->
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

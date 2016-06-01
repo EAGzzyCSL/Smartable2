@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -18,29 +20,32 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:background="#eee"
-        android:orientation="horizontal">
+        android:elevation="2dp"
+        android:orientation="horizontal"
+        tools:targetApi="lollipop">
 
         <TextView
             android:id="@+id/textView_month"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary" />
+            android:layout_width="40dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            tools:text="六月" />
 
-        <LinearLayout
-            style="@style/cal_week_liner_ver"
-
-            android:background="#ff0000">
+        <LinearLayout style="@style/cal_week_liner_ver">
 
             <TextView
                 style="@style/cal_week_top_label"
+
                 android:text="@string/week_mon" />
 
             <TextView
                 android:id="@+id/cal_week_top_day_1"
-                style="@style/cal_week_top_label" />
+                style="@style/cal_week_top_label"
+
+                tools:text="1" />
         </LinearLayout>
 
         <LinearLayout style="@style/cal_week_liner_ver">
