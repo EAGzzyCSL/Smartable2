@@ -55,4 +55,7 @@ public abstract class CalendricPageView<T extends CalendricSimpleView> extends F
 
     /*获取布局id*/
     public abstract int getLayoutId();
+    public void arrangeLayout(){
+        simpleView.arrangeLayout();
+    }
 }

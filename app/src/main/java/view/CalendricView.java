@@ -109,12 +109,16 @@ public class CalendricView extends ViewPager {
         myAdapter.getPage_a().transData(moment_a,
                 myAdapter.getScheduleFromItemProvider(moment_a.getDate()),
                 myAdapter.getCalendricViewItemClick());
+        //TODO 虽然不知道bug成因，但可以凑活解决问题
+        myAdapter.getPage_a().arrangeLayout();
         myMoment.dayAdd(myAdapter.getEnumViewType().getDiv());
         /*page_b*/
         MyMoment moment_b = myMoment.newSameMoment();
         myAdapter.getPage_b().transData(moment_b,
                 myAdapter.getScheduleFromItemProvider(moment_b.getDate()),
                 myAdapter.getCalendricViewItemClick());
+        myAdapter.getPage_b().arrangeLayout();
+
         myMoment.dayAdd(myAdapter.getEnumViewType().getDiv());
 
         /*page_c*/
@@ -123,6 +127,8 @@ public class CalendricView extends ViewPager {
                 myAdapter.getScheduleFromItemProvider(moment_c.getDate()),
                 myAdapter.getCalendricViewItemClick()
         );
+        myAdapter.getPage_c().arrangeLayout();
+
         /*reset calendar and notify data change*/
         myMoment.dayAdd(-2 * myAdapter.getEnumViewType().getDiv());
         myAdapter.notifyDataSetChanged();

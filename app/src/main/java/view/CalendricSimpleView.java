@@ -147,6 +147,8 @@ public abstract class CalendricSimpleView extends ViewGroup {
         }
         /*添加当点击空白处预备添加时的按钮*/
         addView(preAddButton);
+        //TODO 如果不这样做的话它的位置就会保留
+        preAddButton.layout(0, 0, 0, 0);
     }
 
 
