@@ -17,6 +17,11 @@
         <!--<item name="android:datePickerDialogTheme">@style/MyDatePickerDialogBlueTheme</item>-->
         <!--<item name="android:timePickerDialogTheme">@style/MyTimePickerDialogBlueTheme</item>-->
     </style>
+    <style name="BatchTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorMyYellow</item>
+        <item name="colorPrimaryDark">@color/colorMyYellow</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>

@@ -40,4 +40,5 @@
 
     <color name="colorMyLineEditText">#55FFFFFF</color>
     <color name="cal_yellow">#fbe251</color>
+    <color name="light_yellow">#f5e196</color>
 </resources>

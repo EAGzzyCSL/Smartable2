@@ -174,6 +174,9 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
             }
+            case R.id.nav_entry_done: {
+                startActivity(new Intent(this, BatchAddActivity.class));
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

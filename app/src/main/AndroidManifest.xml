@@ -36,10 +36,11 @@
         <activity
             android:name=".ModifyDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SettingsActivity" />
         <activity
-            android:name=".SettingsActivity"
-
-            />
+            android:name=".BatchAddActivity"
+            android:label="@string/title_activity_batch_add"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
