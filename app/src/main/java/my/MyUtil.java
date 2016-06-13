@@ -119,7 +119,7 @@ public class MyUtil {
 
     public static boolean inRange(int a, int v, int b) {
         return a <= v && v <= b;
-
+    }
     /**
      * 获得屏幕宽度
      *

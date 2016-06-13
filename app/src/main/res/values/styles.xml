@@ -18,6 +18,7 @@
         <!--<item name="android:datePickerDialogTheme">@style/MyDatePickerDialogBlueTheme</item>-->
         <!--<item name="android:timePickerDialogTheme">@style/MyTimePickerDialogBlueTheme</item>-->
     </style>
+
     <style name="BatchTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorMyYellow</item>
         <item name="colorPrimaryDark">@color/colorMyYellow</item>
@@ -111,13 +112,15 @@
     <style name="cal_week_top_label_day" parent="@style/cal_week_top_label">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-		
+    </style>
+
     <style name="FeelyouWindowAnimTheme" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/out_from_left</item>
         <item name="android:activityOpenExitAnimation">@anim/in_from_right</item>
         <item name="android:activityCloseEnterAnimation">@anim/out_from_right</item>
         <item name="android:activityCloseExitAnimation">@anim/in_from_left</item>
     </style>
+
     <style name="AppTheme.AnimActivityTheme">
         <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
         <item name="windowActionBar">false</item>
