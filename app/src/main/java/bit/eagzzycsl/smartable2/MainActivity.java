@@ -167,7 +167,8 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
             case R.id.nav_kind_note: {
-                startActivity(new Intent(this, NoteBookActivity.class));
+//                startActivity(new Intent(this, NoteBookActivity.class));
+                startActivity(new Intent(this, NoteBook2Activity.class));
                 break;
             }
             case R.id.nav_about_setting: {

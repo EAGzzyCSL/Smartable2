@@ -9,4 +9,8 @@ public class MyTod {
     //TODO 重构time
     //TODO 有朝一日的添加是如何添加的？
     //TODO 大量的读数据库操作可能导致app启动过慢，需要使用异步操作。
+
+    //yu
+    //todo 把AndroidManifest.xml 里的activity的东西补全
+    //todo notebookdetail.java 里的todo
 }

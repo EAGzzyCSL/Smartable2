@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/edit_activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:textSize="28sp"
+        android:gravity="top"
+        android:hint="请输入事项："
+        />
+
+    <Button
+        android:id="@+id/btn_note_save"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="bottom"
+        android:text="确定"
+        />
+
+    <Button
+        android:id="@+id/btn_note_delete"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="bottom"
+        android:layout_marginBottom="65dp"
+        android:text="删除"
+        />
+
+</LinearLayout>

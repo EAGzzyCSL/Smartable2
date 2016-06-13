@@ -97,16 +97,20 @@ public class SQLHelper extends SQLiteOpenHelper implements TableFiled{
                         +TableFiled.ID +" Integer primary key autoincrement,"
                         +TableFiled.TITLE +" string,"
                         +TableFiled.ANNOTATION +" string,"
-                        +TableFiled.STATUS +" string"
+                        +TableFiled.STATUS +" string,"
+                        +TableFiled.DATE_CREATE + " string,"
+                        +TableFiled.NOTEDETAIL_NUM + " int"
                         + ");"
         );
-        //7.2 笔记 - NoteChild
-        db.execSQL("CREATE TABLE IF NOT EXISTS NoteChild("
+        //7.2 笔记 - NotebookDetail
+        db.execSQL("CREATE TABLE IF NOT EXISTS NotebookDetail("
                         //todo 链接外键到 7.1 笔记本 - Notebook
                         +TableFiled.ID +" Integer primary key autoincrement,"
                         +TableFiled.TITLE +" string,"
                         +TableFiled.ANNOTATION +" string,"
-                        +TableFiled.STATUS +" string"
+                        +TableFiled.STATUS +" string,"
+                        +TableFiled.DATE_CREATE + " string,"
+                        +TableFiled.NOTEBOOKID + " int"
                         + ");"
         );
     }

@@ -14,6 +14,7 @@
             @style/MyTimePickerDialogYellowTheme
         </item>
 
+
         <!--<item name="android:datePickerDialogTheme">@style/MyDatePickerDialogBlueTheme</item>-->
         <!--<item name="android:timePickerDialogTheme">@style/MyTimePickerDialogBlueTheme</item>-->
     </style>
@@ -89,6 +90,7 @@
     <style name="RadioButtonStyles_yellow">
         <item name="android:button">@drawable/ic_radiobtn_yellow_selector</item>
     </style>
+
     <!--周视图的上部-->
     <style name="cal_week_liner_ver">
         <item name="android:gravity">center_horizontal</item>
@@ -109,5 +111,21 @@
     <style name="cal_week_top_label_day" parent="@style/cal_week_top_label">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+		
+    <style name="FeelyouWindowAnimTheme" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/out_from_left</item>
+        <item name="android:activityOpenExitAnimation">@anim/in_from_right</item>
+        <item name="android:activityCloseEnterAnimation">@anim/out_from_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/in_from_left</item>
+    </style>
+    <style name="AppTheme.AnimActivityTheme">
+        <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.note">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

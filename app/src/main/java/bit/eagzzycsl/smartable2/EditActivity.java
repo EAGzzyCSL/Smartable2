@@ -84,8 +84,6 @@ public class EditActivity extends EntryEditActivity {
 
     }
 
-
-
     public void onClick(View v){
         switch (v.getId()){
             case R.id.edit_someday_btn:
@@ -112,7 +110,6 @@ public class EditActivity extends EntryEditActivity {
         switch (isSave){
             case 1://保存
                 return new DialogInterface.OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         saveEntryToDB(false);
@@ -131,8 +128,6 @@ public class EditActivity extends EntryEditActivity {
                         edit_rbtn1.setChecked(true);
                     }
                 };
-
-
         }
         return null;
     }

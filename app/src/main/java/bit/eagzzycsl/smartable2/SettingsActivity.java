@@ -125,7 +125,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         //todo 这个方法可能不好
         if(getTitle().equals(getResources().getString(R.string.app_name))){
             actionBar.setTitle("设置");
@@ -260,11 +259,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
 //        }
 //    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == android.R.id.home) {
-//            finish();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

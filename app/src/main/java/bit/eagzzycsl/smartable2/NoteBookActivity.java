@@ -1,10 +1,8 @@
 package bit.eagzzycsl.smartable2;
 
-import android.app.ExpandableListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -21,9 +19,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -147,29 +142,29 @@ public class NoteBookActivity extends AppCompatActivity {
     // 初始化数据
     private void initData() {
         parent = new ArrayList<String>();
-        parent.add("notebook1");
-        parent.add("notebook2");
-        parent.add("notebook3");
+        parent.add("考研");
+        parent.add("这两天");
+        parent.add("作业");
 
         map = new HashMap<String, List<String>>();
 
         List<String> list1 = new ArrayList<String>();
-        list1.add("note1-1");
-        list1.add("note1-2");
-        list1.add("note1-3");
-        map.put("notebook1", list1);
+        list1.add("数学");
+        list1.add("英语");
+        list1.add("专业");
+        map.put("考研", list1);
 
         List<String> list2 = new ArrayList<String>();
-        list2.add("note2-1");
-        list2.add("note2-2");
-        list2.add("note2-3");
-        map.put("notebook2", list2);
+        list2.add("踢球");
+        list2.add("健身");
+        list2.add("去咖啡馆");
+        map.put("这两天", list2);
 
         List<String> list3 = new ArrayList<String>();
-        list3.add("note3-1");
-        list3.add("note2-2");
-        list3.add("note2-3");
-        map.put("notebook3", list3);
+        list3.add("模电");
+        list3.add("软工");
+        list3.add("测试");
+        map.put("作业", list3);
 
     }
 

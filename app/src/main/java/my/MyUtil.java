@@ -1,6 +1,12 @@
 package my;
 
 
+import android.content.Context;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
+
 import bit.eagzzycsl.smartable2.EnumEntry;
 
 public class MyUtil {
@@ -89,6 +95,7 @@ public class MyUtil {
         return myMoment_A;
     }
 
+
     private static String[] monthInChinese = new String[]{
             null,
             "一月",
@@ -112,5 +119,30 @@ public class MyUtil {
 
     public static boolean inRange(int a, int v, int b) {
         return a <= v && v <= b;
+
+    /**
+     * 获得屏幕宽度
+     *
+     * @param context
+     * @return
+     */
+    public static int getScreenWidth(Context context) {
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics.widthPixels;
+    }
+
+    //设定时间为“昨天”、“今天”等..
+    public static void settvTime(TextView tvtime, MyMoment myMoment) {
+        tvtime.setVisibility(View.VISIBLE);
+        if (myMoment.isToday()) {//今天
+            tvtime.setText("TODAY " + String.format("%02d:%02d", myMoment.getHour(), myMoment.getMinute()));
+        } else {
+            tvtime.setText(myMoment.getMonth() + "/" + myMoment.getDay() + " "
+                    + String.format("%02d:%02d", myMoment.getHour(), myMoment.getMinute()));
+        }
+
     }
 }

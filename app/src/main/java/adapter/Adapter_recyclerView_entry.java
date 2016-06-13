@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,12 +22,14 @@ import entry.Entry;
 import entry.EntryDeadLine;
 import entry.EntrySchedule;
 import entry.EntrySomeDay;
-import my.MyMoment;
+import my.MyUtil;
 
 
 public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_recyclerView_entry.ViewHolder> {
     private Context context;
     private ArrayList<? extends Entry> entries;
+
+
 
     public Adapter_recyclerView_entry(ArrayList<? extends Entry> entries, Context context) {
         this.entries = entries;
@@ -37,7 +40,6 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(context).
                 inflate(R.layout.item_smart_serialize, parent, false));
-        //yu------改样式  adapter_main_recycler_kind
     }
 
     @Override
@@ -102,7 +104,9 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
                 }
                 case schedule: {
                     EntrySchedule concretEntry = (EntrySchedule) entry;
-                    settvTime(item_tv_start, concretEntry.getDate_begin());
+
+
+                    MyUtil.settvTime(item_tv_start,concretEntry.getDate_begin());
 //                    settvTime(item_tv_end,concretEntry.getDate_end());
                     break;
                 }
@@ -111,28 +115,32 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
                 }
                 case deadLine: {
                     EntryDeadLine concretEntry = (EntryDeadLine) entry;
-                    settvTime(item_tv_end, concretEntry.getDate_ddl());
+
+                    MyUtil.settvTime(item_tv_end,concretEntry.getDate_ddl());
+
                     break;
                 }
                 case someDay: {
                     EntrySomeDay concretEntry = (EntrySomeDay) entry;
-                    if (concretEntry.getAlert() != null) {
-                        settvTime(item_tv_alert, concretEntry.getDate_alert());
+
+                    if(concretEntry.getAlert() != null){
+                        MyUtil.settvTime(item_tv_alert,concretEntry.getDate_alert());
+
                     }
                     break;
                 }
             }
         }
-
-        private void settvTime(TextView tvtime, MyMoment myMoment) {
-            tvtime.setVisibility(View.VISIBLE);
-            if (myMoment.isToday()) {//今天
-                tvtime.setText("TODAY " + String.format("%02d:%02d", myMoment.getHour(), myMoment.getMinute()));
-            } else {
-                tvtime.setText(myMoment.getMonth() + "/" + myMoment.getDay() + " "
-                        + String.format("%02d:%02d", myMoment.getHour(), myMoment.getMinute()));
-            }
-        }
+//        private void settvTime(TextView tvtime, MyMoment myMoment) {
+//            tvtime.setVisibility(View.VISIBLE);
+//            if( myMoment.isToday() ){//今天
+//                tvtime.setText("TODAY " + String.format("%02d:%02d",myMoment.getHour(),myMoment.getMinute()));
+//            }
+//            else{
+//                tvtime.setText(myMoment.getMonth() + "/" +myMoment.getDay() + " "
+//                        + String.format("%02d:%02d",myMoment.getHour(),myMoment.getMinute()));
+//            }
+//        }
     }
 
 
@@ -161,6 +169,7 @@ public class Adapter_recyclerView_entry extends RecyclerView.Adapter<Adapter_rec
     private int getIndexInEntries(Entry entry) {
         for (int i = 0; i < entries.size(); i++) {
             if (entries.get(i).getId() == entry.getId()) {
+                Log.i("la-2" , String.valueOf(i));
                 return i;
             }
         }

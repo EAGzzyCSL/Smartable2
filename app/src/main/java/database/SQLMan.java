@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import bit.eagzzycsl.smartable2.EnumEntry;
 import entry.Entry;
 import entry.EntryDeadLine;
+import entry.EntryNotebook;
+import entry.EntryNotebookDetail;
 import entry.EntrySchedule;
 import entry.EntryShortHand;
 import entry.EntrySomeDay;
 import entry.EntryTheseDays;
 import my.MyDate;
-import my.MyLog;
 import my.MyMoment;
 import my.TableFiled;
 
@@ -42,9 +43,9 @@ public class SQLMan implements TableFiled {
     }
 
     //EAGzzyCSL数据库代码修改，增删查改都可以用一句话来实现
-    public void create(Entry entry) {
+    public int create(Entry entry) {
         //以这个为近似的例子，采用一句话来完成insert和update操作。
-        myDb.insert(entry.getType().getTableName(), null, entry.toContentValues());
+        return (int) myDb.insert(entry.getType().getTableName(), null, entry.toContentValues());
     }
 
     public void delete(Entry entry) {
@@ -65,7 +66,7 @@ public class SQLMan implements TableFiled {
         ArrayList<Entry> entries = new ArrayList<>();
         /*note中的内容不应该被读入，不过不需要担心，read会把它跳过*/
         for (EnumEntry e : EnumEntry.values()) {
-            if (e == EnumEntry.note) {
+            if (e == EnumEntry.notebook || e == EnumEntry.notebookDetail) {
                 continue;
             }
             //TODO addAll方法可能有内存和效率上的问题
@@ -157,7 +158,7 @@ public class SQLMan implements TableFiled {
             }
             case someDay: {
                 ArrayList<EntrySomeDay> arr = new ArrayList<>();
-                while (c.moveToNext()){
+                while (c.moveToNext()) {
                     arr.add(new EntrySomeDay(
                             c.getInt(c.getColumnIndex(TableFiled.ID)),
                             c.getString(c.getColumnIndex(TableFiled.TITLE)),
@@ -166,6 +167,20 @@ public class SQLMan implements TableFiled {
                             c.getString(c.getColumnIndex(TableFiled.STATUS)),
                             c.getString(c.getColumnIndex(TableFiled.ALERT)),
                             new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_alert)))
+                    ));
+                }
+                return arr;
+            }
+            case notebook: {
+                ArrayList<EntryNotebook> arr = new ArrayList<>();
+                while (c.moveToNext()) {
+                    arr.add(new EntryNotebook(
+                            c.getInt(c.getColumnIndex(TableFiled.ID)),
+                            c.getString(c.getColumnIndex(TableFiled.TITLE)),
+                            c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
+                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
+                            c.getString(c.getColumnIndex(TableFiled.STATUS)),
+                            c.getInt(c.getColumnIndex(TableFiled.NOTEDETAIL_NUM))
                     ));
                 }
                 return arr;
@@ -184,5 +199,44 @@ public class SQLMan implements TableFiled {
 //        Cursor c = myDb.rawQuery("select * from " + enumEntry.getTableName(), null);
 
     }
+
+    public ArrayList<? extends Entry> readById(EnumEntry enumEntry, Integer id) {
+        Cursor c = myDb.rawQuery( "select * from " + enumEntry.getTableName()+" where _id=?", new String[]{ String.valueOf(id)});
+
+        switch (enumEntry){
+            //notebookDetail比较特殊，这个是通过其所在笔记本的id来索引的
+            case notebookDetail:{
+                Cursor c1 = myDb.rawQuery("select * from NotebookDetail where notebookId=? ", new String[]{String.valueOf(id)});
+                ArrayList<EntryNotebookDetail> arr = new ArrayList<>();
+                while (c1.moveToNext()) {
+                    arr.add(new EntryNotebookDetail(
+                            c1.getInt(c1.getColumnIndex(TableFiled.ID)),
+                            c1.getString(c1.getColumnIndex(TableFiled.TITLE)),
+                            c1.getString(c1.getColumnIndex(TableFiled.ANNOTATION)),
+                            new MyMoment(c1.getString(c1.getColumnIndex(TableFiled.DATE_CREATE))),
+                            c1.getString(c1.getColumnIndex(TableFiled.STATUS)),
+                            c1.getInt(c1.getColumnIndex(TableFiled.NOTEBOOKID))
+                    ));
+                }
+                return arr;
+            }
+//            case notebook:{
+//                ArrayList<EntryNotebook> arr = new ArrayList<>();
+//                while (c.moveToNext()) {
+//                    arr.add(new EntryNotebook(
+//                            c.getInt(c.getColumnIndex(TableFiled.ID)),
+//                            c.getString(c.getColumnIndex(TableFiled.TITLE)),
+//                            c.getString(c.getColumnIndex(TableFiled.ANNOTATION)),
+//                            new MyMoment(c.getString(c.getColumnIndex(TableFiled.DATE_CREATE))),
+//                            c.getString(c.getColumnIndex(TableFiled.STATUS)),
+//                            c.getInt(c.getColumnIndex(TableFiled.NOTEDETAIL_NUM))
+//                    ));
+//                }
+//                return arr;
+//            }
+        }
+        return null;
+    }
+
     //TODO 提供一个读取数据库中全部内容的方法供宦算法用
 }

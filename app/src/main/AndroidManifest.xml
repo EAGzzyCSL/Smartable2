@@ -33,6 +33,20 @@
         <activity
             android:name=".NoteBookDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".NoteBook2Activity"
+            android:label="@string/title_activity_note_book"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".NoteBookDetail2Activity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".NoteBookDetailEdit"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".ModifyDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />

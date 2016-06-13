@@ -9,16 +9,16 @@ public enum EnumEntry {
     deadLine(1,
             TableFiled.TableName.DDL,
             new int[]{
-                    View.GONE,
-                    View.VISIBLE,
-                    View.VISIBLE,
-                    View.VISIBLE,
-                    View.VISIBLE
-            },
+            View.GONE,
+            View.VISIBLE,
+            View.VISIBLE,
+            View.VISIBLE,
+            View.VISIBLE
+    },
             R.color.colorMyBlue
     ),
-    note(2,
-            null
+    notebook(2,
+            TableFiled.TableName.Notebook
     ),
     schedule(3,
             TableFiled.TableName.Schedule,
@@ -65,6 +65,9 @@ public enum EnumEntry {
     ),
     trigger(7,
             TableFiled.TableName.Trigger
+    ),
+    notebookDetail(8,
+            TableFiled.TableName.NotebookDetail
     );
     private int priority;
     private String tableName;
