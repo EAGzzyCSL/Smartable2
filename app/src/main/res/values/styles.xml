@@ -10,6 +10,7 @@
         <item name="android:datePickerDialogTheme" tools:targetApi="lollipop">@style/MyDatePickerDialogYellowTheme</item>
         <item name="android:timePickerDialogTheme" tools:targetApi="lollipop">@style/MyTimePickerDialogYellowTheme</item>
 
+
         <!--<item name="android:datePickerDialogTheme">@style/MyDatePickerDialogBlueTheme</item>-->
         <!--<item name="android:timePickerDialogTheme">@style/MyTimePickerDialogBlueTheme</item>-->
     </style>
@@ -72,5 +73,22 @@
     </style>
     <style name="RadioButtonStyles_yellow">
         <item name="android:button">@drawable/ic_radiobtn_yellow_selector</item>
+    </style>
+
+    <style name="FeelyouWindowAnimTheme" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/out_from_left</item>
+        <item name="android:activityOpenExitAnimation">@anim/in_from_right</item>
+        <item name="android:activityCloseEnterAnimation">@anim/out_from_right</item>
+        <item name="android:activityCloseExitAnimation">@anim/in_from_left</item>
+    </style>
+    <style name="AppTheme.AnimActivityTheme">
+        <item name="android:windowAnimationStyle">@style/FeelyouWindowAnimTheme</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.note">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

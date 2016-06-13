@@ -47,8 +47,11 @@ public abstract class Entry implements Serializable {
         if (this instanceof EntryDeadLine) {
             return EnumEntry.deadLine;
         }
-        if (this instanceof EntryNoteChild) {
-            return EnumEntry.note;
+        if (this instanceof EntryNotebook) {
+            return EnumEntry.notebook;
+        }
+        if (this instanceof EntryNotebookDetail) {
+            return EnumEntry.notebookDetail;
         }
         if (this instanceof EntrySchedule) {
             return EnumEntry.schedule;
@@ -79,8 +82,8 @@ public abstract class Entry implements Serializable {
         return this instanceof EntryNotebook ? (EntryNotebook) this : null;
     }
 
-    public EntryNoteChild castEntryNoteChild() {
-        return this instanceof EntryNoteChild ? (EntryNoteChild) this : null;
+    public EntryNotebookDetail castEntryNoteChild() {
+        return this instanceof EntryNotebookDetail ? (EntryNotebookDetail) this : null;
     }
 
     public EntrySchedule castEntrySchedule() {

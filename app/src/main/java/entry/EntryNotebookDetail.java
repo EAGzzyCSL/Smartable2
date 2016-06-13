@@ -8,8 +8,8 @@ import my.TableFiled;
 /**
  * Created by 宇 on 2016/3/12.
  */
-public class EntryNoteChild extends Entry{
-    public EntryNoteChild(String name) {
+public class EntryNotebookDetail extends Entry{
+    public EntryNotebookDetail(String name) {
         super(name);
     }
 
@@ -19,7 +19,7 @@ public class EntryNoteChild extends Entry{
 
     private int notebookId = -1;
 
-    public EntryNoteChild(String title, String annotation, MyMoment date_create, String status, int notebookId) {
+    public EntryNotebookDetail(String title, String annotation, MyMoment date_create, String status, int notebookId) {
         this.title = title;
         this.annotation = annotation;
         this.date_create = date_create;
@@ -27,7 +27,7 @@ public class EntryNoteChild extends Entry{
         this.notebookId = notebookId;
     }
 
-    public EntryNoteChild(int id, String title, String annotation, MyMoment date_create, String status, int notebookId) {
+    public EntryNotebookDetail(int id, String title, String annotation, MyMoment date_create, String status, int notebookId) {
         this(title, annotation, date_create, status, notebookId);
         this.id = id;
     }

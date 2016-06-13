@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view.SlidingButtonView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="80dp"
+            android:layout_height="39dp"
+            android:layout_toRightOf="@+id/layout_content"
+            android:background="@drawable/btn_click_red_havebackground"
+            android:gravity="center"
+            android:text="删 除"
+            android:textColor="#DDFFFFFF" />
+
+        <RelativeLayout
+            android:id="@+id/layout_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:layout_gravity="right|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_tv_notebook_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="39dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:layout_weight="20"
+                    android:text="lala"
+                    android:textColor="@color/colorMyBlack"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/item_tv_notedetail_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="39dp"
+                    android:gravity="right|center_vertical"
+                    android:layout_marginRight="1dp"
+                    android:layout_weight="1"
+                    android:text="la"
+                    android:textColor="@color/colorMyBlack"
+                    android:textSize="22sp" />
+
+                <ImageView
+                    android:id="@+id/item_img_arrow_right"
+                    android:layout_width="19dp"
+                    android:layout_height="19dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_arrow_right" />
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="19dp"
+                    android:layout_gravity="right|center_vertical"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</view.SlidingButtonView>

@@ -17,15 +17,18 @@ public class EntryNotebook extends Entry{
     private MyMoment date_create = null;
     private String status = null;//归档情况： 未完成（1） 已完成（2） 已删除（3）
 
-    public EntryNotebook(String title, String annotation, MyMoment date_create, String status) {
+    private int notedetail_num = 0;
+
+    public EntryNotebook(String title, String annotation, MyMoment date_create, String status, int notedetail_num) {
         this.title = title;
         this.annotation = annotation;
         this.date_create = date_create;
         this.status = status;
+        this.notedetail_num = notedetail_num;
     }
 
-    public EntryNotebook(int id, String title, String annotation, MyMoment date_create, String status) {
-        this(title, annotation, date_create, status);
+    public EntryNotebook(int id, String title, String annotation, MyMoment date_create, String status, int notedetail_num) {
+        this(title, annotation, date_create, status, notedetail_num);
         this.id = id;
     }
 
@@ -62,6 +65,14 @@ public class EntryNotebook extends Entry{
         this.status = status;
     }
 
+    public int getNotedetail_num() {
+        return notedetail_num;
+    }
+
+    public void setNotedetail_num(int notedetail_num) {
+        this.notedetail_num = notedetail_num;
+    }
+
     @Override
     public ContentValues toContentValues() {
         ContentValues cv = new ContentValues();
@@ -69,6 +80,7 @@ public class EntryNotebook extends Entry{
         cv.put(TableFiled.ANNOTATION, this.getAnnotation());
         cv.put(TableFiled.DATE_CREATE, this.getDate_create().convertToString());
         cv.put(TableFiled.STATUS, this.getStatus());
+        cv.put(TableFiled.NOTEDETAIL_NUM, this.notedetail_num);
         return cv;
     }
 }

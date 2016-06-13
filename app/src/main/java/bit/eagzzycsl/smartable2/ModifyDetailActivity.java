@@ -58,9 +58,6 @@ public class ModifyDetailActivity extends EntryEditActivity {
 
     protected void mySetView() {
         super.mySetView();
-        //yu---
-        //点击确定按钮，绑定事件  edit_done_btn （修改事项）
-        //todo 还没有判别是否有变动，修改后，创建时间会更新
         btn_modify_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

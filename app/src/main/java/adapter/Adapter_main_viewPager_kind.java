@@ -49,7 +49,7 @@ public class Adapter_main_viewPager_kind extends PagerAdapter {
         for (RecyclerView r : pages) {
             r.setLayoutManager(new StaggeredGridLayoutManager(1, LinearLayoutManager.VERTICAL));
             r.setItemAnimator(new DefaultItemAnimator());
-            r.addItemDecoration(new DividerItemDecoration(context, DividerItemDecoration.VERTICAL_LIST));
+            r.addItemDecoration(new DividerItemDecoration(context));
             adapters[i] = new Adapter_recyclerView_entry(entries.get(titleSort[i]), context);
             r.setAdapter(adapters[i++]);
         }

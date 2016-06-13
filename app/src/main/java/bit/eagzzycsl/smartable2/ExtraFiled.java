@@ -8,5 +8,6 @@ public interface ExtraFiled {
     String entryToEdit = "entryToEdit";
     String entryEnum = "entryEnum";
     String entryResult="entryResult";
+    String entryIntent="entryIntent";
     //TODO 无法保证名字不同的字符串真正内容也不同
 }

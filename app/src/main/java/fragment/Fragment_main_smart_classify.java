@@ -79,7 +79,7 @@ public class Fragment_main_smart_classify extends Fragment {
 //        yu-------
         smart_serilizeRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         smart_serilizeRecyclerView.setAdapter(adapter_smart_serialize);
-        smart_serilizeRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        smart_serilizeRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
         edgeDrawerLayout.setOnDrawerStateChangeListener(new OnDrawerStateChangeListener() {
             @Override
             public void onDrawerOpen() {
@@ -106,7 +106,7 @@ public class Fragment_main_smart_classify extends Fragment {
         adapter_main_viewPager_kind = new Adapter_main_viewPager_kind(
                 new ArrayList<ArrayList<? extends Entry>>() {
                     {
-                        this.add((SQLMan.getInstance(getActivity()).read(enumTemp[sort[0]])));
+                        this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[0]]));
                         this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[1]]));
                         this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[2]]));
                         this.add(SQLMan.getInstance(getActivity()).read(enumTemp[sort[3]]));
