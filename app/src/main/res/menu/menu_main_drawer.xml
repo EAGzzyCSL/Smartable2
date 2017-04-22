@@ -10,12 +10,16 @@
             android:icon="@drawable/ic_main_nav_calendric"
             android:title="@string/activity_main_nav_calendric" />
     </group>
-    <item android:title="@string/activity_main_nav_kind">
+    <item android:title="功能">
         <menu>
+            <item
+                android:id="@+id/nav_kind_batch"
+                android:icon="@drawable/ic_batch"
+                android:title="批量添加"/>
             <item
                 android:id="@+id/nav_kind_note"
                 android:icon="@drawable/ic_main_nav_note"
-                android:title="@string/entry_note"></item>
+                android:title="@string/entry_note"/>
         </menu>
     </item>
     <item android:title="@string/activity_main_nav_history">
@@ -23,12 +27,11 @@
             <item
                 android:id="@+id/nav_entry_done"
                 android:icon="@drawable/ic_main_nav_done"
-                android:title="@string/activity_main_nav_done"></item>
+                android:title="@string/activity_main_nav_done"/>
             <item
                 android:id="@+id/nav_entry_recycleBin"
                 android:icon="@drawable/ic_main_nav_recycle_bin"
-                android:title="@string/activity_main_nav_recycle_bin"></item>
-
+                android:title="@string/activity_main_nav_recycle_bin"/>
         </menu>
     </item>
     <item android:title="@string/activity_main_nav_about">

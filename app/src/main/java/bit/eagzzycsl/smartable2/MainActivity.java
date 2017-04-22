@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(new Intent(this, SettingsActivity.class));
                 break;
             }
-            case R.id.nav_entry_done: {
+            case R.id.nav_kind_batch: {
                 startActivity(new Intent(this, BatchAddActivity.class));
             }
         }
