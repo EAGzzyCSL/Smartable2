@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +28,7 @@ public class NoteBookDetailEdit extends AppCompatActivity{
     private Entry entryNotebook;
     private int notebookId = -1;
     private boolean update = false;
+    private Toolbar toolbar;
 
 
     @Override
@@ -43,6 +46,7 @@ public class NoteBookDetailEdit extends AppCompatActivity{
         edit_activity_title = (EditText) findViewById(R.id.edit_activity_title);
         btn_note_delete = (Button) findViewById(R.id.btn_note_delete);
         btn_note_save = (Button) findViewById(R.id.btn_note_save);
+        toolbar =(Toolbar)findViewById(R.id.toolbar);
     }
 
     private void myInit(){
@@ -67,8 +71,19 @@ public class NoteBookDetailEdit extends AppCompatActivity{
     private void myCreate(){
 
     }
+    //toolbar返回按钮监听事件
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     private void mySetView(){
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         btn_note_save.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 if(btn_note_save.getText().toString().equals("")){

@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         action_spinner_switch.setAdapter(spinnerArrayAdapter);
         action_spinner_switch.setOnItemSelectedListener(spinner_onSelected);
-        action_spinner_switch.setSelection(3);
+        action_spinner_switch.setSelection(1);
     }
 
     @Override
@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
             case R.id.nav_kind_note: {
-//                startActivity(new Intent(this, NoteBookActivity.class));
                 startActivity(new Intent(this, NoteBook2Activity.class));
                 break;
             }
