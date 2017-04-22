@@ -27,7 +27,8 @@ public class EdgeDrawerLayout extends ViewGroup {
             edgeSize = ta.getDimensionPixelSize(R.styleable.edge_edgeSize, edgeSize);
             ta.recycle();
         }
-        myViewDragHelper = ViewDragHelper.create(this, 10.0f, new ViewDragHelper.Callback() {
+        // 灵敏度
+        myViewDragHelper = ViewDragHelper.create(this, 4.0f, new ViewDragHelper.Callback() {
             @Override
             public boolean tryCaptureView(View child, int pointerId) {
                 if (child == drawerView) {

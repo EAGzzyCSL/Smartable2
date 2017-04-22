@@ -33,9 +33,7 @@ public class MainActivity extends AppCompatActivity
     private FrameLayout frameLayout_glance;
     private Toolbar toolbar;
     private NavigationView navigationView;
-    private AdapterView.OnItemSelectedListener spinner_onSelected;
     private ArrayAdapter<String> spinnerArrayAdapter;
-    private Spinner action_spinner_switch;
 
     @Override
 
@@ -55,25 +53,11 @@ public class MainActivity extends AppCompatActivity
         fragment_main_smart = (Fragment_main_smart) getFragmentManager().findFragmentById(R.id.fragment_main_smart);
         fragment_main_calendric = (Fragment_main_calendric) getFragmentManager().findFragmentById(R.id.fragment_main_calendric);
         navigationView = (NavigationView) findViewById(R.id.nav_main);
-        action_spinner_switch = (Spinner) findViewById(R.id.action_spinner_switch);
     }
 
     private void myCreate() {
         setSupportActionBar(toolbar);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        spinner_onSelected = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                fragment_main_calendric.showCal(EnumCalendricViewType.getEnum(position));
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        };
-        spinnerArrayAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, getResources().getStringArray(
-                R.array.menu_calendric_switch));
     }
 
     private void mySetView() {
@@ -93,9 +77,6 @@ public class MainActivity extends AppCompatActivity
 
 
         navigationView.setNavigationItemSelectedListener(this);
-        action_spinner_switch.setAdapter(spinnerArrayAdapter);
-        action_spinner_switch.setOnItemSelectedListener(spinner_onSelected);
-        action_spinner_switch.setSelection(1);
     }
 
     @Override
@@ -116,11 +97,6 @@ public class MainActivity extends AppCompatActivity
             getMenuInflater().inflate(R.menu.menu_main_smart, menu);
         } else {
             getMenuInflater().inflate(R.menu.menu_main_calendric, menu);
-//            MenuItem item = menu.findItem(R.id.action_spinner_switch);
-//            Spinner spinner = (Spinner) MenuItemCompat.getActionView(item);
-//            spinner.setAdapter(spinnerArrayAdapter);
-//            spinner.setOnItemSelectedListener(spinner_onSelected);
-//            spinner.setSelection(3);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -141,9 +117,18 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(this, "switch", Toast.LENGTH_LONG).show();
                 break;
             }
+            case R.id.show_by_week:{
+                fragment_main_calendric.showCal(EnumCalendricViewType.Week);
+                break;
+            }
+            case R.id.show_by_day:{
+                fragment_main_calendric.showCal(EnumCalendricViewType.Day);
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -154,14 +139,12 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_glance_smart: {
                 getFragmentManager().beginTransaction().hide(fragment_main_calendric)
                         .show(fragment_main_smart).commit();
-                action_spinner_switch.setVisibility(View.INVISIBLE);
                 invalidateOptionsMenu();
                 break;
             }
             case R.id.nav_glance_calendric: {
                 getFragmentManager().beginTransaction().hide(fragment_main_smart)
                         .show(fragment_main_calendric).commit();
-                action_spinner_switch.setVisibility(View.VISIBLE);
 
                 invalidateOptionsMenu();
                 break;

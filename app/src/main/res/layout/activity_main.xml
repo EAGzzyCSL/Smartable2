@@ -24,12 +24,6 @@
                 android:background="?attr/colorPrimary"
                 android:fitsSystemWindows="true"
                 app:popupTheme="@style/AppTheme.PopupOverlay">
-                <Spinner
-                    android:id="@+id/action_spinner_switch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/menu_calendric_switch"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
