@@ -7,11 +7,12 @@ import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ import my.MyTime;
 import my.MyUtil;
 
 
-public abstract class CalendricSimpleView extends ViewGroup {
+public abstract class CalendricSimpleView extends LinearLayout {
     /*从dp转化为像素乘的值*/
     protected final float destiny = getContext().getResources().getDisplayMetrics().density;
     //TODO 是不是该使用float表示绘制的量
@@ -64,6 +65,7 @@ public abstract class CalendricSimpleView extends ViewGroup {
     /*添加按钮*/
     protected AppCompatButton preAddButton;
 
+
     public CalendricSimpleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         /*完成画笔创建设置等初始化工作*/
@@ -76,10 +78,12 @@ public abstract class CalendricSimpleView extends ViewGroup {
         preAddButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.view_calendric_day_item_add_bkg));
         preAddButton.setText("+");
         preAddButton.setTextColor(Color.BLACK);
-        preAddButton.setGravity(Gravity.START);
+        preAddButton.setGravity(Gravity.CENTER);
         preAddButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                v.layout(0,0,0,0);
+                Log.i("宽高:",v.getWidth()+","+v.getHeight());
                 //日期是view自己的日期，时间通过计算获取
                 MyMoment m = new MyMoment(myMoment.getYear(), myMoment.getMonth(),
                         myMoment.getDay(), addButtonHour, 0);
@@ -114,10 +118,9 @@ public abstract class CalendricSimpleView extends ViewGroup {
     /*创建一个新的条目标签*/
     protected View createNewEntryLabel(final EntrySchedule schedule) {
         //TODO 设置其大小的measure
-//        AppCompatButton b = new AppCompatButton(getContext());
-        TextView b = new TextView(getContext());//可以使用textView
+        Button b = new Button(getContext());//可以使用textView
         b.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.cal_yellow));
-        b.setGravity(Gravity.START);
+        b.setGravity(Gravity.CENTER);
         b.setTextColor(Color.BLACK);
         b.setText(schedule.getTitle());
         b.setOnClickListener(new OnClickListener() {
@@ -130,26 +133,6 @@ public abstract class CalendricSimpleView extends ViewGroup {
         return b;
     }
 
-    /*安排日历视图上事件的显示*/
-    protected void arrangeLayout() {
-        this.removeAllViews();
-        if (schedules != null) {
-            for (EntrySchedule entrySchedule : schedules) {
-                                /*增加一个新的条目*/
-                View vEntry = createNewEntryLabel(entrySchedule);
-                addView(vEntry);
-                calcEntryLayoutPos(entrySchedule);
-                vEntry.layout(calEntryLayoutPos.getLeft(),
-                        calEntryLayoutPos.getTop(),
-                        calEntryLayoutPos.getRight(),
-                        calEntryLayoutPos.getBottom());
-            }
-        }
-        /*添加当点击空白处预备添加时的按钮*/
-        addView(preAddButton);
-        //TODO 如果不这样做的话它的位置就会保留
-        preAddButton.layout(0, 0, 0, 0);
-    }
 
 
     /*覆写onTouch事件来实现触摸添加一个添加按钮*/
@@ -169,12 +152,20 @@ public abstract class CalendricSimpleView extends ViewGroup {
                             ) {
                             /*根据触摸的位置来决定是否显示一个添加按钮*/
                         calcPreAddLayoutPos(x - grid_left, y - grid_top);
+                        int mW=calEntryLayoutPos.getRight()-calEntryLayoutPos.getLeft();
+                        int mH= calEntryLayoutPos.getBottom()-calEntryLayoutPos.getTop();
+                        preAddButton.setLayoutParams(new LayoutParams(mW,mH));
+                        preAddButton.measure(
+                                View.MeasureSpec.makeMeasureSpec(mW,MeasureSpec.EXACTLY),
+                                View.MeasureSpec.makeMeasureSpec(mH,MeasureSpec.EXACTLY)
+                        );
+                        Log.i("preAddbutton","preAddbutton");
                         preAddButton.layout(calEntryLayoutPos.getLeft(),
                                 calEntryLayoutPos.getTop(),
-                                calEntryLayoutPos.getRight(),
-                                calEntryLayoutPos.getBottom()
+                                calEntryLayoutPos.getLeft()+preAddButton.getMeasuredWidth(),
+                                calEntryLayoutPos.getTop()+preAddButton.getMeasuredHeight()
                         );
-
+//                        preAddButton.setVisibility(VISIBLE);
                     }
                 }
                 break;
@@ -184,22 +175,51 @@ public abstract class CalendricSimpleView extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        Log.i("onLayout","onLayout");
         arrangeLayout();
     }
+    /*安排日历视图上事件的显示*/
+    protected void arrangeLayout() {
+        this.removeAllViews();
+        if (schedules != null) {
+            for (int i=0;i<schedules.size();i++) {
+                                /*增加一个新的条目*/
+                View vEntry = createNewEntryLabel(schedules.get(i));
+                calcEntryLayoutPos(schedules.get(i));
+                int mW=calEntryLayoutPos.getRight()-calEntryLayoutPos.getLeft();
+                int mH= calEntryLayoutPos.getBottom()-calEntryLayoutPos.getTop();
+                addView(vEntry,new LayoutParams(mW,mH));
+                vEntry.measure(
+                        View.MeasureSpec.makeMeasureSpec(mW,MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(mH,MeasureSpec.EXACTLY)
+                );
+                vEntry.layout(calEntryLayoutPos.getLeft(),
+                        calEntryLayoutPos.getTop(),
+                        calEntryLayoutPos.getLeft()+getChildAt(i).getMeasuredWidth(),
+                        calEntryLayoutPos.getTop()+getChildAt(i).getMeasuredHeight());
+            }
+        }
+        /*添加当点击空白处预备添加时的按钮*/
+        addView(preAddButton);
+//        preAddButton.setVisibility(GONE);
+        //TODO 如果不这样做的话它的位置就会保留
+//        preAddButton.layout(0, 0, 0, 0);
+    }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.i("测量","测量");
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int sizeWidth = MeasureSpec.getSize(widthMeasureSpec);
-        int sizeHeight = MeasureSpec.getSize(heightMeasureSpec);
         /*如果给定了大小的话就用给定的大小，否则用自己默认的大小*/
         myWidth = (widthMode == MeasureSpec.EXACTLY) ? sizeWidth
                 : defaultWidth;
-        myHeight = (heightMode == MeasureSpec.EXACTLY) ? sizeHeight
-                : defaultHeight;
-        setMeasuredDimension(myWidth, myHeight);
+        myHeight = defaultHeight;
+        super.onMeasure(
+                View.MeasureSpec.makeMeasureSpec(myWidth, MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(myHeight,MeasureSpec.EXACTLY)
+        );
         /*只有在myWidth和myHeight的值确定后才可以计算网格部分边界*/
         grid_right = myWidth - letRightPad();
         grid_bottom = myHeight - letBottomPad();
